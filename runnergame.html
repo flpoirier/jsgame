@@ -5,7 +5,7 @@
     <title>Runner Game Test</title>
     <style>
       * { padding: 0; margin: 0; }
-      canvas { background: #ccc; display: block; margin: 0 auto; }
+      canvas { background: #30dcff; display: block; margin: 0 auto; }
     </style>
   </head>
   <body>
@@ -15,10 +15,13 @@
       var canvas = document.getElementById("myCanvas");
       var ctx = canvas.getContext("2d");
 
+      var img = new Image();
+      img.src = 'http://www.mariowiki.com/images/thumb/1/1b/Mario_-_New_Super_Mario_Bros_U.png/100px-Mario_-_New_Super_Mario_Bros_U.png'
+
       var dudeHeight = 50;
       var dudeWidth = 20;
-      var dudeX = (canvas.width-dudeWidth)/2;
-      var dudeY = (canvas.height-dudeHeight);
+      var dudeX = (canvas.width-100)/2;
+      var dudeY = (canvas.height-133);
 
       var rightPressed = false;
       var leftPressed = false;
@@ -30,14 +33,15 @@
       function drawDude() {
         ctx.beginPath();
         ctx.rect(dudeX, dudeY, dudeWidth, dudeHeight);
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = "#30dcff";
         ctx.fill();
         ctx.closePath();
       }
 
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawDude();
+        // drawDude();
+        ctx.drawImage(img, dudeX, dudeY);
 
         if(rightPressed) {
           dudeX += 3;
@@ -49,14 +53,14 @@
           jumping = true;
         }
 
-        if(jumping && dudeY > 380) {
+        if(jumping && dudeY > 260) {
           dudeY -= 3;
-        } else if (jumping && dudeY <= 400) {
+        } else if (jumping && dudeY <= 260) {
           jumping = false;
           dudeY += 3;
         }
 
-        if(!jumping && dudeY < canvas.height-dudeHeight) {
+        if(!jumping && dudeY < canvas.height-133) {
           dudeY += 3;
         }
 
