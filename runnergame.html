@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Runner Game Test</title>
+    <style>
+      * { padding: 0; margin: 0; }
+      canvas { background: #ccc; display: block; margin: 0 auto; }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="700" height="500"></canvas>
+
+    <script>
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+
+      var dudeHeight = 50;
+      var dudeWidth = 20;
+      var dudeX = (canvas.width-dudeWidth)/2;
+      var dudeY = (canvas.height-dudeHeight);
+
+      var rightPressed = false;
+      var leftPressed = false;
+      var upPressed = false;
+      var downPressed = false;
+      var spacePressed = false;
+      var jumping = false;
+
+      function drawDude() {
+        ctx.beginPath();
+        ctx.rect(dudeX, dudeY, dudeWidth, dudeHeight);
+        ctx.fillStyle = "#000000";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawDude();
+
+        if(rightPressed) {
+          dudeX += 3;
+        } else if(leftPressed) {
+          dudeX -= 3;
+        }
+
+        if(spacePressed) {
+          jumping = true;
+        }
+
+        if(jumping && dudeY > 350) {
+          dudeY -= 3;
+        } else if (jumping && dudeY <= 400) {
+          jumping = false;
+          dudeY += 3;
+        }
+
+        if(!jumping && dudeY < canvas.height-dudeHeight) {
+          dudeY += 3;
+        }
+
+      }
+
+      function keyDownHandler(e) {
+        if(e.keyCode == 39) {
+          rightPressed = true;
+        }
+        else if(e.keyCode == 37) {
+          leftPressed = true;
+        }
+        else if(e.keyCode == 38) {
+          upPressed = true;
+        }
+        else if(e.keyCode == 40) {
+          downPressed = true;
+        }
+        else if(e.keyCode == 32) {
+          spacePressed = true;
+        }
+      }
+
+      function keyUpHandler(e) {
+        if(e.keyCode == 39) {
+          rightPressed = false;
+        }
+        else if(e.keyCode == 37) {
+          leftPressed = false;
+        }
+        else if(e.keyCode == 38) {
+          upPressed = false;
+        }
+        else if(e.keyCode == 40) {
+          downPressed = false;
+        }
+        else if(e.keyCode == 32) {
+          spacePressed = false;
+        }
+      }
+
+      document.addEventListener("keydown", keyDownHandler, false);
+      document.addEventListener("keyup", keyUpHandler, false);
+      setInterval(draw, 10);
+
+    </script>
+  </body>
+</html>
