@@ -101,15 +101,28 @@
       }
 
       function directionHandler() {
-        if (leftPressed) {
+        if (leftPressed && leftTile > 0) {
           leftTile -= 1;
-        } else if (rightPressed) {
-          leftTile += 1;
+        } else if (leftPressed) {
+          dudeX -= tileSize;
         }
+
+        if (rightPressed && leftTile < maxLeftTile) {
+          leftTile += 1;
+        } else if (rightPressed) {
+          dudeX += tileSize;
+        }
+
         if (leftTile < 0) {
           leftTile = 0;
         } else if (leftTile > maxLeftTile) {
           leftTile = maxLeftTile;
+        }
+
+        if (dudeX < tileSize) {
+          dudeX = tileSize;
+        } else if (dudeX > canvas.width - dudeWidth - tileSize) {
+          dudeX = canvas.width - dudeWidth - tileSize
         }
       }
 
@@ -151,7 +164,7 @@
 
       document.addEventListener("keydown", keyDownHandler, false);
       document.addEventListener("keyup", keyUpHandler, false);
-      setInterval(draw, 50);
+      setInterval(draw, 25);
     </script>
   </body>
 </html>
