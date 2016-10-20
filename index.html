@@ -111,9 +111,9 @@
           dg = -dg;
         }
 
-        if(rightPressed) {
+        if(rightPressed && dudeX < (canvas.width - dude.width - 3)) {
           dudeX += 3;
-        } else if(leftPressed) {
+        } else if(leftPressed && dudeX >=3) {
           dudeX -= 3;
         }
 
