@@ -21,7 +21,8 @@
       dude.src = 'https://koenig-media.raywenderlich.com/uploads/2014/03/Player@2x.png'
       ghost.src = './red_ghost.png' // 53 x 52
 
-      var lives = 10;
+      var maxLives = 3;
+      var lives = maxLives;
       var floatHeight = 25;
 
       var dudeHeight = dude.height;
@@ -42,6 +43,7 @@
       var spacePressed = false;
       var jumping = false;
       var current_collision = false;
+      var gameOver = false;
 
       function intersecting() {
         var xIntersect = false;
@@ -78,12 +80,28 @@
         }
       }
 
+      function restartGame() {
+        gameOver = false;
+        lives = maxLives;
+      }
+
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(dude, dudeX, dudeY);
         ctx.drawImage(ghost, ghostX, ghostY);
         checkCollision();
-        ctx.fillText(`Lives: ${lives}`, 40, 40);
+        if (lives > 0) {
+          ctx.font = "30px serif";
+          ctx.fillText(`Lives: ${lives}`, 40, 40);
+        } else {
+          gameOver = true;
+          setTimeout(restartGame, 5000);
+        }
+
+        if (gameOver) {
+          ctx.font = "60px serif";
+          ctx.fillText(`GAME OVER`, 40, 60);
+        }
 
         ghostX += dg;
 
