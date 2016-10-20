@@ -14,14 +14,26 @@
     <script>
       var canvas = document.getElementById("myCanvas");
       var ctx = canvas.getContext("2d");
+      ctx.font = "30px serif";
 
-      var img = new Image();
-      img.src = 'https://koenig-media.raywenderlich.com/uploads/2014/03/Player@2x.png'
+      var dude = new Image();
+      var ghost = new Image();
+      dude.src = 'https://koenig-media.raywenderlich.com/uploads/2014/03/Player@2x.png'
+      ghost.src = './red_ghost.png' // 53 x 52
 
-      var dudeHeight = 50;
-      var dudeWidth = 20;
-      var dudeX = (canvas.width-90)/2;
-      var dudeY = (canvas.height-125);
+      var lives = 10;
+      var floatHeight = 25;
+
+      var dudeHeight = dude.height;
+      var dudeWidth = dude.width;
+      var dudeX = (canvas.width - dudeWidth)/2;
+      var dudeY = (canvas.height - dudeHeight - floatHeight);
+
+      var ghostHeight = 52; // have to hardcode these for whatever reason?
+      var ghostWidth = 53;
+      var ghostX = 0;
+      var ghostY = (canvas.height - ghostHeight - floatHeight);
+      var dg = 2;
 
       var rightPressed = false;
       var leftPressed = false;
@@ -29,19 +41,57 @@
       var downPressed = false;
       var spacePressed = false;
       var jumping = false;
+      var current_collision = false;
 
-      function drawDude() {
-        ctx.beginPath();
-        ctx.rect(dudeX, dudeY, dudeWidth, dudeHeight);
-        ctx.fillStyle = "#30dcff";
-        ctx.fill();
-        ctx.closePath();
+      function intersecting() {
+        var xIntersect = false;
+        var yIntersect = false;
+
+        var dudeLeft = dudeX;
+        var dudeRight = dudeX + dudeWidth;
+        var ghostLeft = ghostX;
+        var ghostRight = ghostX + ghostWidth;
+
+        if (dudeY + dudeHeight > ghostY) {
+          yIntersect = true;
+        }
+
+        if (ghostLeft > dudeLeft && ghostLeft < dudeRight) {
+          xIntersect = true;
+        } else if (ghostRight > dudeLeft && ghostRight < dudeRight) {
+          xIntersect = true;
+        }
+
+        if (xIntersect && yIntersect) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      function checkCollision() {
+        if (intersecting() && !current_collision) {
+          current_collision = true;
+          lives -= 1;
+        } else if (!intersecting() && current_collision) {
+          current_collision = false;
+        }
       }
 
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // drawDude();
-        ctx.drawImage(img, dudeX, dudeY);
+        ctx.drawImage(dude, dudeX, dudeY);
+        ctx.drawImage(ghost, ghostX, ghostY);
+        checkCollision();
+        ctx.fillText(`Lives: ${lives}`, 40, 40);
+
+        ghostX += dg;
+
+        if (ghostX <= 0) {
+          dg = -dg;
+        } else if (ghostX >= canvas.width - ghostWidth) {
+          dg = -dg;
+        }
 
         if(rightPressed) {
           dudeX += 3;
