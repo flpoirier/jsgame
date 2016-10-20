@@ -25,6 +25,8 @@
       var lives = maxLives;
       var floatHeight = 50;
       var jumpHeight = 100;
+      var wallHeight = 50;
+      var wallWidth = 100;
 
       var dudeHeight = dude.height;
       var dudeWidth = dude.width;
@@ -52,7 +54,8 @@
       }
 
       function walls() {
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "brown";
+        ctx.fillRect(0, (canvas.height-floatHeight-wallHeight), wallWidth, wallHeight);
       }
 
       function intersecting() {
@@ -100,6 +103,7 @@
         ctx.drawImage(dude, dudeX, dudeY);
         ctx.drawImage(ghost, ghostX, ghostY);
         grass();
+        walls();
         checkCollision();
         if (lives > 0) {
           ctx.font = "30px serif";
