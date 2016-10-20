@@ -16,12 +16,12 @@
       var ctx = canvas.getContext("2d");
 
       var img = new Image();
-      img.src = 'http://www.mariowiki.com/images/thumb/1/1b/Mario_-_New_Super_Mario_Bros_U.png/100px-Mario_-_New_Super_Mario_Bros_U.png'
+      img.src = 'https://koenig-media.raywenderlich.com/uploads/2014/03/Player@2x.png'
 
       var dudeHeight = 50;
       var dudeWidth = 20;
-      var dudeX = (canvas.width-100)/2;
-      var dudeY = (canvas.height-133);
+      var dudeX = (canvas.width-90)/2;
+      var dudeY = (canvas.height-125);
 
       var rightPressed = false;
       var leftPressed = false;
@@ -49,7 +49,7 @@
           dudeX -= 3;
         }
 
-        if(spacePressed) {
+        if(spacePressed && dudeY >= canvas.height-125) {
           jumping = true;
         }
 
@@ -60,8 +60,12 @@
           dudeY += 3;
         }
 
-        if(!jumping && dudeY < canvas.height-133) {
+        if(!jumping && dudeY < canvas.height-125) {
           dudeY += 3;
+        }
+
+        if(dudeY > canvas.height-125) {
+          dudeY = canvas.height-125;
         }
 
       }
