@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Runner Game Test</title>
+    <style>
+      * { padding: 0; margin: 0; }
+      canvas { background: #30dcff; display: block; margin: 0 auto; }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="900" height="700"></canvas>
+
+    <script>
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+      var tileSize = 35;
+      var map = [
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+      ]; // this is 24 x 11
+
+      function draw() {
+        var rowNum = -1;
+        map.forEach((row) => {
+          rowNum += 1;
+          var tileNum = -1;
+          row.forEach((tile) => {
+            tileNum += 1;
+            if (tile === 0) {
+              ctx.fillStyle = "white";
+              ctx.fillRect(tileNum * tileSize, rowNum * tileSize, tileSize, tileSize);
+            } else {
+              ctx.fillStyle = "black";
+              ctx.fillRect(tileNum * tileSize, rowNum * tileSize, tileSize, tileSize);
+            }
+          })
+        })
+      }
+
+      setTimeout(draw, 3);
+    </script>
+  </body>
+</html>
