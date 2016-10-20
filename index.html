@@ -23,7 +23,8 @@
 
       var maxLives = 3;
       var lives = maxLives;
-      var floatHeight = 25;
+      var floatHeight = 50;
+      var jumpHeight = 100;
 
       var dudeHeight = dude.height;
       var dudeWidth = dude.width;
@@ -44,6 +45,15 @@
       var jumping = false;
       var current_collision = false;
       var gameOver = false;
+
+      function grass() {
+        ctx.fillStyle = "green";
+        ctx.fillRect(0, canvas.height-floatHeight, canvas.width, floatHeight);
+      }
+
+      function walls() {
+        ctx.fillStyle = "black";
+      }
 
       function intersecting() {
         var xIntersect = false;
@@ -89,6 +99,7 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(dude, dudeX, dudeY);
         ctx.drawImage(ghost, ghostX, ghostY);
+        grass();
         checkCollision();
         if (lives > 0) {
           ctx.font = "30px serif";
@@ -117,23 +128,23 @@
           dudeX -= 3;
         }
 
-        if(spacePressed && dudeY >= canvas.height-125) {
+        if(spacePressed && dudeY >= canvas.height-dudeHeight-floatHeight) {
           jumping = true;
         }
 
-        if(jumping && dudeY > 260) {
+        if(jumping && dudeY > canvas.height-dudeHeight-floatHeight-jumpHeight) {
           dudeY -= 3;
-        } else if (jumping && dudeY <= 260) {
+        } else if (jumping && dudeY <= canvas.height-dudeHeight-floatHeight-jumpHeight) {
           jumping = false;
           dudeY += 3;
         }
 
-        if(!jumping && dudeY < canvas.height-125) {
+        if(!jumping && dudeY < canvas.height-dudeHeight-floatHeight) {
           dudeY += 3;
         }
 
-        if(dudeY > canvas.height-125) {
-          dudeY = canvas.height-125;
+        if(dudeY > canvas.height-dudeHeight-floatHeight) {
+          dudeY = canvas.height-dudeHeight-floatHeight;
         }
 
       }
