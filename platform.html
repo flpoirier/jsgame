@@ -52,16 +52,32 @@
         [2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2]
       ]; // this is 80 x 24
 
-      var dudeX = 4;
+      var dudeX = 15;
       var dudeY = 21;
       var dudeColor = "red";
 
-      var jumpHeight = 4;
+      var jumpHeight = 7;
+
+      var ghosts = [{x: 1, dx: 1, alive: true}, {x: 30, dx: 1, alive: true}];
+      var ghostY = 21;
+      var ghostColor = "blue";
+      var ghostMove = 0;
+
+      maxLives = 5;
+      lives = maxLives;
 
       function draw() {
         var rowNum = -1;
 
         directionHandler();
+        collisionChecker();
+
+        ghostMove += 1;
+
+        if (ghostMove === 8) {
+          ghostHandler();
+          ghostMove = 0;
+        }
 
         map.forEach((row) => {
           rowNum += 1;
@@ -79,6 +95,15 @@
             } else if (tile === 3){
               ctx.fillStyle = "brown";
             }
+
+            if (rowNum === ghostY) {
+              ghosts.forEach((ghost) => {
+                if (ghost.x === tileNum && ghost.alive) {
+                  ctx.fillStyle = ghostColor;
+                }
+              });
+            }
+
             if (tileNum >= leftTile) {
               ctx.fillRect((tileNum*tileSize - leftTile*tileSize), rowNum * tileSize, tileSize, tileSize);
             }
@@ -104,12 +129,12 @@
         return heightAboveGround() === 0;
       }
 
-      function leftFree() {
-        return map[dudeY][dudeX-1] === 0;
+      function leftFree(x,y) {
+        return map[y][x-1] === 0;
       }
 
-      function rightFree() {
-        return map[dudeY][dudeX+1] === 0;
+      function rightFree(x,y) {
+        return map[y][x+1] === 0;
       }
 
       function topFree() {
@@ -133,23 +158,43 @@
 
       }
 
+      function ghostHandler() {
+        ghosts.forEach((ghost) => {
+          if (ghost.dx === -1 && leftFree(ghost.x, 21)) {
+            ghost.x -= 1;
+          } else if (ghost.dx === 1 && rightFree(ghost.x, 21)) {
+            ghost.x += 1;
+          } else {
+            ghost.dx = -ghost.dx;
+          }
+        })
+      }
+
       function directionHandler() {
-        if (leftPressed && leftFree()) {
+        if (leftPressed && leftFree(dudeX, dudeY) && (dudeX - leftTile > 15)) {
+          dudeX -= 1;
+        } else if (leftPressed && leftFree(dudeX,dudeY) && leftTile > 0) {
           leftTile -= 1;
+          dudeX -= 1;
+        } else if (leftPressed && leftFree(dudeX, dudeY)) {
           dudeX -= 1;
         }
 
-        if (rightPressed && rightFree()) {
+        if (rightPressed && rightFree(dudeX, dudeY) && (dudeX - leftTile < 15)) {
+          dudeX += 1;
+        } else if (rightPressed && rightFree(dudeX,dudeY) && leftTile < maxLeftTile) {
           leftTile += 1;
+          dudeX += 1;
+        } else if (rightPressed && rightFree(dudeX, dudeY)) {
           dudeX += 1;
         }
 
-        if (leftTile < 0) {
-          leftTile = 0;
-        } else if (leftTile > maxLeftTile) {
-          leftTile = maxLeftTile;
-        }
+      }
 
+      function collisionChecker() {
+        ghosts.forEach((ghost) => {
+
+        })
       }
 
       function keyDownHandler(e) {
@@ -190,7 +235,7 @@
 
       document.addEventListener("keydown", keyDownHandler, false);
       document.addEventListener("keyup", keyUpHandler, false);
-      setInterval(draw, 50);
+      setInterval(draw, 30);
     </script>
   </body>
 </html>
