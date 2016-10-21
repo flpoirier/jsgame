@@ -57,14 +57,17 @@
       var dudeColor = "red";
 
       var jumpHeight = 7;
+      var jumpStart = null;
 
       var ghosts = [{x: 1, dx: 1, alive: true}, {x: 30, dx: 1, alive: true}];
       var ghostY = 21;
       var ghostColor = "blue";
       var ghostMove = 0;
 
-      maxLives = 5;
-      lives = maxLives;
+      var maxLives = 5;
+      var lives = maxLives;
+      var gameOver = false;
+
 
       function draw() {
         var rowNum = -1;
@@ -110,6 +113,19 @@
           })
         })
         jumpHandler();
+        //
+        // if (lives > 0) {
+        //   ctx.font = "30px serif";
+        //   ctx.fillText(`Lives: ${lives}`, 40, 40);
+        // } else {
+        //   gameOver = true;
+        //   setTimeout(restartGame, 5000);
+        // }
+        //
+        // if (gameOver) {
+        //   ctx.font = "60px serif";
+        //   ctx.fillText(`GAME OVER`, 40, 60);
+        // }
       }
 
       function heightAboveGround() {
@@ -144,12 +160,14 @@
       function jumpHandler() {
         if(spacePressed && onGround()) {
           jumping = true;
+          jumpStart = dudeY;
         }
 
-        if(jumping && (heightAboveGround() < jumpHeight) && topFree()) {
+        if(jumping && ((jumpStart - dudeY) < jumpHeight) && topFree()) {
           dudeY -= 1;
         } else if (jumping) {
           jumping = false;
+          jumpStart = null;
         }
 
         if(!jumping && !onGround()) {
@@ -193,7 +211,11 @@
 
       function collisionChecker() {
         ghosts.forEach((ghost) => {
-
+          if (ghost.alive && ghost.x === dudeX && ghostY === dudeY) {
+            lives -= 1;
+          } else if (ghost.x === dudeX && ghostY - 1 === dudeY) {
+            ghost.alive = false;
+          }
         })
       }
 
