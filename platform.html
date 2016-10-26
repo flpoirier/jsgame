@@ -88,7 +88,7 @@
 
         sunset += 1;
 
-        if (sunset === 3) {
+        if (sunset === 5) {
           red -= 1;
           green -= 2;
           blue -= 2;
@@ -159,6 +159,9 @@
       function caughtCoins() {
         if (map[dudeY][dudeX] === 4) {
           coins += 1;
+          red += 10;
+          green += 20;
+          blue += 20;
           map[dudeY][dudeX] = 0;
         }
       }
