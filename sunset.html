@@ -19,31 +19,47 @@
       var sunY = sunRad;
       var sunset = 0;
 
+      function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+      }
+
+      var stars = [];
+      for (let star = 0; star < 200; star++) {
+        let starX = getRandomInt(0, 900);
+        let starY = getRandomInt(0, 450);
+        stars.push([starX, starY]);
+      }
+
       var red = 85;
       var green = 200;
       var blue = 255;
 
-      function distance(x1, y1, x2, y2) {
-        return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
-      }
+      // function distance(x1, y1, x2, y2) {
+      //   return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+      // }
 
       function draw() {
 
         sunset += 1;
 
-        if (sunset === 5 && blue > 50) {
+        if (sunset === 5 && blue > 40) {
           red -= 1;
           green -= 2;
           blue -= 2;
           sunset = 0;
         }
 
-        if (sunY < (700)) {
+        if (sunY < (800)) {
           sunY += 1;
         }
 
         ctx.fillStyle = `rgb(${red},${green},${blue})`;
         ctx.fillRect(0,0,900,600);
+        //
+        // ctx.fillStyle = "rgb(6,76,6)";
+        // ctx.fillRect(0,400,900,200);
 
         // for (let x = (sunX - 150); x < (sunX + 150); x++) {
         //   for (let y = (sunY - 150); y < (sunY + 150); y++) {
@@ -53,16 +69,43 @@
         //   }
         // }
 
-        for (let dist = 300; dist >= 0; dist--) {
-          let tempRed = red - dist + 225;
+        // for (let dist = 300; dist >= 0; dist--) {
+
+        // ctx.fillStyle = "purple";
+        // ctx.beginPath();
+        // ctx.arc(sunX, sunY, 502, 0, 2 * Math.PI);
+        // ctx.fill();
+        if (blue < 150) {
+          stars.forEach((star) => {
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.arc(star[0], star[1], 1, 0, 2 * Math.PI);
+            ctx.fill();
+          });
+        }
+
+        let dist = 450;
+
+        while (dist >= 0) {
+
+          let tempRed = red - dist + Math.floor(300*sunY/500);
           if (tempRed < red) {
             tempRed = red;
           }
-          let trans = sunY/1000;
-          ctx.fillStyle = `rgba(${tempRed},${green},${blue},${trans})`;
+          let tempGreen = green - dist + Math.floor(175*sunY/500);
+          if (tempGreen < green) {
+            tempGreen = green;
+          }
+          // let tempBlue = blue + dist + Math.floor(200*sunY/500);
+          // if (tempBlue < blue) {
+          //   tempBlue = blue;
+          // }
+          ctx.fillStyle = `rgb(${tempRed},${tempGreen},${blue})`;
           ctx.beginPath();
           ctx.arc(sunX, sunY, dist, 0, 2 * Math.PI);
           ctx.fill();
+
+          dist -= 3;
         }
 
         ctx.fillStyle = "white";
@@ -72,7 +115,7 @@
 
       }
 
-      setInterval(draw, 15);
+      setInterval(draw, 10);
 
     </script>
   </body>
