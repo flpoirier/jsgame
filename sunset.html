@@ -43,10 +43,10 @@
         ctx.fillStyle = `rgb(${red},${green},${blue})`;
         ctx.fillRect(0,0,900,600);
 
-        for (let x = (sunX - 100); x < (sunX + 100); x++) {
-          for (let y = (sunY - 50); y < (sunY + 50); y++) {
+        for (let x = (sunX - 150); x < (sunX + 150); x++) {
+          for (let y = (sunY - 150); y < (sunY + 150); y++) {
             dist = Math.ceil(distance(sunX, sunY, x, y));
-            ctx.fillStyle = `rgb(${red + dist},${green},${blue})`;
+            ctx.fillStyle = `rgb(${red - dist + 150},${green},${blue})`;
             ctx.fillRect(x,y,1,1)
           }
         }
