@@ -31,33 +31,48 @@
 
         sunset += 1;
 
-        if (sunset === 5) {
+        if (sunset === 5 && blue > 50) {
           red -= 1;
           green -= 2;
           blue -= 2;
           sunset = 0;
         }
 
-        sunY += 1;
+        if (sunY < (700)) {
+          sunY += 1;
+        }
 
         ctx.fillStyle = `rgb(${red},${green},${blue})`;
         ctx.fillRect(0,0,900,600);
 
-        for (let x = (sunX - 150); x < (sunX + 150); x++) {
-          for (let y = (sunY - 150); y < (sunY + 150); y++) {
-            dist = Math.ceil(distance(sunX, sunY, x, y));
-            ctx.fillStyle = `rgb(${red - dist + 150},${green},${blue})`;
-            ctx.fillRect(x,y,1,1)
+        // for (let x = (sunX - 150); x < (sunX + 150); x++) {
+        //   for (let y = (sunY - 150); y < (sunY + 150); y++) {
+        //     dist = Math.ceil(distance(sunX, sunY, x, y));
+        //     ctx.fillStyle = `rgb(${red - dist + 150},${green},${blue})`;
+        //     ctx.fillRect(x,y,1,1)
+        //   }
+        // }
+
+        for (let dist = 300; dist >= 0; dist--) {
+          let tempRed = red - dist + 225;
+          if (tempRed < red) {
+            tempRed = red;
           }
+          let trans = sunY/1000;
+          ctx.fillStyle = `rgba(${tempRed},${green},${blue},${trans})`;
+          ctx.beginPath();
+          ctx.arc(sunX, sunY, dist, 0, 2 * Math.PI);
+          ctx.fill();
         }
 
         ctx.fillStyle = "white";
         ctx.beginPath();
         ctx.arc(sunX, sunY, sunRad, 0, 2 * Math.PI);
         ctx.fill();
+
       }
 
-      setInterval(draw, 30);
+      setInterval(draw, 15);
 
     </script>
   </body>
