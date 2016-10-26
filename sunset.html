@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sunset</title>
+    <style>
+      * { padding: 0; margin: 0; }
+      canvas { display: block; margin: 0 auto; }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="900" height="600"></canvas>
+    <script>
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+
+      var sunRad = 20;
+      var sunX = 450;
+      var sunY = sunRad;
+      var sunset = 0;
+
+      var red = 85;
+      var green = 200;
+      var blue = 255;
+
+      function distance(x1, y1, x2, y2) {
+        return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+      }
+
+      function draw() {
+
+        sunset += 1;
+
+        if (sunset === 5) {
+          red -= 1;
+          green -= 2;
+          blue -= 2;
+          sunset = 0;
+        }
+
+        sunY += 1;
+
+        ctx.fillStyle = `rgb(${red},${green},${blue})`;
+        ctx.fillRect(0,0,900,600);
+
+        for (let x = (sunX - 100); x < (sunX + 100); x++) {
+          for (let y = (sunY - 50); y < (sunY + 50); y++) {
+            dist = Math.ceil(distance(sunX, sunY, x, y));
+            ctx.fillStyle = `rgb(${red + dist},${green},${blue})`;
+            ctx.fillRect(x,y,1,1)
+          }
+        }
+
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.arc(sunX, sunY, sunRad, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+
+      setInterval(draw, 30);
+
+    </script>
+  </body>
+</html>
