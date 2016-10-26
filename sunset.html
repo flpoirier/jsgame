@@ -9,13 +9,15 @@
     </style>
   </head>
   <body>
-    <canvas id="myCanvas" width="900" height="600"></canvas>
+    <canvas id="myCanvas" width="1100" height="750"></canvas>
     <script>
       var canvas = document.getElementById("myCanvas");
       var ctx = canvas.getContext("2d");
+      var canvasWidth = 1100;
+      var canvasHeight = 750;
 
       var sunRad = 20;
-      var sunX = 450;
+      var sunX = canvasWidth / 2;
       var sunY = sunRad;
       var sunset = 0;
 
@@ -25,10 +27,14 @@
         return Math.floor(Math.random() * (max - min)) + min;
       }
 
+      function distance(x1, y1, x2, y2) {
+        return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+      }
+
       var stars = [];
       for (let star = 0; star < 200; star++) {
-        let starX = getRandomInt(0, 900);
-        let starY = getRandomInt(0, 450);
+        let starX = getRandomInt(0, canvasWidth);
+        let starY = getRandomInt(0, 2 * canvasHeight / 3);
         let starRad = getRandomInt(1,3);
         stars.push([starX, starY, starRad]);
       }
@@ -36,10 +42,6 @@
       var red = 85;
       var green = 200;
       var blue = 255;
-
-      // function distance(x1, y1, x2, y2) {
-      //   return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
-      // }
 
       function draw() {
 
@@ -57,7 +59,7 @@
         }
 
         ctx.fillStyle = `rgb(${red},${green},${blue})`;
-        ctx.fillRect(0,0,900,600);
+        ctx.fillRect(0,0,canvasWidth,canvasHeight);
         //
         // ctx.fillStyle = "rgb(6,76,6)";
         // ctx.fillRect(0,400,900,200);
@@ -78,6 +80,8 @@
         // ctx.fill();
         if (blue < 150) {
           stars.forEach((star) => {
+            // let stardist = distance(star[0],star[1],sunX, sunY);
+            // ctx.fillStyle = `rgba(255,255,255,${stardist/1000})`;
             ctx.fillStyle = "white";
             ctx.beginPath();
             ctx.arc(star[0], star[1], star[2], 0, 2 * Math.PI);
@@ -114,6 +118,11 @@
         ctx.arc(sunX, sunY, sunRad, 0, 2 * Math.PI);
         ctx.fill();
 
+        ctx.strokeStyle = "#7b9095";
+        ctx.lineWidth = 20;
+        ctx.beginPath();
+        ctx.arc(canvasWidth / 2, canvasHeight + 400, canvasWidth * 2/3, Math.PI, 2 * Math.PI)
+        ctx.stroke();
       }
 
       setInterval(draw, 10);
