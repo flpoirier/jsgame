@@ -59,10 +59,12 @@
       var jumpHeight = 7;
       var jumpStart = null;
 
-      var ghosts = [{x: 1, dx: 1, alive: true}, {x: 30, dx: 1, alive: true}];
+      var ghosts = [{x: 1, dx: 1, alive: true}, {x: 30, dx: 1, alive: true},{x: 45, dx: -1, alive: true},{x: 60, dx: 1, alive: true}];
       var ghostY = 21;
       var ghostColor = "blue";
       var ghostMove = 0;
+
+
 
       var maxLives = 5;
       var lives = maxLives;
@@ -70,17 +72,18 @@
 
 
       function draw() {
-        var rowNum = -1;
 
-        directionHandler();
-        collisionChecker();
+        directionHandler(); // moves the player avatar
+        collisionChecker(); // checks if ghost has killed player or player has killed ghosts
 
         ghostMove += 1;
 
-        if (ghostMove === 8) {
+        if (ghostMove === 8) { // this ensures that ghosts will only move once every 8 frames
           ghostHandler();
           ghostMove = 0;
         }
+
+        var rowNum = -1;
 
         map.forEach((row) => {
           rowNum += 1;
