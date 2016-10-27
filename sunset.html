@@ -211,12 +211,12 @@
         }
 
         let dudeAngle = Math.PI - Math.acos(translatedX / bridgeRad);
-        let dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - 10 ;
+        let dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - 8;
 
         ctx.strokeStyle = "purple";
         ctx.lineWidth = 2;
         ctx.moveTo(dudeX, dudeY);
-        ctx.lineTo(dudeX + 20 * Math.cos(dudeAngle), dudeY + 20 * Math.sin(dudeAngle));
+        ctx.lineTo(dudeX - 40 * Math.cos(dudeAngle), dudeY - 40 * Math.sin(dudeAngle));
         ctx.stroke();
 
         // ctx.beginPath();
