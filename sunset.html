@@ -21,6 +21,10 @@
       var sunY = sunRad;
       var sunset = 0;
 
+      var bridgeX = canvasWidth / 2;
+      var bridgeY = canvasHeight + 400;
+      var bridgeRad = canvasWidth * 2/3;
+
       var dudeX = 40;
       var dudeHeight = 75;
       var dudeDx = 1;
@@ -36,6 +40,9 @@
       var jumpHeight = 0;
       var jumpSpeed = 3;
       var maxJump = 80;
+
+      var maxTime = 120;
+      var time = maxTime;
 
       var gameStarting = true;
       var gameOver = false;
@@ -207,10 +214,6 @@
         //   });
         // }
 
-        let bridgeX = canvasWidth / 2;
-        let bridgeY = canvasHeight + 400;
-        let bridgeRad = canvasWidth * 2/3;
-
         ctx.strokeStyle = "#7b9095";
         ctx.lineWidth = 15;
         ctx.beginPath();
@@ -244,6 +247,10 @@
         ctx.lineTo(dudeX - dudeHeight * Math.cos(dudeAngle), dudeY - dudeHeight * Math.sin(dudeAngle));
         ctx.stroke();
 
+        ctx.fillStyle = "#7b9095";
+        ctx.font = "30px serif";
+        ctx.fillText(`${timeString()}`, 40, 60);
+
         // if (gameStarting) {
         //   dudeX += dudeDx;
         // }
@@ -260,8 +267,10 @@
 
         if (dudeX > canvasWidth - 40) {
           dudeX = canvasWidth - 40;
+          // starMove("right");
         } else if (dudeX < 40) {
           dudeX = 40;
+          // starMove("left");
         }
 
         // jumping logic
@@ -288,6 +297,23 @@
 
       }
 
+      // function starMove(direction) {
+      //   if (direction === "left") {
+      //     stars.forEach((star) => {
+      //       star.starX -= 1;
+      //       let translatedX = 0;
+      //       if (star.starX < bridgeX) {
+      //         translatedX = -(bridgeX - star.starX);
+      //       } else if (star.starX > bridgeX) {
+      //         translatedX = star.starX - bridgeX;
+      //       }
+      //       let starAngle = Math.PI - Math.acos(translatedX / bridgeRad);
+      //       star.starY = bridgeY - Math.floor(bridgeRad * Math.sin(starAngle));
+      //     });
+      //   } else if (direction === "right") {
+      //
+      //   }
+      // }
 
       function keyDownHandler(e) {
         if(e.keyCode == 39) {
@@ -325,9 +351,34 @@
         }
       }
 
+      function timeTick() {
+        if (time > 0) {
+          time -= 1;
+        }
+      }
+
+      function timeString() {
+        let mins = Math.floor(time / 60);
+        let secs = time - (mins * 60);
+        if (mins === 0) {
+          mins = "00";
+        } else {
+          mins = `0${mins}`;
+        }
+        if (secs === 0) {
+          secs = "00";
+        } else if (secs < 10) {
+          secs = `0${mins}`;
+        } else {
+          secs = `${secs}`;
+        }
+        return `${mins}:${secs}`;
+      }
+
       document.addEventListener("keydown", keyDownHandler, false);
       document.addEventListener("keyup", keyUpHandler, false);
       setInterval(draw, 15);
+      setInterval(timeTick, 1000);
 
     </script>
   </body>
