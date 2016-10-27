@@ -34,7 +34,7 @@
 
       var jumping = false;
       var jumpHeight = 0;
-      var jumpSpeed = 2;
+      var jumpSpeed = 3;
       var maxJump = 80;
 
       var gameStarting = true;
@@ -270,11 +270,19 @@
           jumping = true;
         }
 
-        if (jumping && jumpHeight < maxJump) {
+        // if (jumping && jumpHeight < maxJump) {
+        //   jumpHeight += jumpSpeed;
+        // } else if (jumping && jumpHeight === maxJump) {
+        //   jumping = false;
+        // } else if (!jumping && jumpHeight > 0) {
+        //   jumpHeight -= 2 * jumpSpeed;
+        // }
+
+        // jump height proportional to length of time space bar pressed
+
+        if (spacePressed && jumpHeight < maxJump) {
           jumpHeight += jumpSpeed;
-        } else if (jumping && jumpHeight === maxJump) {
-          jumping = false;
-        } else if (!jumping && jumpHeight > 0) {
+        } else if (!spacePressed && jumpHeight > 0) {
           jumpHeight -= 2 * jumpSpeed;
         }
 
