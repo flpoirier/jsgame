@@ -25,6 +25,7 @@
       var dudeHeight = 75;
       var dudeDx = 1;
 
+      var gameStarting = true;
       var gameOver = false;
 
       function getRandomInt(min, max) {
@@ -216,14 +217,22 @@
 
         ctx.strokeStyle = "purple";
         ctx.lineWidth = 4;
+        ctx.beginPath();
         ctx.moveTo(dudeX, dudeY);
         ctx.lineTo(dudeX - dudeHeight * Math.cos(dudeAngle), dudeY - dudeHeight * Math.sin(dudeAngle));
         ctx.stroke();
 
-        dudeX += dudeDx;
-        if (dudeX > canvasWidth - 40 || dudeX < 40) {
-          dudeDx *= -1;
+        if (dudeAngle === Math.PI / 2) {
+          gameStarting = false;
         }
+
+        if (gameStarting) {
+          dudeX += dudeDx;
+        }
+
+        // if (dudeX > canvasWidth - 40 || dudeX < 40) {
+        //   dudeDx *= -1;
+        // }
 
       }
 
