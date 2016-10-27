@@ -25,11 +25,12 @@
       var bridgeY = canvasHeight + 400;
       var bridgeRad = canvasWidth * 2/3;
 
+      var asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
       var asteroidSpeed = 15;
-      var asteroidRad = 20;
+      var asteroidRad = 10;
       var asteroidX = getRandomInt(0, canvasWidth);
       var asteroidY = -1 * asteroidRad;
-      var asteroidColor = "#aaaaaa";
+      var asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
 
       var dudeX = 40;
       var dudeHeight = 75;
@@ -253,7 +254,7 @@
         ctx.lineTo(dudeX - dudeHeight * Math.cos(dudeAngle), dudeY - dudeHeight * Math.sin(dudeAngle));
         ctx.stroke();
 
-        ctx.fillStyle = "purple";
+        ctx.fillStyle = asteroidCol;
         ctx.beginPath();
         ctx.arc(asteroidX, asteroidY, asteroidRad, 0, 2 * Math.PI);
         ctx.fill();
@@ -263,11 +264,14 @@
         if (asteroidY > canvasHeight + asteroidRad) {
           asteroidX = getRandomInt(0, canvasWidth);
           asteroidY = -asteroidRad;
+          asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
         }
 
-        ctx.fillStyle = "#7b9095";
-        ctx.font = "30px serif";
-        ctx.fillText(`${timeString()}`, 40, 60);
+        // put this back in once I fix time rendering
+
+        // ctx.fillStyle = "#7b9095";
+        // ctx.font = "30px serif";
+        // ctx.fillText(`${timeString()}`, 40, 60);
 
         // if (gameStarting) {
         //   dudeX += dudeDx;
