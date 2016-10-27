@@ -24,15 +24,18 @@
       var dudeX = 40;
       var dudeHeight = 75;
       var dudeDx = 1;
+      var walkSpeed = 2;
 
       var rightPressed = false;
       var leftPressed = false;
       var upPressed = false;
       var downPressed = false;
       var spacePressed = false;
+
       var jumping = false;
       var jumpHeight = 0;
-      var maxJump = 25;
+      var jumpSpeed = 2;
+      var maxJump = 80;
 
       var gameStarting = true;
       var gameOver = false;
@@ -222,6 +225,16 @@
         }
 
         let dudeAngle = Math.PI - Math.acos(translatedX / bridgeRad);
+        let dudeXDraw = dudeX;
+
+        // change dudeX to account for jump
+
+        // if (dudeX > Math.floor(canvasWidth / 2)) {
+        //   dudeXDraw += jumpHeight;
+        // } else if (dudeX < Math.floor(canvasWidth / 2)) {
+        //   dudeXDraw -= jumpHeight;
+        // }
+
         let dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - jumpHeight - 8;
 
         ctx.strokeStyle = "purple";
@@ -231,12 +244,24 @@
         ctx.lineTo(dudeX - dudeHeight * Math.cos(dudeAngle), dudeY - dudeHeight * Math.sin(dudeAngle));
         ctx.stroke();
 
-        if (dudeAngle === Math.PI / 2) {
-          gameStarting = false;
+        // if (gameStarting) {
+        //   dudeX += dudeDx;
+        // }
+
+        // walking logic
+
+        if (leftPressed) {
+          dudeX -= walkSpeed;
+        } else if (rightPressed) {
+          dudeX += walkSpeed;
         }
 
-        if (gameStarting) {
-          dudeX += dudeDx;
+        // boundaries on where avatar can walk
+
+        if (dudeX > canvasWidth - 40) {
+          dudeX = canvasWidth - 40;
+        } else if (dudeX < 40) {
+          dudeX = 40;
         }
 
         // jumping logic
@@ -246,16 +271,12 @@
         }
 
         if (jumping && jumpHeight < maxJump) {
-          jumpHeight += 1;
+          jumpHeight += jumpSpeed;
         } else if (jumping && jumpHeight === maxJump) {
           jumping = false;
         } else if (!jumping && jumpHeight > 0) {
-          jumpHeight -= 1;
+          jumpHeight -= 2 * jumpSpeed;
         }
-
-        // if (dudeX > canvasWidth - 40 || dudeX < 40) {
-        //   dudeDx *= -1;
-        // }
 
       }
 
