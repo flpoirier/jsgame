@@ -40,12 +40,23 @@
         let starX = getRandomInt(0, canvasWidth);
         let starY = getRandomInt(-canvasHeight, 2 * canvasHeight / 3);
         let starRad = getRandomInt(1,3);
-        stars.push([starX, starY, starRad]);
+        let starSpeed = getRandomInt(4,15);
+        stars.push([starX, starY, starRad, starSpeed]);
       }
 
       var red = 85;
       var green = 200;
       var blue = 255;
+
+      function skyColored(r, g) {
+        let redDiff = Math.abs(red - r);
+        let greenDiff = Math.abs(green - g);
+        if (redDiff === 0 && greenDiff === 0) {
+          return true;
+        } else {
+          return false;
+        }
+      }
 
       function draw() {
 
@@ -102,27 +113,27 @@
             twinkle = 0;
           }
 
-          if (twinkle <= 500) {
-            stars.forEach((star) => {
-              // let stardist = distance(star[0],star[1],sunX, sunY);
-              // ctx.fillStyle = `rgba(255,255,255,${stardist/1000})`;
-              ctx.fillStyle = "white";
-              ctx.beginPath();
-              ctx.arc(star[0], star[1], star[2], 0, 2 * Math.PI);
-              ctx.fill();
-            });
-          }
+          stars.forEach((star) => {
+            // let stardist = distance(star[0],star[1],sunX, sunY);
+            // ctx.fillStyle = `rgba(255,255,255,${stardist/1000})`;
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.arc(star[0], star[1], star[2], 0, 2 * Math.PI);
+            ctx.fill();
+          });
         }
 
         let dist = 450;
+        let tempRed = 255;
+        let tempGreen = 255;
 
         while (dist >= 0) {
 
-          let tempRed = red - dist + Math.floor(300*sunY/500);
+          tempRed = red - dist + Math.floor(300*sunY/500);
           if (tempRed < red) {
             tempRed = red;
           }
-          let tempGreen = green - dist + Math.floor(175*sunY/500);
+          tempGreen = green - dist + Math.floor(175*sunY/500);
           if (tempGreen < green) {
             tempGreen = green;
           }
@@ -130,10 +141,12 @@
           // if (tempBlue < blue) {
           //   tempBlue = blue;
           // }
-          ctx.fillStyle = `rgb(${tempRed},${tempGreen},${blue})`;
-          ctx.beginPath();
-          ctx.arc(sunX, sunY, dist, 0, 2 * Math.PI);
-          ctx.fill();
+          if (!skyColored(tempRed, tempGreen)) {
+            ctx.fillStyle = `rgb(${tempRed},${tempGreen},${blue})`;
+            ctx.beginPath();
+            ctx.arc(sunX, sunY, dist, 0, 2 * Math.PI);
+            ctx.fill();
+          }
 
           dist -= 3;
         }
@@ -149,12 +162,7 @@
           //   falling += 1;
           // }
           stars.forEach((star) => {
-            let speed = getRandomInt(0,15);
-            star[1] += speed;
-            ctx.fillStyle = "white";
-            ctx.beginPath();
-            ctx.arc(star[0], star[1], star[2], 0, 2 * Math.PI);
-            ctx.fill();
+            star[1] += star[3];
           });
         }
 
