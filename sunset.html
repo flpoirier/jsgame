@@ -21,7 +21,8 @@
       var sunY = sunRad;
       var sunset = 0;
 
-      var dudeX = 25;
+      var dudeX = 40;
+      var dudeHeight = 75;
       var dudeDx = 1;
 
       var gameOver = false;
@@ -214,17 +215,13 @@
         let dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - 8;
 
         ctx.strokeStyle = "purple";
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 4;
         ctx.moveTo(dudeX, dudeY);
-        ctx.lineTo(dudeX - 40 * Math.cos(dudeAngle), dudeY - 40 * Math.sin(dudeAngle));
+        ctx.lineTo(dudeX - dudeHeight * Math.cos(dudeAngle), dudeY - dudeHeight * Math.sin(dudeAngle));
         ctx.stroke();
 
-        // ctx.beginPath();
-        // ctx.arc(dudeX, dudeY, 4, 0, 2 * Math.PI)
-        // ctx.fill();
-
         dudeX += dudeDx;
-        if (dudeX > canvasWidth - 25 || dudeX < 25) {
+        if (dudeX > canvasWidth - 40 || dudeX < 40) {
           dudeDx *= -1;
         }
 
