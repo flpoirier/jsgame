@@ -25,6 +25,12 @@
       var bridgeY = canvasHeight + 400;
       var bridgeRad = canvasWidth * 2/3;
 
+      var asteroidSpeed = 15;
+      var asteroidRad = 20;
+      var asteroidX = getRandomInt(0, canvasWidth);
+      var asteroidY = -1 * asteroidRad;
+      var asteroidColor = "#aaaaaa";
+
       var dudeX = 40;
       var dudeHeight = 75;
       var dudeDx = 1;
@@ -41,7 +47,7 @@
       var jumpSpeed = 3;
       var maxJump = 80;
 
-      var maxTime = 120;
+      var maxTime = 15;
       var time = maxTime;
 
       var gameStarting = true;
@@ -247,6 +253,18 @@
         ctx.lineTo(dudeX - dudeHeight * Math.cos(dudeAngle), dudeY - dudeHeight * Math.sin(dudeAngle));
         ctx.stroke();
 
+        ctx.fillStyle = "purple";
+        ctx.beginPath();
+        ctx.arc(asteroidX, asteroidY, asteroidRad, 0, 2 * Math.PI);
+        ctx.fill();
+
+        asteroidY += asteroidSpeed;
+
+        if (asteroidY > canvasHeight + asteroidRad) {
+          asteroidX = getRandomInt(0, canvasWidth);
+          asteroidY = -asteroidRad;
+        }
+
         ctx.fillStyle = "#7b9095";
         ctx.font = "30px serif";
         ctx.fillText(`${timeString()}`, 40, 60);
@@ -361,6 +379,8 @@
         let mins = Math.floor(time / 60);
         let secs = time - (mins * 60);
         if (mins === 0) {
+
+
           mins = "00";
         } else {
           mins = `0${mins}`;
@@ -369,7 +389,7 @@
           secs = "00";
         } else if (secs < 10) {
           secs = `0${mins}`;
-        } else {
+        } else if (secs > 10) {
           secs = `${secs}`;
         }
         return `${mins}:${secs}`;
@@ -377,7 +397,7 @@
 
       document.addEventListener("keydown", keyDownHandler, false);
       document.addEventListener("keyup", keyUpHandler, false);
-      setInterval(draw, 15);
+      setInterval(draw, 30);
       setInterval(timeTick, 1000);
 
     </script>
