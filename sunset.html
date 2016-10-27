@@ -21,6 +21,8 @@
       var sunY = sunRad;
       var sunset = 0;
 
+      var dudeX = 25;
+
       var gameOver = false;
 
       function getRandomInt(min, max) {
@@ -115,9 +117,7 @@
               } else if (star.starRad === 1) {
                 star.starRad = getRandomInt(0,3);
               } else if (star.starRad === 2) {
-                star.starRad = getRandomInt(1,4);
-              } else if (star.starRad === 3) {
-                star.starRad = 2;
+                star.starRad = 1;
               }
 
             // }
@@ -192,11 +192,31 @@
         //   });
         // }
 
+        let bridgeX = canvasWidth / 2;
+        let bridgeY = canvasHeight + 400;
+        let bridgeRad = canvasWidth * 2/3;
+
         ctx.strokeStyle = "#7b9095";
         ctx.lineWidth = 15;
         ctx.beginPath();
-        ctx.arc(canvasWidth / 2, canvasHeight + 400, canvasWidth * 2/3, Math.PI, 2 * Math.PI)
+        ctx.arc(bridgeX, bridgeY, bridgeRad, Math.PI, 2 * Math.PI)
         ctx.stroke();
+
+        let translatedX = 0;
+        if (dudeX < bridgeX) {
+          translatedX = -(bridgeX - dudeX);
+        } else if (dudeX > bridgeX) {
+          translatedX = dudeX - bridgeX;
+        }
+
+        let dudeAngle = Math.acos(translatedX / bridgeRad);
+        let dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle));
+        ctx.fillStyle = "purple";
+        ctx.beginPath();
+        ctx.arc(dudeX, dudeY, 4, 0, 2 * Math.PI)
+        ctx.fill();
+        dudeX += 1;
+
       }
 
       setInterval(draw, 15);
