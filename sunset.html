@@ -22,6 +22,7 @@
       var sunset = 0;
 
       var dudeX = 25;
+      var dudeDx = 1;
 
       var gameOver = false;
 
@@ -209,13 +210,23 @@
           translatedX = dudeX - bridgeX;
         }
 
-        let dudeAngle = Math.acos(translatedX / bridgeRad);
-        let dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle));
-        ctx.fillStyle = "purple";
-        ctx.beginPath();
-        ctx.arc(dudeX, dudeY, 4, 0, 2 * Math.PI)
-        ctx.fill();
-        dudeX += 1;
+        let dudeAngle = Math.PI - Math.acos(translatedX / bridgeRad);
+        let dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - 10 ;
+
+        ctx.strokeStyle = "purple";
+        ctx.lineWidth = 2;
+        ctx.moveTo(dudeX, dudeY);
+        ctx.lineTo(dudeX + 20 * Math.cos(dudeAngle), dudeY + 20 * Math.sin(dudeAngle));
+        ctx.stroke();
+
+        // ctx.beginPath();
+        // ctx.arc(dudeX, dudeY, 4, 0, 2 * Math.PI)
+        // ctx.fill();
+
+        dudeX += dudeDx;
+        if (dudeX > canvasWidth - 25 || dudeX < 25) {
+          dudeDx *= -1;
+        }
 
       }
 
