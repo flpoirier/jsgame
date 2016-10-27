@@ -102,7 +102,7 @@
             twinkle = 0;
           }
 
-          if (twinkle <= 150) {
+          if (twinkle <= 500) {
             stars.forEach((star) => {
               // let stardist = distance(star[0],star[1],sunX, sunY);
               // ctx.fillStyle = `rgba(255,255,255,${stardist/1000})`;
@@ -143,7 +143,7 @@
         ctx.arc(sunX, sunY, sunRad, 0, 2 * Math.PI);
         ctx.fill();
 
-        if (gameOver && twinkle > 150) {
+        if (gameOver && twinkle > 500) {
           // stars[falling][1] += 15;
           // if (stars[falling][1] > canvasHeight + 5) {
           //   falling += 1;
