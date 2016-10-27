@@ -25,6 +25,15 @@
       var dudeHeight = 75;
       var dudeDx = 1;
 
+      var rightPressed = false;
+      var leftPressed = false;
+      var upPressed = false;
+      var downPressed = false;
+      var spacePressed = false;
+      var jumping = false;
+      var jumpHeight = 0;
+      var maxJump = 25;
+
       var gameStarting = true;
       var gameOver = false;
 
@@ -213,7 +222,7 @@
         }
 
         let dudeAngle = Math.PI - Math.acos(translatedX / bridgeRad);
-        let dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - 8;
+        let dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - jumpHeight - 8;
 
         ctx.strokeStyle = "purple";
         ctx.lineWidth = 4;
@@ -230,12 +239,65 @@
           dudeX += dudeDx;
         }
 
+        // jumping logic
+
+        if (spacePressed) {
+          jumping = true;
+        }
+
+        if (jumping && jumpHeight < maxJump) {
+          jumpHeight += 1;
+        } else if (jumping && jumpHeight === maxJump) {
+          jumping = false;
+        } else if (!jumping && jumpHeight > 0) {
+          jumpHeight -= 1;
+        }
+
         // if (dudeX > canvasWidth - 40 || dudeX < 40) {
         //   dudeDx *= -1;
         // }
 
       }
 
+
+      function keyDownHandler(e) {
+        if(e.keyCode == 39) {
+          rightPressed = true;
+        }
+        else if(e.keyCode == 37) {
+          leftPressed = true;
+        }
+        else if(e.keyCode == 38) {
+          upPressed = true;
+        }
+        else if(e.keyCode == 40) {
+          downPressed = true;
+        }
+        else if(e.keyCode == 32) {
+          spacePressed = true;
+        }
+      }
+
+      function keyUpHandler(e) {
+        if(e.keyCode == 39) {
+          rightPressed = false;
+        }
+        else if(e.keyCode == 37) {
+          leftPressed = false;
+        }
+        else if(e.keyCode == 38) {
+          upPressed = false;
+        }
+        else if(e.keyCode == 40) {
+          downPressed = false;
+        }
+        else if(e.keyCode == 32) {
+          spacePressed = false;
+        }
+      }
+
+      document.addEventListener("keydown", keyDownHandler, false);
+      document.addEventListener("keyup", keyUpHandler, false);
       setInterval(draw, 15);
 
     </script>
