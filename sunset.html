@@ -296,7 +296,7 @@
         }
 
         if (asteroidX < 0) {
-          asteroidX = getRandomInt(0, canvasWidth);
+          asteroidX = getRandomInt(dudeX, canvasWidth);
           asteroidY = -1 * asteroidRad;
           asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
           asteroidCollisionPoint = bridgeCollisionPoint(asteroidX);
