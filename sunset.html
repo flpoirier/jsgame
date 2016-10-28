@@ -21,16 +21,20 @@
       var sunY = sunRad;
       var sunset = 0;
 
-      var bridgeX = canvasWidth / 2;
-      var bridgeY = canvasHeight + 400;
-      var bridgeRad = canvasWidth * 2/3;
-
       var asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
-      var asteroidSpeed = 15;
+      var asteroidSpeed = 10;
       var asteroidRad = 10;
       var asteroidX = getRandomInt(0, canvasWidth);
       var asteroidY = -1 * asteroidRad;
       var asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
+      var asteroidCollisionPoint = bridgeCollisionPoint();
+      var asteroidFalling = true;
+      var asteroidRolling = false;
+
+      var bridgeX = canvasWidth / 2;
+      var bridgeY = canvasHeight + 400;
+      var bridgeRad = canvasWidth * 2/3;
+      var bridgeHeight = Math.floor(bridgeRad + asteroidRad);
 
       var dudeX = 40;
       var dudeHeight = 75;
@@ -70,16 +74,23 @@
         return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
       }
 
+      function bridgeCollisionPoint() {
+        return -1 * Math.floor(Math.sqrt( (bridgeHeight*bridgeHeight) - ((asteroidX-bridgeX)*(asteroidX-bridgeX)) ) - bridgeY);
+      }
+
       var stars = [];
       var twinkle = 0;
       var falling = 0;
+
       for (let star = 0; star < 800; star++) {
+
         let starX = getRandomInt(0, canvasWidth);
         let starY = getRandomInt(-canvasHeight, canvasHeight);
         let starRad = getRandomInt(1,3);
         let dX = getRandomInt(8,15) * negOrPos();
         let dY = getRandomInt(2,5) * negOrPos();
         stars.push({starX: starX, starY: starY, starRad: starRad, dX: dX, dY: dY});
+
       }
 
       var red = 85;
@@ -259,13 +270,22 @@
         ctx.arc(asteroidX, asteroidY, asteroidRad, 0, 2 * Math.PI);
         ctx.fill();
 
-        asteroidY += asteroidSpeed;
-
-        if (asteroidY > canvasHeight + asteroidRad) {
-          asteroidX = getRandomInt(0, canvasWidth);
-          asteroidY = -asteroidRad;
-          asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
+        if (asteroidY >= (bridgeCollisionPoint() - asteroidSpeed)) {
+          asteroidFalling = false;
+          asteroidY = bridgeCollisionPoint();
         }
+
+        if (asteroidFalling) {
+          asteroidY += asteroidSpeed;
+        } else if (asteroidRolling) {
+          // add rolling logic here
+        }
+
+        // if (asteroidY > canvasHeight + asteroidRad) {
+        //   asteroidX = getRandomInt(0, canvasWidth);
+        //   asteroidY = -asteroidRad;
+        //   asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
+        // }
 
         // put this back in once I fix time rendering
 
