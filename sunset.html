@@ -120,18 +120,18 @@
 
         sunset += 1;
 
-        if (sunset === 5 && blue > 40) {
+        if (sunset === 8 && blue > 40) {
           red -= 1;
           green -= 2;
           blue -= 2;
           sunset = 0;
         }
 
-        // if (sunY < (800)) {
+        if (sunY < canvasHeight) {
           sunY += 1;
-        // } // else {
-        //   gameOver = true;
-        // }
+        } else {
+          sunY += 2;
+        }
 
         ctx.fillStyle = `rgb(${red},${green},${blue})`;
         ctx.fillRect(0,0,canvasWidth,canvasHeight);
