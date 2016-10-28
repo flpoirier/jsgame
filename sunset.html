@@ -46,10 +46,12 @@
       var bridgeHeight = Math.floor(bridgeRad + asteroidRad);
 
       var stars = [];
+      var numStars = 800;
       var twinkle = 0;
       var falling = 0;
+      var starsOut = 0;
 
-      for (let star = 0; star < 800; star++) {
+      for (let star = 0; star < numStars; star++) {
         let starX = getRandomInt(0, canvasWidth);
         let starY = getRandomInt(-canvasHeight, canvasHeight);
         let starRad = getRandomInt(1,3);
@@ -155,6 +157,12 @@
 
           twinkle += 1;
 
+          // this will break unless numStars is even!!!
+
+          if (starsOut < numStars) {
+            starsOut += 2;
+          }
+
           if (twinkle === 3 && !gameOver) {
             // for (let num = 0; num < 2; num++) {
               let idx = getRandomInt(0,stars.length);
@@ -171,14 +179,15 @@
             twinkle = 0;
           }
 
-          stars.forEach((star) => {
+          for (let starIdx = 0; starIdx < starsOut; starIdx ++) {
+            let star = stars[starIdx];
             // let stardist = distance(star[0],star[1],sunX, sunY);
             // ctx.fillStyle = `rgba(255,255,255,${stardist/1000})`;
             ctx.fillStyle = "white";
             ctx.beginPath();
             ctx.arc(star.starX, star.starY, star.starRad, 0, 2 * Math.PI);
             ctx.fill();
-          });
+          }
         }
 
         let dist = 450;
