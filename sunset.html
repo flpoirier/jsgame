@@ -24,6 +24,7 @@
       var asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
       var asteroidSpeed = 20;
       var asteroidRad = 10;
+      var asteroidPush = 60;
       var asteroids = [];
 
       function asteroidConstructor() {
@@ -64,7 +65,9 @@
       var green = 200;
       var blue = 255;
 
+      // var dudeX = 300;
       var dudeX = 40;
+      var dudeY;
       var dudeHeight = 75;
       var dudeDx = 1;
       var walkSpeed = 2;
@@ -114,6 +117,14 @@
         } else {
           return false;
         }
+      }
+
+      function collisionChecker() {
+        asteroids.forEach((asteroid) => {
+          if ((Math.floor(distance(asteroid.X, asteroid.Y, dudeX, dudeY)) + 2) < asteroidRad) {
+            dudeX -= asteroidPush;
+          }
+        });
       }
 
       function draw() {
@@ -272,7 +283,7 @@
         //   dudeXDraw -= jumpHeight;
         // }
 
-        let dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - jumpHeight - 8;
+        dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - jumpHeight - 8;
 
         ctx.strokeStyle = "purple";
         ctx.lineWidth = 4;
@@ -282,6 +293,8 @@
         ctx.stroke();
 
         asteroids.forEach((asteroid) => {
+
+        //let asteroid = asteroids[0];
 
           ctx.fillStyle = asteroid.color;
           ctx.beginPath();
@@ -314,6 +327,8 @@
           }
 
         });
+
+        collisionChecker();
 
 
         // if (asteroidY > canvasHeight + asteroidRad) {
