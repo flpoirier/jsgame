@@ -41,8 +41,6 @@
         }
       }
 
-      asteroidConstructor();
-
       var bridgeX = canvasWidth / 2;
       var bridgeY = canvasHeight + 400;
       var bridgeRad = canvasWidth * 2/3;
@@ -85,8 +83,10 @@
       var jumpSpeed = 3;
       var maxJump = 80;
 
-      var maxTime = 15;
+      var maxTime = 30;
       var time = maxTime;
+      var minsAndSecs;
+      timeString();
 
       var gameStarting = true;
       var gameOver = false;
@@ -342,9 +342,9 @@
 
         // put this back in once I fix time rendering
 
-        // ctx.fillStyle = "#7b9095";
-        // ctx.font = "30px serif";
-        // ctx.fillText(`${timeString()}`, 40, 60);
+        ctx.fillStyle = "#7b9095";
+        ctx.font = "30px serif";
+        ctx.fillText(`${minsAndSecs}`, 40, 60);
 
         // if (gameStarting) {
         //   dudeX += dudeDx;
@@ -450,14 +450,13 @@
         if (time > 0) {
           time -= 1;
         }
+        timeString();
       }
 
       function timeString() {
         let mins = Math.floor(time / 60);
         let secs = time - (mins * 60);
         if (mins === 0) {
-
-
           mins = "00";
         } else {
           mins = `0${mins}`;
@@ -465,17 +464,18 @@
         if (secs === 0) {
           secs = "00";
         } else if (secs < 10) {
-          secs = `0${mins}`;
+          secs = `0${secs}`;
         } else if (secs > 10) {
           secs = `${secs}`;
         }
-        return `${mins}:${secs}`;
+        minsAndSecs = `${mins}:${secs}`;
       }
 
       document.addEventListener("keydown", keyDownHandler, false);
       document.addEventListener("keyup", keyUpHandler, false);
       setInterval(draw, 30);
       setInterval(timeTick, 1000);
+      setInterval(timeString, 1000);
       setInterval(asteroidConstructor, 1000);
       setInterval(asteroidConstructor, 2500);
     </script>
