@@ -288,9 +288,19 @@
         // }
 
 
-        ctx.fillStyle = "#7b9095";
-        ctx.font = "30px serif";
+        ctx.fillStyle = "white";
+        ctx.font = "30px sans-serif";
         ctx.fillText(`${minsAndSecs}`, 40, 60);
+
+        if (gameWon) {
+          ctx.fillStyle = "white";
+          ctx.font = "60px sans-serif";
+          ctx.fillText("You won!", (canvasWidth / 2) - 125, canvasHeight / 2);
+        } else if (gameLost) {
+          ctx.fillStyle = "white";
+          ctx.font = "60px sans-serif";
+          ctx.fillText("You lost!", (canvasWidth / 2) - 125, canvasHeight / 2);
+        }
 
 
         // walking logic
@@ -338,10 +348,6 @@
           jumpHeight += jumpSpeed;
         } else if (!spacePressed && jumpHeight > 0) {
           jumpHeight -= 2 * jumpSpeed;
-        }
-
-        if (gameOver) {
-          console.log("Game over!");
         }
 
       }
@@ -411,6 +417,7 @@
 
       document.addEventListener("keydown", keyDownHandler, false);
       document.addEventListener("keyup", keyUpHandler, false);
+
       setInterval(draw, 30);
       setInterval(timeTick, 1000);
       setInterval(timeString, 1000);
