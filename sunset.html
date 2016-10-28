@@ -238,14 +238,14 @@
         ctx.arc(bridgeX, bridgeY, bridgeRad, Math.PI, 2 * Math.PI)
         ctx.stroke();
 
-        let translatedX = 0;
+        let translatedDudeX = 0;
         if (dudeX < bridgeX) {
-          translatedX = -(bridgeX - dudeX);
+          translatedDudeX = -(bridgeX - dudeX);
         } else if (dudeX > bridgeX) {
-          translatedX = dudeX - bridgeX;
+          translatedDudeX = dudeX - bridgeX;
         }
 
-        let dudeAngle = Math.PI - Math.acos(translatedX / bridgeRad);
+        let dudeAngle = Math.PI - Math.acos(translatedDudeX / bridgeRad);
         let dudeXDraw = dudeX;
 
         // change dudeX to account for jump
@@ -273,12 +273,26 @@
         if (asteroidY >= (bridgeCollisionPoint() - asteroidSpeed)) {
           asteroidFalling = false;
           asteroidY = bridgeCollisionPoint();
+          asteroidRolling = true;
         }
 
         if (asteroidFalling) {
           asteroidY += asteroidSpeed;
+
         } else if (asteroidRolling) {
-          // add rolling logic here
+
+          asteroidX -= 3;
+
+          let translatedAstX = 0;
+          if (asteroidX < bridgeX) {
+            translatedAstX = -(bridgeX - AsteroidX);
+          } else if (asteroidX > bridgeX) {
+            translatedAstX = asteroidX - bridgeX;
+          }
+
+          let asteroidAngle = Math.PI - Math.acos(translatedAstX / bridgeRad);
+          asteroidY = bridgeY - Math.floor(bridgeRad * Math.sin(asteroidAngle)) - 5;
+
         }
 
         // if (asteroidY > canvasHeight + asteroidRad) {
