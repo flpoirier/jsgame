@@ -68,6 +68,8 @@
       timeString();
 
       var gameOver = false;
+      var gameWon = false;
+      var gameLost = false;
       var endMargin = 40;
       var endPoint = canvasWidth - endMargin;
 
@@ -149,7 +151,7 @@
             starsOut += 2;
           }
 
-          if (twinkle === 3 && !gameOver) {
+          if (twinkle === 3) {
             let idx = getRandomInt(0,stars.length);
             let star = stars[idx];
             if (star.starRad === 0) {
@@ -301,10 +303,19 @@
 
         // boundaries on where avatar can walk
 
-        if (dudeX > canvasWidth - 40) {
-          dudeX = canvasWidth - 40;
+        if (dudeX >= endPoint && time > 0) {
+          dudeX = endPoint;
+          gameOver = true;
+          gameWon = true;
+        } else if (dudeX >= endPoint) {
+          dudeX = endMargin;
         } else if (dudeX < endMargin) {
           dudeX = endMargin;
+        }
+
+        if (time === 0 && !gameWon) {
+          gameOver = true;
+          gameLost = true;
         }
 
         // jumping logic
@@ -327,6 +338,10 @@
           jumpHeight += jumpSpeed;
         } else if (!spacePressed && jumpHeight > 0) {
           jumpHeight -= 2 * jumpSpeed;
+        }
+
+        if (gameOver) {
+          console.log("Game over!");
         }
 
       }
@@ -401,6 +416,7 @@
       setInterval(timeString, 1000);
       setInterval(asteroidConstructor, 1000);
       setInterval(asteroidConstructor, 2500);
+
     </script>
   </body>
 </html>
