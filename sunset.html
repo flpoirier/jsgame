@@ -22,14 +22,15 @@
       var sunset = 0;
 
       var asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
-      var asteroidSpeed = 15;
+      var asteroidSpeed = 20;
       var asteroidRad = 10;
       var asteroids = [];
 
       function asteroidConstructor() {
         let asteroidX = getRandomInt(0, canvasWidth);
         let asteroidY = -1 * asteroidRad;
-        let asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
+        // let asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
+        let asteroidCol = "#292e37";
         let asteroidCollisionPoint = bridgeCollisionPoint(asteroidX);
         let asteroidFalling = true;
         let asteroidRolling = false;
@@ -289,7 +290,7 @@
 
           } else if (asteroid.rolling) {
 
-            asteroid.X -= asteroidSpeed;
+            asteroid.X -= Math.floor(asteroidSpeed / 2);
 
             let translatedAstX = 0;
             if (asteroid.X < bridgeX) {
@@ -448,7 +449,8 @@
       document.addEventListener("keyup", keyUpHandler, false);
       setInterval(draw, 30);
       setInterval(timeTick, 1000);
-      setInterval(asteroidConstructor, 500);
+      setInterval(asteroidConstructor, 1000);
+      setInterval(asteroidConstructor, 2500);
     </script>
   </body>
 </html>
