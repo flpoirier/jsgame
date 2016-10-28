@@ -285,13 +285,13 @@
 
           let translatedAstX = 0;
           if (asteroidX < bridgeX) {
-            translatedAstX = -(bridgeX - AsteroidX);
+            translatedAstX = -(bridgeX - asteroidX);
           } else if (asteroidX > bridgeX) {
             translatedAstX = asteroidX - bridgeX;
           }
 
           let asteroidAngle = Math.PI - Math.acos(translatedAstX / bridgeRad);
-          asteroidY = bridgeY - Math.floor(bridgeRad * Math.sin(asteroidAngle)) - 5;
+          asteroidY = bridgeY - Math.floor(bridgeRad * Math.sin(asteroidAngle)) - 10;
 
         }
 
