@@ -27,7 +27,7 @@
       var asteroidX = getRandomInt(0, canvasWidth);
       var asteroidY = -1 * asteroidRad;
       var asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
-      var asteroidCollisionPoint = bridgeCollisionPoint();
+      var asteroidCollisionPoint = bridgeCollisionPoint(asteroidX);
       var asteroidFalling = true;
       var asteroidRolling = false;
 
@@ -74,8 +74,8 @@
         return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
       }
 
-      function bridgeCollisionPoint() {
-        return -1 * Math.floor(Math.sqrt( (bridgeHeight*bridgeHeight) - ((asteroidX-bridgeX)*(asteroidX-bridgeX)) ) - bridgeY);
+      function bridgeCollisionPoint(astX) {
+        return -1 * Math.floor(Math.sqrt( (bridgeHeight*bridgeHeight) - ((astX-bridgeX)*(astX-bridgeX)) ) - bridgeY);
       }
 
       var stars = [];
@@ -270,9 +270,9 @@
         ctx.arc(asteroidX, asteroidY, asteroidRad, 0, 2 * Math.PI);
         ctx.fill();
 
-        if (asteroidY >= (bridgeCollisionPoint() - asteroidSpeed)) {
+        if (asteroidY >= (bridgeCollisionPoint(asteroidX) - asteroidSpeed)) {
           asteroidFalling = false;
-          asteroidY = bridgeCollisionPoint();
+          asteroidY = bridgeCollisionPoint(asteroidX);
           asteroidRolling = true;
         }
 
@@ -281,7 +281,7 @@
 
         } else if (asteroidRolling) {
 
-          asteroidX -= 3;
+          asteroidX -= asteroidSpeed;
 
           let translatedAstX = 0;
           if (asteroidX < bridgeX) {
@@ -293,6 +293,15 @@
           let asteroidAngle = Math.PI - Math.acos(translatedAstX / bridgeRad);
           asteroidY = bridgeY - Math.floor(bridgeRad * Math.sin(asteroidAngle)) - 10;
 
+        }
+
+        if (asteroidX < 0) {
+          asteroidX = getRandomInt(0, canvasWidth);
+          asteroidY = -1 * asteroidRad;
+          asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
+          asteroidCollisionPoint = bridgeCollisionPoint(asteroidX);
+          asteroidFalling = true;
+          asteroidRolling = false;
         }
 
         // if (asteroidY > canvasHeight + asteroidRad) {
