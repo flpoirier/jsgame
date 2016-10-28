@@ -28,15 +28,17 @@
       var asteroids = [];
 
       function asteroidConstructor() {
-        let asteroidX = getRandomInt(0, canvasWidth);
-        let asteroidY = -1 * asteroidRad;
-        // let asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
-        let asteroidCol = "#292e37";
-        let asteroidCollisionPoint = bridgeCollisionPoint(asteroidX);
-        let asteroidFalling = true;
-        let asteroidRolling = false;
-        asteroids.push({X: asteroidX, Y: asteroidY, color: asteroidCol,
-          collisionPoint: asteroidCollisionPoint, falling: asteroidFalling, rolling: asteroidRolling});
+        if (sunY < canvasHeight) {
+          let asteroidX = getRandomInt(0, canvasWidth);
+          let asteroidY = -1 * asteroidRad;
+          // let asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
+          let asteroidCol = "#292e37";
+          let asteroidCollisionPoint = bridgeCollisionPoint(asteroidX);
+          let asteroidFalling = true;
+          let asteroidRolling = false;
+          asteroids.push({X: asteroidX, Y: asteroidY, color: asteroidCol,
+            collisionPoint: asteroidCollisionPoint, falling: asteroidFalling, rolling: asteroidRolling});
+        }
       }
 
       asteroidConstructor();
@@ -291,6 +293,7 @@
         ctx.moveTo(dudeX, dudeY);
         ctx.lineTo(dudeX - dudeHeight * Math.cos(dudeAngle), dudeY - dudeHeight * Math.sin(dudeAngle));
         ctx.stroke();
+
 
         asteroids.forEach((asteroid) => {
 
