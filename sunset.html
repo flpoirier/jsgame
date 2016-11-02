@@ -88,6 +88,7 @@
       var dudeX = endMargin;
       var dudeY;
       var dudeHeight = 75;
+      var dudeRad = 15;
       var dudeDx = 1;
       var walkSpeed = 2;
 
@@ -99,7 +100,7 @@
 
       var jumping = false;
       var jumpHeight = 0;
-      var jumpSpeed = 3;
+      var jumpSpeed = 5;
       var maxJump = 80;
 
       function getRandomInt(min, max) {
@@ -251,14 +252,19 @@
         //   dudeXDraw -= jumpHeight;
         // }
 
-        dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - jumpHeight - 8;
+        dudeY = bridgeY - Math.floor(bridgeRad * Math.sin(dudeAngle)) - jumpHeight - 18;
 
-        ctx.strokeStyle = "purple";
-        ctx.lineWidth = 4;
+        // ctx.strokeStyle = "purple";
+        // ctx.lineWidth = 4;
+        // ctx.beginPath();
+        // ctx.moveTo(dudeX, dudeY);
+        // ctx.lineTo(dudeX - dudeHeight * Math.cos(dudeAngle), dudeY - dudeHeight * Math.sin(dudeAngle));
+        // ctx.stroke();
+
+        ctx.fillStyle = "purple"
         ctx.beginPath();
-        ctx.moveTo(dudeX, dudeY);
-        ctx.lineTo(dudeX - dudeHeight * Math.cos(dudeAngle), dudeY - dudeHeight * Math.sin(dudeAngle));
-        ctx.stroke();
+        ctx.arc(dudeX, dudeY, dudeRad, 0, 2 * Math.PI);
+        ctx.fill();
 
 
         asteroids.forEach((asteroid) => {
@@ -294,7 +300,7 @@
             }
 
             let asteroidAngle = Math.PI - Math.acos(translatedAstX / bridgeRad);
-            asteroid.Y = bridgeY - Math.floor(bridgeRad * Math.sin(asteroidAngle)) - 10;
+            asteroid.Y = bridgeY - Math.floor(bridgeRad * Math.sin(asteroidAngle)) - asteroidRad;
 
           }
 
