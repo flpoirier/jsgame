@@ -25,6 +25,7 @@
       var asteroidSpeed = 20;
       var asteroidRad = 10;
       var asteroidPush = 60;
+      var intersectionMaxTime = 15;
       var asteroids = [];
 
       function asteroidConstructor() {
@@ -33,9 +34,12 @@
           let asteroidY = -1 * asteroidRad;
           // let asteroidCol = asteroidColors[getRandomInt(0, asteroidColors.length)];
           let asteroidCol = "#292e37";
+          let intersectingColor = "red";
           let asteroidCollisionPoint = bridgeCollisionPoint(asteroidX);
           let asteroidFalling = true;
           let asteroidRolling = false;
+          let asteroidIntersecting = false;
+          let intersectingTimer = 0;
           // let asteroidDx;
           // if (asteroidX > canvasWidth / 2) {
           //   asteroidDx = asteroidSpeed;
@@ -43,8 +47,9 @@
           //   asteroidDx = -asteroidSpeed;
           // }
           let asteroidDx = -asteroidSpeed;
-          asteroids.push({X: asteroidX, Y: asteroidY, color: asteroidCol,
-            collisionPoint: asteroidCollisionPoint, falling: asteroidFalling, rolling: asteroidRolling, dX: asteroidDx});
+          asteroids.push({X: asteroidX, Y: asteroidY, color: asteroidCol, intersectingColor: intersectingColor,
+            collisionPoint: asteroidCollisionPoint, falling: asteroidFalling, rolling: asteroidRolling,
+            intersecting: asteroidIntersecting, intersectingTimer: intersectingTimer, dX: asteroidDx});
         }
       }
 
@@ -123,8 +128,14 @@
 
       function collisionChecker() {
         asteroids.forEach((asteroid) => {
-          if ((Math.floor(distance(asteroid.X, asteroid.Y, dudeX, dudeY)) + 2) < asteroidRad) {
+          if (asteroid.intersecting && asteroid.intersectingTimer < intersectionMaxTime) {
+            asteroid.intersectingTimer += 1;
+          } else if (asteroid.intersecting && asteroid.intersectingTimer === intersectionMaxTime) {
+            asteroid.intersecting = false;
+            asteroid.intersectingTimer = 0;
+          } else if ((Math.floor(distance(asteroid.X, asteroid.Y, dudeX, dudeY)) + 2) < asteroidRad && !asteroid.intersecting) {
             dudeX -= asteroidPush;
+            asteroid.intersecting = true;
           }
         });
       }
@@ -252,7 +263,11 @@
 
         asteroids.forEach((asteroid) => {
 
-          ctx.fillStyle = asteroid.color;
+          if (!asteroid.intersecting) {
+            ctx.fillStyle = asteroid.color;
+          } else {
+            ctx.fillStyle = asteroid.intersectingColor;
+          }
           ctx.beginPath();
           ctx.arc(asteroid.X, asteroid.Y, asteroidRad, 0, 2 * Math.PI);
           ctx.fill();
