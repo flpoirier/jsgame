@@ -36,12 +36,13 @@
           let asteroidCollisionPoint = bridgeCollisionPoint(asteroidX);
           let asteroidFalling = true;
           let asteroidRolling = false;
-          let asteroidDx;
-          if (asteroidX > canvasWidth / 2) {
-            asteroidDx = asteroidSpeed;
-          } else {
-            asteroidDx = -asteroidSpeed;
-          }
+          // let asteroidDx;
+          // if (asteroidX > canvasWidth / 2) {
+          //   asteroidDx = asteroidSpeed;
+          // } else {
+          //   asteroidDx = -asteroidSpeed;
+          // }
+          let asteroidDx = -asteroidSpeed;
           asteroids.push({X: asteroidX, Y: asteroidY, color: asteroidCol,
             collisionPoint: asteroidCollisionPoint, falling: asteroidFalling, rolling: asteroidRolling, dX: asteroidDx});
         }
@@ -355,6 +356,10 @@
         } else if (!spacePressed && jumpHeight > 0) {
           jumpHeight -= 2 * jumpSpeed;
         }
+
+      }
+
+      function gameOverScreen() {
 
       }
 
