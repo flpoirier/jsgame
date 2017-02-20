@@ -1,14 +1,7 @@
-This will, at some point, be a Mario-ish runner game -- character will jump to get coins, and either jump over chasms or jump up stairs (or both, I'm still figuring that out). It will mostly be coded in vanilla JS. Controls will be arrow keys (to move) and the space bar (to jump).
+<h1>Sunset Boulevard</h1>
 
-Features:
+Sunset Boulevard is a browser game built using JavaScript and HTML Canvas. The object of the game is for the player to cross the bridge before the sun sets, while dodging asteroids that rain from the sky. Transparent, concentric circles are used to produce a sunset effect, while stars gradually appear as the sky gets darker.
 
-- Blue sky background with randomly generated clouds floating past.
-- Green grass floor with variable height (steps and/or chasms).
-- Floating coins
-- A player avatar (probably a small cartoon human)
-- A running count of the number of captured coins at the top right of the screen and of the number of lives
+Sunset Boulevard uses event listeners to move based on player keyboard input, as well as trigonometry to calculate the trajectories of the player avatar and the asteroid obstacles. The embedded audio is "Error", by Lemon Demon. The volume icons were created by Font Awesome.
 
-Maybe:
-
-- Monsters that go back and forth and make you lose a life if you hit them
-- A win condition: a castle you can reach if you successfully pass all the monsters / jump over all the caverns
+(<a href="http://flpoirier.com/sunset.html">Live version</a>)
