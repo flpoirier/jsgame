@@ -111,6 +111,7 @@
       var spacePressed = false;
 
       var jumping = false;
+      var falling = false;
       var jumpHeight = 0;
       var jumpSpeed = 5;
       var maxJump = 80;
@@ -370,7 +371,7 @@
 
         // jumping logic
 
-        if (spacePressed) {
+        if (spacePressed && !falling) {
           jumping = true;
         }
 
@@ -384,10 +385,24 @@
 
         // jump height proportional to length of time space bar pressed
 
-        if (spacePressed && jumpHeight < maxJump) {
+        if (jumping && jumpHeight < maxJump) {
           jumpHeight += jumpSpeed;
-        } else if (!spacePressed && jumpHeight > 0) {
+        } else if (falling && jumpHeight > 0) {
           jumpHeight -= 2 * jumpSpeed;
+        }
+
+        // player starts falling if spacebar is released or they reach max jump height
+
+        if (!spacePressed && jumpHeight > 0) {
+          jumping = false;
+          falling = true;
+        } else if (jumpHeight >= maxJump) {
+          jumping = false;
+          falling = true;
+        }
+
+        if (falling && jumpHeight <= 0) {
+          falling = false;
         }
 
       }
