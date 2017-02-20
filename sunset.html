@@ -7,14 +7,23 @@
     <style>
       * { padding: 0; margin: 0; }
       canvas {
-        margin: 20px 0 20px 30px;
+        margin: 20px 0 0px 30px;
+      }
+      #footer {
+        font-family: sans-serif;
+        margin-left: 30px;
+        font-weight: bold;
+        display: block;
+        float: left;
       }
       #links {
-        margin-left: 30px;
+        display: block;
+        float: right;
+        margin-left: 210px;
+        font-weight: normal;
       }
       a {
         color: black;
-        font-style: sans-serif;
         text-decoration: none;
         padding: 10px;
       }
@@ -494,15 +503,20 @@
       setInterval(asteroidConstructor, 2500);
 
     </script>
-    <br/>
+    <br>
 
     <audio id="audio" autoplay loop>
       <source src="error.mp3">
     </audio>
 
-    <div id="links">
-      <i class="fa fa-volume-up" aria-hidden="true" id="soundicon"></i>
-      <a href="http://flpoirier.com/">Portfolio site</a> | <a href="https://github.com/flpoirier">GitHub</a> | <a href="https://www.linkedin.com/in/flpoirier/">LinkedIn</a>
+    <br>
+
+    <div id="footer">
+      Get to the other side before the sun sets! Arrow keys to run, spacebar to jump.
+      <div id="links">
+        <i class="fa fa-volume-up" aria-hidden="true" id="soundicon"></i>
+        <a href="http://flpoirier.com/">Portfolio site</a> | <a href="https://github.com/flpoirier">GitHub</a> | <a href="https://www.linkedin.com/in/flpoirier/">LinkedIn</a>
+      </div>
     </div>
 
     <script>
