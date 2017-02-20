@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title>Sunset Boulevard</title>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <style>
       * { padding: 0; margin: 0; }
       canvas { display: block; margin: 0 auto; }
       #links {
-        margin-left: 87px;
+        margin-left: 98px;
       }
       a {
         color: black;
@@ -16,7 +17,11 @@
         padding: 10px;
       }
       a:hover {
-        font-weight: bold;
+        color: blue;
+      }
+      i:hover {
+        cursor: pointer;
+        color: blue;
       }
     </style>
   </head>
@@ -488,7 +493,13 @@
 
     </script>
     <br/>
+
+    <audio autoplay loop>
+      <source src="error.mp3">
+    </audio>
+
     <div id="links">
+      <i class="fa fa-volume-up" aria-hidden="true"></i>
       <a href="http://flpoirier.com/">Portfolio site</a> | <a href="https://github.com/flpoirier">GitHub</a> | <a href="https://www.linkedin.com/in/flpoirier/">LinkedIn</a>
     </div>
   </body>
