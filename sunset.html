@@ -112,9 +112,10 @@
 
       var jumping = false;
       var falling = false;
+      var justJumped = false;
       var jumpHeight = 0;
       var jumpSpeed = 5;
-      var maxJump = 80;
+      var maxJump = 60;
 
       function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -371,7 +372,7 @@
 
         // jumping logic
 
-        if (spacePressed && !falling) {
+        if (spacePressed && !falling && !justJumped) {
           jumping = true;
         }
 
@@ -403,12 +404,14 @@
 
         if (falling && jumpHeight <= 0) {
           falling = false;
+          justJumped = true;
+          setTimeout(jumpDelay, 200);
         }
 
       }
 
-      function gameOverScreen() {
-
+      function jumpDelay() {
+        justJumped = false;
       }
 
       // end of draw function
