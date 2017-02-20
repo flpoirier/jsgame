@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <style>
       * { padding: 0; margin: 0; }
-      canvas { display: block; margin: 0 auto; }
+      canvas {
+        margin: 20px 0 20px 30px;
+      }
       #links {
-        margin-left: 98px;
+        margin-left: 30px;
       }
       a {
         color: black;
@@ -494,13 +496,29 @@
     </script>
     <br/>
 
-    <audio autoplay loop>
+    <audio id="audio" loop>
       <source src="error.mp3">
     </audio>
 
     <div id="links">
-      <i class="fa fa-volume-up" aria-hidden="true"></i>
+      <i class="fa fa-volume-off" aria-hidden="true" id="soundicon"></i>
       <a href="http://flpoirier.com/">Portfolio site</a> | <a href="https://github.com/flpoirier">GitHub</a> | <a href="https://www.linkedin.com/in/flpoirier/">LinkedIn</a>
     </div>
+
+    <script>
+
+      const soundicon = document.getElementById("soundicon");
+      const music = document.getElementById("audio");
+
+      soundicon.addEventListener('mousedown', function(e) {
+        if (soundicon.classList.contains("fa-volume-off")) {
+          soundicon.className = "fa fa-volume-up"
+        } else {
+          soundicon.className = "fa fa-volume-off"
+        }
+      });
+
+    </script>
+
   </body>
 </html>
