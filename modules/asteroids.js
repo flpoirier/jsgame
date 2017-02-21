@@ -1,8 +1,28 @@
-const Game = require('./game.js');
-
-class Asteroid extends Game {
+class Asteroid {
 
   constructor() {
+    this.canvas = document.getElementById("myCanvas");
+    this.ctx = this.canvas.getContext("2d");
+    this.canvasWidth = 1100;
+    this.canvasHeight = 750;
+
+    this.endMargin = 40;
+    this.endPoint = this.canvasWidth - this.endMargin;
+
+    this.bridgeX = this.canvasWidth / 2;
+    this.bridgeY = this.canvasHeight + 400;
+    this.bridgeRad = this.canvasWidth * 2/3;
+    this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
+
+
+
+    this.asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
+    this.asteroidSpeed = 20;
+    this.asteroidRad = 10;
+    this.asteroidPush = 60;
+    this.intersectionMaxTime = 15;
+    this.asteroids = [];
+
     this.distance = this.distance.bind(this);
     this.bridgeCollisionPoint = this.bridgeCollisionPoint.bind(this);
     this.asteroidConstructor = this.asteroidConstructor.bind(this);
@@ -33,14 +53,14 @@ class Asteroid extends Game {
       let asteroidIntersecting = false;
       let intersectingTimer = 0;
       let asteroidDx = -this.asteroidSpeed;
-      asteroids.push({X: asteroidX, Y: asteroidY, color: asteroidCol, intersectingColor: intersectingColor,
+      this.asteroids.push({X: asteroidX, Y: asteroidY, color: asteroidCol, intersectingColor: intersectingColor,
         collisionPoint: asteroidCollisionPoint, falling: asteroidFalling, rolling: asteroidRolling,
         intersecting: asteroidIntersecting, intersectingTimer: intersectingTimer, dX: asteroidDx});
     }
   }
 
   collisionChecker() {
-    asteroids.forEach((asteroid) => {
+    this.asteroids.forEach((asteroid) => {
       if (asteroid.intersecting && asteroid.intersectingTimer < intersectionMaxTime) {
         asteroid.intersectingTimer += 1;
       } else if (asteroid.intersecting && asteroid.intersectingTimer === intersectionMaxTime) {

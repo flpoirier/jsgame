@@ -1,8 +1,25 @@
-const Game = require('./game.js');
-
-class Star extends Game {
+class Star {
 
   constructor() {
+    this.canvas = document.getElementById("myCanvas");
+    this.ctx = this.canvas.getContext("2d");
+    this.canvasWidth = 1100;
+    this.canvasHeight = 750;
+
+    this.endMargin = 40;
+    this.endPoint = this.canvasWidth - this.endMargin;
+
+    this.bridgeX = this.canvasWidth / 2;
+    this.bridgeY = this.canvasHeight + 400;
+    this.bridgeRad = this.canvasWidth * 2/3;
+    this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
+
+
+    this.stars = [];
+    this.numStars = 800;
+    this.twinkle = 0;
+    this.starsOut = 0;
+
     this.getRandomInt = this.getRandomInt.bind(this);
     this.starConstructor = this.starConstructor.bind(this);
     this.starshine = this.starshine.bind(this);
@@ -16,9 +33,9 @@ class Star extends Game {
 
   starConstructor () {
     for (let star = 0; star < this.numStars; star++) {
-      let starX = getRandomInt(0, this.canvasWidth);
-      let starY = getRandomInt(-this.canvasHeight, this.canvasHeight);
-      let starRad = getRandomInt(1,3);
+      let starX = this.getRandomInt(0, this.canvasWidth);
+      let starY = this.getRandomInt(-this.canvasHeight, this.canvasHeight);
+      let starRad = this.getRandomInt(1,3);
       this.stars.push({starX: starX, starY: starY, starRad: starRad});
     }
   }

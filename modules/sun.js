@@ -1,8 +1,29 @@
-const Game = require('./game.js');
-
-class Sun extends Game {
+class Sun {
 
   constructor() {
+    this.canvas = document.getElementById("myCanvas");
+    this.ctx = this.canvas.getContext("2d");
+    this.canvasWidth = 1100;
+    this.canvasHeight = 750;
+
+    this.endMargin = 40;
+    this.endPoint = this.canvasWidth - this.endMargin;
+
+    this.bridgeX = this.canvasWidth / 2;
+    this.bridgeY = this.canvasHeight + 400;
+    this.bridgeRad = this.canvasWidth * 2/3;
+    this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
+
+
+    this.sunRad = 20;
+    this.sunX = this.canvasWidth / 2;
+    this.sunY = this.sunRad;
+    this.sunset = 0;
+
+    this.red = 85;
+    this.green = 200;
+    this.blue = 255;
+
     this.skyColored = this.skyColored.bind(this);
     this.sundown = this.sundown.bind(this);
   }
