@@ -215,7 +215,7 @@ class Game {
         }
 
         let asteroidAngle = Math.PI - Math.acos(translatedAstX / this.bridgeRad);
-        asteroid.Y = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(this.asteroids.asteroidAngle)) - this.asteroids.asteroidRad;
+        asteroid.Y = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(asteroidAngle)) - this.asteroids.asteroidRad;
 
       }
 
