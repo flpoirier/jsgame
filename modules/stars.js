@@ -14,7 +14,7 @@ class Star {
     this.bridgeRad = this.canvasWidth * 2/3;
     this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
 
-
+    
     this.stars = [];
     this.numStars = 800;
     this.twinkle = 0;

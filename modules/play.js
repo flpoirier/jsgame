@@ -6,8 +6,8 @@ const Game = require('./game.js');
 
 let sun = new Sun();
 let stars = new Star();
-let asteroids = new Asteroid();
 let dude = new Dude();
+let asteroids = new Asteroid(sun, dude);
 let game = new Game(sun, stars, asteroids, dude);
 
 game.play();

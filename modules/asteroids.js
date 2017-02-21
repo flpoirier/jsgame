@@ -1,6 +1,6 @@
 class Asteroid {
 
-  constructor() {
+  constructor(sun, dude) {
     this.canvas = document.getElementById("myCanvas");
     this.ctx = this.canvas.getContext("2d");
     this.canvasWidth = 1100;
@@ -9,13 +9,6 @@ class Asteroid {
     this.endMargin = 40;
     this.endPoint = this.canvasWidth - this.endMargin;
 
-    this.bridgeX = this.canvasWidth / 2;
-    this.bridgeY = this.canvasHeight + 400;
-    this.bridgeRad = this.canvasWidth * 2/3;
-    this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
-
-
-
     this.asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
     this.asteroidSpeed = 20;
     this.asteroidRad = 10;
@@ -23,7 +16,16 @@ class Asteroid {
     this.intersectionMaxTime = 15;
     this.asteroids = [];
 
+    this.bridgeX = this.canvasWidth / 2;
+    this.bridgeY = this.canvasHeight + 400;
+    this.bridgeRad = this.canvasWidth * 2/3;
+    this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
+
+    this.sun = sun;
+    this.dude = dude;
+
     this.distance = this.distance.bind(this);
+    this.getRandomInt = this.getRandomInt.bind(this);
     this.bridgeCollisionPoint = this.bridgeCollisionPoint.bind(this);
     this.asteroidConstructor = this.asteroidConstructor.bind(this);
     this.collisionChecker = this.collisionChecker.bind(this);
@@ -35,6 +37,12 @@ class Asteroid {
     return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
   }
 
+  getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
   // calculates at what height a given asteroid will hit the bridge
 
   bridgeCollisionPoint(astX) {
@@ -42,12 +50,12 @@ class Asteroid {
   }
 
   asteroidConstructor() {
-    if (this.sunY < this.canvasHeight) {
-      let asteroidX = getRandomInt(0, this.canvasWidth);
+    if (this.sun.sunY < this.canvasHeight) {
+      let asteroidX = this.getRandomInt(0, this.canvasWidth);
       let asteroidY = -1 * this.asteroidRad;
       let asteroidCol = "#292e37";
       let intersectingColor = "red";
-      let asteroidCollisionPoint = bridgeCollisionPoint(this.asteroidX);
+      let asteroidCollisionPoint = this.bridgeCollisionPoint(asteroidX);
       let asteroidFalling = true;
       let asteroidRolling = false;
       let asteroidIntersecting = false;
@@ -66,8 +74,8 @@ class Asteroid {
       } else if (asteroid.intersecting && asteroid.intersectingTimer === intersectionMaxTime) {
         asteroid.intersecting = false;
         asteroid.intersectingTimer = 0;
-      } else if ((Math.floor(distance(asteroid.X, asteroid.Y, dudeX, dudeY)) + 2) < asteroidRad && !asteroid.intersecting) {
-        dudeX -= asteroidPush;
+      } else if ((Math.floor(this.distance(asteroid.X, asteroid.Y, this.dude.dudeX, this.dude.dudeY)) + 2) < this.asteroidRad && !asteroid.intersecting) {
+        this.dude.dudeX -= this.asteroidPush;
         asteroid.intersecting = true;
       }
     });
