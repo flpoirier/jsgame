@@ -30,6 +30,12 @@ class Dude {
     this.jumpSpeed = 5;
     this.maxJump = 60;
 
+    this.rightPressed = false;
+    this.leftPressed = false;
+    this.upPressed = false;
+    this.downPressed = false;
+    this.spacePressed = false;
+
     this.jumpDelay = this.jumpDelay.bind(this);
     this.walking = this.walking.bind(this);
   }

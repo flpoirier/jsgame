@@ -28,12 +28,6 @@ class Game {
     this.gameWon = false;
     this.gameLost = false;
 
-    this.rightPressed = false;
-    this.leftPressed = false;
-    this.upPressed = false;
-    this.downPressed = false;
-    this.spacePressed = false;
-
     this.keyDownHandler = this.keyDownHandler.bind(this);
     this.keyUpHandler = this.keyUpHandler.bind(this);
     this.timeString = this.timeString.bind(this);
@@ -46,37 +40,37 @@ class Game {
 
   keyDownHandler(e) {
     if(e.keyCode == 39) {
-      rightPressed = true;
+      this.dude.rightPressed = true;
     }
     else if(e.keyCode == 37) {
-      leftPressed = true;
+      this.dude.leftPressed = true;
     }
     else if(e.keyCode == 38) {
-      upPressed = true;
+      this.dude.upPressed = true;
     }
     else if(e.keyCode == 40) {
-      downPressed = true;
+      this.dude.downPressed = true;
     }
     else if(e.keyCode == 32) {
-      spacePressed = true;
+      this.dude.spacePressed = true;
     }
   }
 
   keyUpHandler(e) {
     if(e.keyCode == 39) {
-      rightPressed = false;
+      this.dude.rightPressed = false;
     }
     else if(e.keyCode == 37) {
-      leftPressed = false;
+      this.dude.leftPressed = false;
     }
     else if(e.keyCode == 38) {
-      upPressed = false;
+      this.dude.upPressed = false;
     }
     else if(e.keyCode == 40) {
-      downPressed = false;
+      this.dude.downPressed = false;
     }
     else if(e.keyCode == 32) {
-      spacePressed = false;
+      this.dude.spacePressed = false;
     }
   }
 
