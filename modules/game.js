@@ -247,7 +247,7 @@ class Game {
     document.addEventListener("keyup", this.keyUpHandler, false);
 
     setInterval(this.sun.sundown, 30);
-    setInterval(function() { this.stars.starshine(this.sun.blue); }.bind(this), 30);
+    setInterval(() => { this.stars.starshine(this.sun.blue); }, 30);
     setInterval(this.dude.walking, 30);
     setInterval(this.asteroids.collisionChecker, 30);
     setInterval(this.asteroids.asteroidConstructor, 1000);
