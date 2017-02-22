@@ -14,7 +14,6 @@ class Sun {
     this.bridgeRad = this.canvasWidth * 2/3;
     this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
 
-
     this.sunRad = 20;
     this.sunX = this.canvasWidth / 2;
     this.sunY = this.sunRad;

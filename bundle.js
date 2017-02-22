@@ -173,11 +173,12 @@ class Dude {
     this.endMargin = 40;
     this.endPoint = this.canvasWidth - this.endMargin;
 
+    this.asteroidRad = 10;
+
     this.bridgeX = this.canvasWidth / 2;
     this.bridgeY = this.canvasHeight + 400;
     this.bridgeRad = this.canvasWidth * 2/3;
     this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
-
 
     this.dudeX = this.endMargin;
     this.dudeY = 0;
@@ -400,7 +401,7 @@ class Game {
         tempRed = this.sun.red;
       }
 
-      tempGreen = this.green - dist + Math.floor(175*this.sun.sunY/500);
+      tempGreen = this.sun.green - dist + Math.floor(175*this.sun.sunY/500);
       if (tempGreen < this.sun.green) {
         tempGreen = this.sun.green;
       }
@@ -442,7 +443,6 @@ class Game {
     // change dudeX to account for jump
 
     this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(this.dude.dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
-
 
     this.ctx.fillStyle = "purple";
     this.ctx.beginPath();
@@ -624,7 +624,6 @@ class Sun {
     this.bridgeY = this.canvasHeight + 400;
     this.bridgeRad = this.canvasWidth * 2/3;
     this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
-
 
     this.sunRad = 20;
     this.sunX = this.canvasWidth / 2;

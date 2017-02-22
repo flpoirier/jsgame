@@ -133,7 +133,7 @@ class Game {
         tempRed = this.sun.red;
       }
 
-      tempGreen = this.green - dist + Math.floor(175*this.sun.sunY/500);
+      tempGreen = this.sun.green - dist + Math.floor(175*this.sun.sunY/500);
       if (tempGreen < this.sun.green) {
         tempGreen = this.sun.green;
       }
@@ -175,7 +175,6 @@ class Game {
     // change dudeX to account for jump
 
     this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(this.dude.dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
-
 
     this.ctx.fillStyle = "purple";
     this.ctx.beginPath();

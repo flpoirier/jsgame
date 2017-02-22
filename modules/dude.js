@@ -9,11 +9,12 @@ class Dude {
     this.endMargin = 40;
     this.endPoint = this.canvasWidth - this.endMargin;
 
+    this.asteroidRad = 10;
+
     this.bridgeX = this.canvasWidth / 2;
     this.bridgeY = this.canvasHeight + 400;
     this.bridgeRad = this.canvasWidth * 2/3;
     this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
-
 
     this.dudeX = this.endMargin;
     this.dudeY = 0;
