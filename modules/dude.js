@@ -36,6 +36,11 @@ class Dude {
     this.downPressed = false;
     this.spacePressed = false;
 
+    this.time = 0;
+    this.gameWon = false;
+    this.youWon = () => {};
+    this.youLose = () => {};
+
     this.jumpDelay = this.jumpDelay.bind(this);
     this.walking = this.walking.bind(this);
   }
@@ -55,8 +60,8 @@ class Dude {
 
     if (this.dudeX >= this.endPoint && this.time > 0) {
       this.dudeX = this.endPoint;
-      this.gameOver = true;
       this.gameWon = true;
+      this.youWon();
     } else if (this.dudeX >= this.endPoint) {
       this.dudeX = this.endPoint;
     } else if (this.dudeX < this.endMargin) {
@@ -64,8 +69,7 @@ class Dude {
     }
 
     if (this.time === 0 && !this.gameWon) {
-      this.gameOver = true;
-      this.gameLost = true;
+      this.youLose();
     }
 
     // jumping logic

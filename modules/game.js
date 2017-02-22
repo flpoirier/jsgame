@@ -28,12 +28,27 @@ class Game {
     this.gameWon = false;
     this.gameLost = false;
 
+    this.youLose = this.youLose.bind(this);
+    this.youWon = this.youWon.bind(this);
     this.keyDownHandler = this.keyDownHandler.bind(this);
     this.keyUpHandler = this.keyUpHandler.bind(this);
     this.timeString = this.timeString.bind(this);
     this.timeTick = this.timeTick.bind(this);
     this.draw = this.draw.bind(this);
     this.play = this.play.bind(this);
+
+    this.dude.gameWon = this.gameWon;
+    this.dude.youWon = this.youWon;
+    this.dude.youLose = this.youLose;
+    this.dude.time = this.time;
+  }
+
+  youLose() {
+    this.gameLost = true;
+  }
+
+  youWon() {
+    this.gameWon = true;
   }
 
   // end of constants
@@ -96,6 +111,7 @@ class Game {
     if (this.time > 0) {
       this.time -= 1;
     }
+    this.dude.time = this.time;
     this.timeString();
   }
 
