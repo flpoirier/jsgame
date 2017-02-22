@@ -141,9 +141,9 @@ class Asteroid {
 
   collisionChecker() {
     this.asteroids.forEach((asteroid) => {
-      if (asteroid.intersecting && asteroid.intersectingTimer < intersectionMaxTime) {
+      if (asteroid.intersecting && asteroid.intersectingTimer < this.intersectionMaxTime) {
         asteroid.intersectingTimer += 1;
-      } else if (asteroid.intersecting && asteroid.intersectingTimer === intersectionMaxTime) {
+      } else if (asteroid.intersecting && asteroid.intersectingTimer === this.intersectionMaxTime) {
         asteroid.intersecting = false;
         asteroid.intersectingTimer = 0;
       } else if ((Math.floor(this.distance(asteroid.X, asteroid.Y, this.dude.dudeX, this.dude.dudeY)) + 2) < this.asteroidRad && !asteroid.intersecting) {
