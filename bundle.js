@@ -432,7 +432,7 @@ class Game {
 
     let translatedDudeX = 0;
     if (this.dude.dudeX < this.bridgeX) {
-      translatedDudeX = -(this.bridgeX - this.dudeX);
+      translatedDudeX = -(this.bridgeX - this.dude.dudeX);
     } else if (this.dude.dudeX > this.bridgeX) {
       translatedDudeX = this.dude.dudeX - this.bridgeX;
     }
@@ -442,7 +442,7 @@ class Game {
 
     // change dudeX to account for jump
 
-    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(this.dude.dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
+    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
 
     this.ctx.fillStyle = "purple";
     this.ctx.beginPath();
