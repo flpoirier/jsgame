@@ -68,222 +68,21 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-class Asteroid {
-
-  constructor(sun, dude) {
-    this.canvas = document.getElementById("myCanvas");
-    this.ctx = this.canvas.getContext("2d");
-    this.canvasWidth = 1100;
-    this.canvasHeight = 750;
-
-    this.endMargin = 40;
-    this.endPoint = this.canvasWidth - this.endMargin;
-
-    this.asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
-    this.asteroidSpeed = 20;
-    this.asteroidRad = 10;
-    this.asteroidPush = 60;
-    this.intersectionMaxTime = 15;
-    this.asteroids = [];
-
-    this.bridgeX = this.canvasWidth / 2;
-    this.bridgeY = this.canvasHeight + 400;
-    this.bridgeRad = this.canvasWidth * 2/3;
-    this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
-
-    this.sun = sun;
-    this.dude = dude;
-
-    this.distance = this.distance.bind(this);
-    this.getRandomInt = this.getRandomInt.bind(this);
-    this.bridgeCollisionPoint = this.bridgeCollisionPoint.bind(this);
-    this.asteroidConstructor = this.asteroidConstructor.bind(this);
-    this.collisionChecker = this.collisionChecker.bind(this);
-  }
-
-  // basic distance formula
-
-  distance(x1, y1, x2, y2) {
-    return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
-  }
-
-  getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
-  // calculates at what height a given asteroid will hit the bridge
-
-  bridgeCollisionPoint(astX) {
-    return -1 * Math.floor(Math.sqrt( (this.bridgeHeight*this.bridgeHeight) - ((astX-this.bridgeX)*(astX-this.bridgeX)) ) - this.bridgeY);
-  }
-
-  asteroidConstructor() {
-    if (this.sun.sunY < this.canvasHeight) {
-      let asteroidX = this.getRandomInt(0, this.canvasWidth);
-      let asteroidY = -1 * this.asteroidRad;
-      let asteroidCol = "#292e37";
-      let intersectingColor = "red";
-      let asteroidCollisionPoint = this.bridgeCollisionPoint(asteroidX);
-      let asteroidFalling = true;
-      let asteroidRolling = false;
-      let asteroidIntersecting = false;
-      let intersectingTimer = 0;
-      let asteroidDx = -this.asteroidSpeed;
-      this.asteroids.push({X: asteroidX, Y: asteroidY, color: asteroidCol, intersectingColor: intersectingColor,
-        collisionPoint: asteroidCollisionPoint, falling: asteroidFalling, rolling: asteroidRolling,
-        intersecting: asteroidIntersecting, intersectingTimer: intersectingTimer, dX: asteroidDx});
-    }
-  }
-
-  collisionChecker() {
-    this.asteroids.forEach((asteroid) => {
-      if (asteroid.intersecting && asteroid.intersectingTimer < this.intersectionMaxTime) {
-        asteroid.intersectingTimer += 1;
-      } else if (asteroid.intersecting && asteroid.intersectingTimer === this.intersectionMaxTime) {
-        asteroid.intersecting = false;
-        asteroid.intersectingTimer = 0;
-      } else if ((Math.floor(this.distance(asteroid.X, asteroid.Y, this.dude.dudeX, this.dude.dudeY)) + 2) < this.asteroidRad && !asteroid.intersecting) {
-        this.dude.dudeX -= this.asteroidPush;
-        asteroid.intersecting = true;
-      }
-    });
-  }
-
-}
-
-module.exports = Asteroid;
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-class Dude {
-
-  constructor() {
-    this.canvas = document.getElementById("myCanvas");
-    this.ctx = this.canvas.getContext("2d");
-    this.canvasWidth = 1100;
-    this.canvasHeight = 750;
-
-    this.endMargin = 40;
-    this.endPoint = this.canvasWidth - this.endMargin;
-
-    this.asteroidRad = 10;
-
-    this.bridgeX = this.canvasWidth / 2;
-    this.bridgeY = this.canvasHeight + 400;
-    this.bridgeRad = this.canvasWidth * 2/3;
-    this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
-
-    this.dudeX = this.endMargin;
-    this.dudeY = 0;
-    this.dudeHeight = 75;
-    this.dudeRad = 15;
-    this.dudeDx = 1;
-    this.walkSpeed = 2;
-
-    this.jumping = false;
-    this.falling = false;
-    this.justJumped = false;
-    this.jumpHeight = 0;
-    this.jumpSpeed = 5;
-    this.maxJump = 60;
-
-    this.rightPressed = false;
-    this.leftPressed = false;
-    this.upPressed = false;
-    this.downPressed = false;
-    this.spacePressed = false;
-
-    this.time = 0;
-    this.gameWon = false;
-    this.youWon = () => {};
-    this.youLose = () => {};
-
-    this.jumpDelay = this.jumpDelay.bind(this);
-    this.walking = this.walking.bind(this);
-  }
-
-  jumpDelay() {
-    this.justJumped = false;
-  }
-
-  walking() {
-    if (this.leftPressed) {
-      this.dudeX -= this.walkSpeed;
-    } else if (this.rightPressed) {
-      this.dudeX += this.walkSpeed;
-    }
-
-    // boundaries on where avatar can walk
-
-    if (this.dudeX >= this.endPoint && this.time > 0) {
-      this.dudeX = this.endPoint;
-      this.gameWon = true;
-      this.youWon();
-    } else if (this.dudeX >= this.endPoint) {
-      this.dudeX = this.endPoint;
-    } else if (this.dudeX < this.endMargin) {
-      this.dudeX = this.endMargin;
-    }
-
-    if (this.time === 0 && !this.gameWon) {
-      this.youLose();
-    }
-
-    // jumping logic
-
-    if (this.spacePressed && !this.falling && !this.justJumped) {
-      this.jumping = true;
-    }
-
-    // jump height proportional to length of time space bar pressed
-
-    if (this.jumping && this.jumpHeight < this.maxJump) {
-      this.jumpHeight += this.jumpSpeed;
-    } else if (this.falling && this.jumpHeight > 0) {
-      this.jumpHeight -= 2 * this.jumpSpeed;
-    }
-
-    // player starts falling if spacebar is released or they reach max jump height
-
-    if (!this.spacePressed && this.jumpHeight > 0) {
-      this.jumping = false;
-      this.falling = true;
-    } else if (this.jumpHeight >= this.maxJump) {
-      this.jumping = false;
-      this.falling = true;
-    }
-
-    if (this.falling && this.jumpHeight <= 0) {
-      this.falling = false;
-      this.justJumped = true;
-      setTimeout(this.jumpDelay, 200);
-    }
-  }
-
-}
-
-module.exports = Dude;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
+const Sun = __webpack_require__(4);
+const Star = __webpack_require__(3);
+const Asteroid = __webpack_require__(1);
+const Dude = __webpack_require__(2);
 
 class Game {
 
-  constructor(sun, stars, asteroids, dude) {
+  constructor() {
 
-    this.sun = sun;
-    this.stars = stars;
-    this.asteroids = asteroids;
-    this.dude = dude;
+    this.sun = new Sun();
+    this.stars = new Star();
+    this.dude = new Dude();
+    this.asteroids = new Asteroid(this.sun, this.dude);
 
     this.canvas = document.getElementById("myCanvas");
     this.ctx = this.canvas.getContext("2d");
@@ -551,6 +350,212 @@ module.exports = Game;
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+class Asteroid {
+
+  constructor(sun, dude) {
+    this.canvas = document.getElementById("myCanvas");
+    this.ctx = this.canvas.getContext("2d");
+    this.canvasWidth = 1100;
+    this.canvasHeight = 750;
+
+    this.endMargin = 40;
+    this.endPoint = this.canvasWidth - this.endMargin;
+
+    this.asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
+    this.asteroidSpeed = 20;
+    this.asteroidRad = 10;
+    this.asteroidPush = 60;
+    this.intersectionMaxTime = 15;
+    this.asteroids = [];
+
+    this.bridgeX = this.canvasWidth / 2;
+    this.bridgeY = this.canvasHeight + 400;
+    this.bridgeRad = this.canvasWidth * 2/3;
+    this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
+
+    this.sun = sun;
+    this.dude = dude;
+
+    this.distance = this.distance.bind(this);
+    this.getRandomInt = this.getRandomInt.bind(this);
+    this.bridgeCollisionPoint = this.bridgeCollisionPoint.bind(this);
+    this.asteroidConstructor = this.asteroidConstructor.bind(this);
+    this.collisionChecker = this.collisionChecker.bind(this);
+  }
+
+  // basic distance formula
+
+  distance(x1, y1, x2, y2) {
+    return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+  }
+
+  getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  // calculates at what height a given asteroid will hit the bridge
+
+  bridgeCollisionPoint(astX) {
+    return -1 * Math.floor(Math.sqrt( (this.bridgeHeight*this.bridgeHeight) - ((astX-this.bridgeX)*(astX-this.bridgeX)) ) - this.bridgeY);
+  }
+
+  asteroidConstructor() {
+    if (this.sun.sunY < this.canvasHeight) {
+      let asteroidX = this.getRandomInt(0, this.canvasWidth);
+      let asteroidY = -1 * this.asteroidRad;
+      let asteroidCol = "#292e37";
+      let intersectingColor = "red";
+      let asteroidCollisionPoint = this.bridgeCollisionPoint(asteroidX);
+      let asteroidFalling = true;
+      let asteroidRolling = false;
+      let asteroidIntersecting = false;
+      let intersectingTimer = 0;
+      let asteroidDx = -this.asteroidSpeed;
+      this.asteroids.push({X: asteroidX, Y: asteroidY, color: asteroidCol, intersectingColor: intersectingColor,
+        collisionPoint: asteroidCollisionPoint, falling: asteroidFalling, rolling: asteroidRolling,
+        intersecting: asteroidIntersecting, intersectingTimer: intersectingTimer, dX: asteroidDx});
+    }
+  }
+
+  collisionChecker() {
+    this.asteroids.forEach((asteroid) => {
+      if (asteroid.intersecting && asteroid.intersectingTimer < this.intersectionMaxTime) {
+        asteroid.intersectingTimer += 1;
+      } else if (asteroid.intersecting && asteroid.intersectingTimer === this.intersectionMaxTime) {
+        asteroid.intersecting = false;
+        asteroid.intersectingTimer = 0;
+      } else if ((Math.floor(this.distance(asteroid.X, asteroid.Y, this.dude.dudeX, this.dude.dudeY)) + 2) < this.asteroidRad && !asteroid.intersecting) {
+        this.dude.dudeX -= this.asteroidPush;
+        asteroid.intersecting = true;
+      }
+    });
+  }
+
+}
+
+module.exports = Asteroid;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+class Dude {
+
+  constructor() {
+    this.canvas = document.getElementById("myCanvas");
+    this.ctx = this.canvas.getContext("2d");
+    this.canvasWidth = 1100;
+    this.canvasHeight = 750;
+
+    this.endMargin = 40;
+    this.endPoint = this.canvasWidth - this.endMargin;
+
+    this.asteroidRad = 10;
+
+    this.bridgeX = this.canvasWidth / 2;
+    this.bridgeY = this.canvasHeight + 400;
+    this.bridgeRad = this.canvasWidth * 2/3;
+    this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
+
+    this.dudeX = this.endMargin;
+    this.dudeY = 0;
+    this.dudeHeight = 75;
+    this.dudeRad = 15;
+    this.dudeDx = 1;
+    this.walkSpeed = 2;
+
+    this.jumping = false;
+    this.falling = false;
+    this.justJumped = false;
+    this.jumpHeight = 0;
+    this.jumpSpeed = 5;
+    this.maxJump = 60;
+
+    this.rightPressed = false;
+    this.leftPressed = false;
+    this.upPressed = false;
+    this.downPressed = false;
+    this.spacePressed = false;
+
+    this.time = 0;
+    this.gameWon = false;
+    this.youWon = () => {};
+    this.youLose = () => {};
+
+    this.jumpDelay = this.jumpDelay.bind(this);
+    this.walking = this.walking.bind(this);
+  }
+
+  jumpDelay() {
+    this.justJumped = false;
+  }
+
+  walking() {
+    if (this.leftPressed) {
+      this.dudeX -= this.walkSpeed;
+    } else if (this.rightPressed) {
+      this.dudeX += this.walkSpeed;
+    }
+
+    // boundaries on where avatar can walk
+
+    if (this.dudeX >= this.endPoint && this.time > 0) {
+      this.dudeX = this.endPoint;
+      this.gameWon = true;
+      this.youWon();
+    } else if (this.dudeX >= this.endPoint) {
+      this.dudeX = this.endPoint;
+    } else if (this.dudeX < this.endMargin) {
+      this.dudeX = this.endMargin;
+    }
+
+    if (this.time === 0 && !this.gameWon) {
+      this.youLose();
+    }
+
+    // jumping logic
+
+    if (this.spacePressed && !this.falling && !this.justJumped) {
+      this.jumping = true;
+    }
+
+    // jump height proportional to length of time space bar pressed
+
+    if (this.jumping && this.jumpHeight < this.maxJump) {
+      this.jumpHeight += this.jumpSpeed;
+    } else if (this.falling && this.jumpHeight > 0) {
+      this.jumpHeight -= 2 * this.jumpSpeed;
+    }
+
+    // player starts falling if spacebar is released or they reach max jump height
+
+    if (!this.spacePressed && this.jumpHeight > 0) {
+      this.jumping = false;
+      this.falling = true;
+    } else if (this.jumpHeight >= this.maxJump) {
+      this.jumping = false;
+      this.falling = true;
+    }
+
+    if (this.falling && this.jumpHeight <= 0) {
+      this.falling = false;
+      this.justJumped = true;
+      setTimeout(this.jumpDelay, 200);
+    }
+  }
+
+}
+
+module.exports = Dude;
+
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
@@ -569,7 +574,6 @@ class Star {
     this.bridgeY = this.canvasHeight + 400;
     this.bridgeRad = this.canvasWidth * 2/3;
     this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
-
 
     this.stars = [];
     this.numStars = 800;
@@ -695,17 +699,9 @@ module.exports = Sun;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Sun = __webpack_require__(4);
-const Star = __webpack_require__(3);
-const Asteroid = __webpack_require__(0);
-const Dude = __webpack_require__(1);
-const Game = __webpack_require__(2);
+const Game = __webpack_require__(0);
 
-let sun = new Sun();
-let stars = new Star();
-let dude = new Dude();
-let asteroids = new Asteroid(sun, dude);
-let game = new Game(sun, stars, asteroids, dude);
+let game = new Game();
 
 game.play();
 

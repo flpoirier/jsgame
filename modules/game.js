@@ -1,11 +1,16 @@
+const Sun = require('./sun.js');
+const Star = require('./stars.js');
+const Asteroid = require('./asteroids.js');
+const Dude = require('./dude.js');
+
 class Game {
 
-  constructor(sun, stars, asteroids, dude) {
+  constructor() {
 
-    this.sun = sun;
-    this.stars = stars;
-    this.asteroids = asteroids;
-    this.dude = dude;
+    this.sun = new Sun();
+    this.stars = new Star();
+    this.dude = new Dude();
+    this.asteroids = new Asteroid(this.sun, this.dude);
 
     this.canvas = document.getElementById("myCanvas");
     this.ctx = this.canvas.getContext("2d");
