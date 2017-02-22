@@ -14,7 +14,7 @@ class Star {
     this.bridgeRad = this.canvasWidth * 2/3;
     this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
 
-    
+
     this.stars = [];
     this.numStars = 800;
     this.twinkle = 0;
@@ -40,8 +40,9 @@ class Star {
     }
   }
 
-  starshine() {
-    if (this.blue < 150) {
+  starshine(blue) {
+
+    if (blue < 150) {
 
       this.twinkle += 1;
       // this will break unless numStars is even!!!
@@ -50,12 +51,12 @@ class Star {
       }
 
       if (this.twinkle === 3) {
-        let idx = getRandomInt(0,this.stars.length);
+        let idx = this.getRandomInt(0,this.stars.length);
         let star = this.stars[idx];
         if (star.starRad === 0) {
           star.starRad = 1;
         } else if (star.starRad === 1) {
-          star.starRad = getRandomInt(0,3);
+          star.starRad = this.getRandomInt(0,3);
         } else if (star.starRad === 2) {
           star.starRad = 1;
         }

@@ -378,10 +378,10 @@ class Game {
     this.ctx.fillStyle = `rgb(${this.sun.red},${this.sun.green},${this.sun.blue})`;
     this.ctx.fillRect(0,0,this.canvasWidth,this.canvasHeight);
 
-    if (this.blue < 150) {
+    if (this.sun.blue < 150) {
 
-      for (let starIdx = 0; starIdx < this.starsOut; starIdx ++) {
-        let star = this.stars[starIdx];
+      for (let starIdx = 0; starIdx < this.stars.starsOut; starIdx ++) {
+        let star = this.stars.stars[starIdx];
         this.ctx.fillStyle = "white";
         this.ctx.beginPath();
         this.ctx.arc(star.starX, star.starY, star.starRad, 0, 2 * Math.PI);
@@ -515,7 +515,7 @@ class Game {
     document.addEventListener("keyup", this.keyUpHandler, false);
 
     setInterval(this.sun.sundown, 30);
-    setInterval(this.stars.starshine, 30);
+    setInterval(function() { this.stars.starshine(this.sun.blue); }.bind(this), 30);
     setInterval(this.dude.walking, 30);
     setInterval(this.asteroids.collisionChecker, 30);
     setInterval(this.asteroids.asteroidConstructor, 1000);
@@ -550,7 +550,7 @@ class Star {
     this.bridgeRad = this.canvasWidth * 2/3;
     this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
 
-    
+
     this.stars = [];
     this.numStars = 800;
     this.twinkle = 0;
@@ -576,8 +576,9 @@ class Star {
     }
   }
 
-  starshine() {
-    if (this.blue < 150) {
+  starshine(blue) {
+
+    if (blue < 150) {
 
       this.twinkle += 1;
       // this will break unless numStars is even!!!
@@ -586,12 +587,12 @@ class Star {
       }
 
       if (this.twinkle === 3) {
-        let idx = getRandomInt(0,this.stars.length);
+        let idx = this.getRandomInt(0,this.stars.length);
         let star = this.stars[idx];
         if (star.starRad === 0) {
           star.starRad = 1;
         } else if (star.starRad === 1) {
-          star.starRad = getRandomInt(0,3);
+          star.starRad = this.getRandomInt(0,3);
         } else if (star.starRad === 2) {
           star.starRad = 1;
         }

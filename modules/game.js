@@ -110,10 +110,10 @@ class Game {
     this.ctx.fillStyle = `rgb(${this.sun.red},${this.sun.green},${this.sun.blue})`;
     this.ctx.fillRect(0,0,this.canvasWidth,this.canvasHeight);
 
-    if (this.blue < 150) {
+    if (this.sun.blue < 150) {
 
-      for (let starIdx = 0; starIdx < this.starsOut; starIdx ++) {
-        let star = this.stars[starIdx];
+      for (let starIdx = 0; starIdx < this.stars.starsOut; starIdx ++) {
+        let star = this.stars.stars[starIdx];
         this.ctx.fillStyle = "white";
         this.ctx.beginPath();
         this.ctx.arc(star.starX, star.starY, star.starRad, 0, 2 * Math.PI);
@@ -247,7 +247,7 @@ class Game {
     document.addEventListener("keyup", this.keyUpHandler, false);
 
     setInterval(this.sun.sundown, 30);
-    setInterval(this.stars.starshine, 30);
+    setInterval(function() { this.stars.starshine(this.sun.blue); }.bind(this), 30);
     setInterval(this.dude.walking, 30);
     setInterval(this.asteroids.collisionChecker, 30);
     setInterval(this.asteroids.asteroidConstructor, 1000);
