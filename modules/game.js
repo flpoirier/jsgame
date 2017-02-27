@@ -3,19 +3,24 @@ const Star = require('./stars.js');
 const Asteroid = require('./asteroids.js');
 const Dude = require('./dude.js');
 
+// sprite source: http://media.photobucket.com/user/JRuff/media/Art/Improved%20versions/Sprite%20Animations/ed-sprite-walk.gif.html
+// other sprites i considered: https://www.pinterest.com/pin/397794579560723889/
+
 class Game {
 
   constructor() {
-
-    this.sun = new Sun();
-    this.stars = new Star();
-    this.dude = new Dude();
-    this.asteroids = new Asteroid(this.sun, this.dude);
 
     this.canvas = document.getElementById("myCanvas");
     this.ctx = this.canvas.getContext("2d");
     this.canvasWidth = 1100;
     this.canvasHeight = 750;
+
+    this.sprite = document.getElementById('sprite');
+
+    this.sun = new Sun();
+    this.stars = new Star();
+    this.dude = new Dude(this.sprite);
+    this.asteroids = new Asteroid(this.sun, this.dude);
 
     this.endMargin = 40;
     this.endPoint = this.canvasWidth - this.endMargin;
@@ -191,10 +196,12 @@ class Game {
 
     this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
 
-    this.ctx.fillStyle = "purple";
-    this.ctx.beginPath();
-    this.ctx.arc(this.dude.dudeX, this.dude.dudeY, this.dude.dudeRad, 0, 2 * Math.PI);
-    this.ctx.fill();
+    // this.ctx.fillStyle = "purple";
+    // this.ctx.beginPath();
+    // this.ctx.arc(this.dude.dudeX, this.dude.dudeY, this.dude.dudeRad, 0, 2 * Math.PI);
+    // this.ctx.fill();
+
+    this.ctx.drawImage(this.sprite, this.dude.dudeX, this.dude.dudeY);
 
     this.asteroids.asteroids.forEach((asteroid) => {
 

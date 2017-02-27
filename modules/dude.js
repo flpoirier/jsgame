@@ -1,10 +1,12 @@
 class Dude {
 
-  constructor() {
+  constructor(img) {
     this.canvas = document.getElementById("myCanvas");
     this.ctx = this.canvas.getContext("2d");
     this.canvasWidth = 1100;
     this.canvasHeight = 750;
+
+    this.sprite = img;
 
     this.endMargin = 40;
     this.endPoint = this.canvasWidth - this.endMargin;
@@ -18,8 +20,8 @@ class Dude {
 
     this.dudeX = this.endMargin;
     this.dudeY = 0;
-    this.dudeHeight = 75;
-    this.dudeRad = 15;
+    this.dudeHeight = this.sprite.height;
+    this.dudeRad = this.sprite.width / 2;
     this.dudeDx = 1;
     this.walkSpeed = 2;
 
