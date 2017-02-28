@@ -11,7 +11,7 @@ class Asteroid {
 
     this.asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
     this.asteroidSpeed = 20;
-    this.asteroidRad = 10;
+    this.asteroidRad = 15;
     this.asteroidPush = 60;
     this.intersectionMaxTime = 15;
     this.asteroids = [];
@@ -74,7 +74,7 @@ class Asteroid {
       } else if (asteroid.intersecting && asteroid.intersectingTimer === this.intersectionMaxTime) {
         asteroid.intersecting = false;
         asteroid.intersectingTimer = 0;
-      } else if ((Math.floor(this.distance(asteroid.X, asteroid.Y, this.dude.dudeX, this.dude.dudeY)) + 2) < this.asteroidRad && !asteroid.intersecting) {
+      } else if ( (Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX + (this.dude.dudeWidth/2)), this.dude.dudeY))) < (this.asteroidRad + this.dude.dudeWidth) && !asteroid.intersecting) {
         this.dude.dudeX -= this.asteroidPush;
         asteroid.intersecting = true;
       }

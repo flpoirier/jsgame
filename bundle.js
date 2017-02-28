@@ -257,7 +257,9 @@
 
 	    // this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
 
-	    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeHeight - 13;
+	    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight;
+
+	    let translatedDudeY = this.dude.dudeY - this.dude.dudeHeight - 13;
 
 	    // this.ctx.fillStyle = "purple";
 	    // this.ctx.beginPath();
@@ -266,13 +268,13 @@
 
 	    let tiltAngle = dudeAngle - Math.PI/2
 
-	    this.ctx.translate(this.dude.dudeX, this.dude.dudeY);
+	    this.ctx.translate(this.dude.dudeX, translatedDudeY);
 	    this.ctx.rotate(tiltAngle);
 
 	    this.ctx.drawImage(this.sprite, 0, 0, this.dude.dudeWidth, this.dude.dudeHeight);
 
 	    this.ctx.rotate(-tiltAngle);
-	    this.ctx.translate(-this.dude.dudeX, -this.dude.dudeY);
+	    this.ctx.translate(-this.dude.dudeX, -translatedDudeY);
 
 
 	    this.asteroids.asteroids.forEach((asteroid) => {
@@ -513,7 +515,7 @@
 
 	    this.asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
 	    this.asteroidSpeed = 20;
-	    this.asteroidRad = 10;
+	    this.asteroidRad = 15;
 	    this.asteroidPush = 60;
 	    this.intersectionMaxTime = 15;
 	    this.asteroids = [];
@@ -576,7 +578,7 @@
 	      } else if (asteroid.intersecting && asteroid.intersectingTimer === this.intersectionMaxTime) {
 	        asteroid.intersecting = false;
 	        asteroid.intersectingTimer = 0;
-	      } else if ((Math.floor(this.distance(asteroid.X, asteroid.Y, this.dude.dudeX, this.dude.dudeY)) + 2) < this.asteroidRad && !asteroid.intersecting) {
+	      } else if ( (Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX + (this.dude.dudeWidth/2)), this.dude.dudeY))) < (this.asteroidRad + this.dude.dudeWidth) && !asteroid.intersecting) {
 	        this.dude.dudeX -= this.asteroidPush;
 	        asteroid.intersecting = true;
 	      }
@@ -625,7 +627,7 @@
 	    this.justJumped = false;
 	    this.jumpHeight = 0;
 	    this.jumpSpeed = 5;
-	    this.maxJump = 60;
+	    this.maxJump = 120;
 
 	    this.rightPressed = false;
 	    this.leftPressed = false;

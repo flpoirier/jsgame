@@ -200,7 +200,9 @@ class Game {
 
     // this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
 
-    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeHeight - 13;
+    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight;
+
+    let translatedDudeY = this.dude.dudeY - this.dude.dudeHeight - 13;
 
     // this.ctx.fillStyle = "purple";
     // this.ctx.beginPath();
@@ -209,13 +211,13 @@ class Game {
 
     let tiltAngle = dudeAngle - Math.PI/2
 
-    this.ctx.translate(this.dude.dudeX, this.dude.dudeY);
+    this.ctx.translate(this.dude.dudeX, translatedDudeY);
     this.ctx.rotate(tiltAngle);
 
     this.ctx.drawImage(this.sprite, 0, 0, this.dude.dudeWidth, this.dude.dudeHeight);
 
     this.ctx.rotate(-tiltAngle);
-    this.ctx.translate(-this.dude.dudeX, -this.dude.dudeY);
+    this.ctx.translate(-this.dude.dudeX, -translatedDudeY);
 
 
     this.asteroids.asteroids.forEach((asteroid) => {

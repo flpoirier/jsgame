@@ -31,7 +31,7 @@ class Dude {
     this.justJumped = false;
     this.jumpHeight = 0;
     this.jumpSpeed = 5;
-    this.maxJump = 60;
+    this.maxJump = 120;
 
     this.rightPressed = false;
     this.leftPressed = false;
