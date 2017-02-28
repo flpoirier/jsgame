@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="1100" height="750"></canvas>
+    <div style="display:none;">
+        <img id="sprite" src="modules/dude.jpg"
+          width="50" height="50">
+    </div>
+    <script>
+
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+      const sprite = document.getElementById("sprite");
+
+      // ctx.fillStyle = `rgb(173,216,230)`;
+      // ctx.fillRect(0,0,1100,750);
+
+      let dudeX = 250;
+      let dudeY;
+
+      let rightPressed = false;
+      let leftPressed = false;
+
+      function draw() {
+        ctx.fillStyle = `rgb(173,216,230)`;
+        ctx.fillRect(0,0,1100,750);
+
+        ctx.strokeStyle = "#7b9095";
+        ctx.lineWidth = 30;
+        ctx.beginPath();
+        ctx.arc(1100/2, 750/2, 300, Math.PI, 2 * Math.PI);
+        ctx.stroke();
+
+        let translatedDudeX = 0;
+        if (dudeX < 1100/2) {
+          translatedDudeX = -(1100/2 - dudeX);
+        } else if (dudeX > 1100/2) {
+          translatedDudeX = dudeX - 1100/2;
+        }
+
+        debugger
+
+        let dudeAngle = Math.PI - Math.acos(translatedDudeX / 300);
+
+        dudeY = 750/2 - Math.floor(300 * Math.sin(dudeAngle)) - sprite.height;
+
+        // ctx.translate(100, 100);
+        //
+        // ctx.fillStyle = "purple";
+        // ctx.beginPath();
+        // ctx.arc(0, 0, 10, 0, 2 * Math.PI);
+        // ctx.fill();
+        //
+        // ctx.translate(-100, -100);
+
+        if (translatedDudeX >= 0) {
+
+          ctx.translate(dudeX, dudeY);
+          ctx.rotate(-dudeAngle);
+
+          ctx.drawImage(sprite, 0, 0, sprite.width, sprite.height);
+
+          ctx.rotate(dudeAngle);
+          ctx.translate(-dudeX, -dudeY);
+
+        } else {
+
+          ctx.translate(dudeX, dudeY);
+          ctx.rotate(-dudeAngle);
+
+          ctx.drawImage(sprite, 0, 0, sprite.width, sprite.height);
+
+          ctx.rotate(dudeAngle);
+          ctx.translate(-dudeX, -dudeY);
+
+        }
+      }
+
+      function walking() {
+        if (rightPressed) {
+          dudeX += 2;
+        } else if (leftPressed) {
+          dudeX -= 2;
+        }
+      }
+
+      function keyDownHandler(e) {
+        if(e.keyCode == 39) {
+          rightPressed = true;
+        }
+        else if(e.keyCode == 37) {
+          leftPressed = true;
+        }
+      }
+
+      function keyUpHandler(e) {
+        if(e.keyCode == 39) {
+          rightPressed = false;
+        }
+        else if(e.keyCode == 37) {
+          leftPressed = false;
+        }
+      }
+
+      document.addEventListener("keydown", this.keyDownHandler, false);
+      document.addEventListener("keyup", this.keyUpHandler, false);
+
+      setInterval(walking, 30);
+      setInterval(draw, 30);
+
+    </script>
+  </body>
+</html>
