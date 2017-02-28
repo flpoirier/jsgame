@@ -9,7 +9,7 @@ class Dude {
     this.sprite = img;
 
     this.endMargin = 40;
-    this.endPoint = this.canvasWidth - this.endMargin;
+    this.endPoint = this.canvasWidth - this.endMargin - this.sprite.width;
 
     this.asteroidRad = 10;
 

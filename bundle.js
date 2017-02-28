@@ -258,7 +258,7 @@
 
 	    // this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
 
-	    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight;
+	    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeHeight;
 
 	    // this.ctx.fillStyle = "purple";
 	    // this.ctx.beginPath();
@@ -595,7 +595,7 @@
 	    this.sprite = img;
 
 	    this.endMargin = 40;
-	    this.endPoint = this.canvasWidth - this.endMargin;
+	    this.endPoint = this.canvasWidth - this.endMargin - this.sprite.width;
 
 	    this.asteroidRad = 10;
 
