@@ -19,7 +19,7 @@
       // ctx.fillStyle = `rgb(173,216,230)`;
       // ctx.fillRect(0,0,1100,750);
 
-      let dudeX = 250;
+      let dudeX = 850;
       let dudeY;
 
       let rightPressed = false;
@@ -42,42 +42,39 @@
           translatedDudeX = dudeX - 1100/2;
         }
 
-        debugger
-
         let dudeAngle = Math.PI - Math.acos(translatedDudeX / 300);
+
+        debugger
 
         dudeY = 750/2 - Math.floor(300 * Math.sin(dudeAngle)) - sprite.height;
 
-        // ctx.translate(100, 100);
-        //
-        // ctx.fillStyle = "purple";
-        // ctx.beginPath();
-        // ctx.arc(0, 0, 10, 0, 2 * Math.PI);
-        // ctx.fill();
-        //
-        // ctx.translate(-100, -100);
+        // ctx.drawImage(sprite, dudeX, dudeY, sprite.width, sprite.height);
+
+        let tiltAngle = dudeAngle - Math.PI/2
 
         if (translatedDudeX >= 0) {
 
           ctx.translate(dudeX, dudeY);
-          ctx.rotate(-dudeAngle);
+          ctx.rotate(tiltAngle);
 
           ctx.drawImage(sprite, 0, 0, sprite.width, sprite.height);
 
-          ctx.rotate(dudeAngle);
+          ctx.rotate(-tiltAngle);
           ctx.translate(-dudeX, -dudeY);
 
         } else {
 
           ctx.translate(dudeX, dudeY);
-          ctx.rotate(-dudeAngle);
+          ctx.rotate(tiltAngle);
 
           ctx.drawImage(sprite, 0, 0, sprite.width, sprite.height);
 
-          ctx.rotate(dudeAngle);
+          ctx.rotate(-tiltAngle);
           ctx.translate(-dudeX, -dudeY);
 
         }
+
+        debugger
       }
 
       function walking() {
