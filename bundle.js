@@ -239,6 +239,11 @@
 	    this.ctx.arc(this.bridgeX, this.bridgeY, this.bridgeRad, Math.PI, 2 * Math.PI);
 	    this.ctx.stroke();
 
+	    // note that the bridge is a drawn circle -- the arc we see is only a
+	    // portion of it, centered by width on the middle of the canvas.
+	    // translatedDudeX takes into account whether the player is on the left or
+	    // the right of the bridge (i.e. whether the path is sloping up or down)
+
 	    let translatedDudeX = 0;
 	    if (this.dude.dudeX < this.bridgeX) {
 	      translatedDudeX = -(this.bridgeX - this.dude.dudeX);
@@ -247,11 +252,13 @@
 	    }
 
 	    let dudeAngle = Math.PI - Math.acos(translatedDudeX / this.bridgeRad);
-	    let dudeXDraw = this.dude.dudeX;
+	    // let dudeXDraw = this.dude.dudeX;
 
 	    // change dudeX to account for jump
 
-	    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
+	    // this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
+
+	    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight;
 
 	    // this.ctx.fillStyle = "purple";
 	    // this.ctx.beginPath();
@@ -600,7 +607,7 @@
 	    this.dudeX = this.endMargin;
 	    this.dudeY = 0;
 	    this.dudeHeight = this.sprite.height;
-	    this.dudeRad = this.sprite.width / 2;
+	    this.dudeRad = this.dudeHeight / 2;
 	    this.dudeDx = 1;
 	    this.walkSpeed = 2;
 

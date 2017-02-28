@@ -21,7 +21,7 @@ class Dude {
     this.dudeX = this.endMargin;
     this.dudeY = 0;
     this.dudeHeight = this.sprite.height;
-    this.dudeRad = this.sprite.width / 2;
+    this.dudeRad = this.dudeHeight / 2;
     this.dudeDx = 1;
     this.walkSpeed = 2;
 
