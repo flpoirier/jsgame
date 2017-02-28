@@ -177,7 +177,7 @@ class Game {
     this.ctx.fill();
 
     this.ctx.strokeStyle = "#7b9095";
-    this.ctx.lineWidth = 15;
+    this.ctx.lineWidth = 30;
     this.ctx.beginPath();
     this.ctx.arc(this.bridgeX, this.bridgeY, this.bridgeRad, Math.PI, 2 * Math.PI);
     this.ctx.stroke();
@@ -194,6 +194,8 @@ class Game {
       translatedDudeX = this.dude.dudeX - this.bridgeX;
     }
 
+    // angle in radians
+
     let dudeAngle = Math.PI - Math.acos(translatedDudeX / this.bridgeRad);
     // let dudeXDraw = this.dude.dudeX;
 
@@ -208,7 +210,7 @@ class Game {
     // this.ctx.arc(this.dude.dudeX, this.dude.dudeY, this.dude.dudeRad, 0, 2 * Math.PI);
     // this.ctx.fill();
 
-    this.ctx.drawImage(this.sprite, this.dude.dudeX, this.dude.dudeY);
+    this.ctx.drawImage(this.sprite, this.dude.dudeX, this.dude.dudeY, this.dude.dudeWidth, this.dude.dudeHeight);
 
     this.asteroids.asteroids.forEach((asteroid) => {
 

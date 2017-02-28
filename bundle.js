@@ -234,7 +234,7 @@
 	    this.ctx.fill();
 
 	    this.ctx.strokeStyle = "#7b9095";
-	    this.ctx.lineWidth = 15;
+	    this.ctx.lineWidth = 30;
 	    this.ctx.beginPath();
 	    this.ctx.arc(this.bridgeX, this.bridgeY, this.bridgeRad, Math.PI, 2 * Math.PI);
 	    this.ctx.stroke();
@@ -265,7 +265,7 @@
 	    // this.ctx.arc(this.dude.dudeX, this.dude.dudeY, this.dude.dudeRad, 0, 2 * Math.PI);
 	    // this.ctx.fill();
 
-	    this.ctx.drawImage(this.sprite, this.dude.dudeX, this.dude.dudeY);
+	    this.ctx.drawImage(this.sprite, this.dude.dudeX, this.dude.dudeY, this.dude.dudeWidth, this.dude.dudeHeight);
 
 	    this.asteroids.asteroids.forEach((asteroid) => {
 
@@ -607,6 +607,7 @@
 	    this.dudeX = this.endMargin;
 	    this.dudeY = 0;
 	    this.dudeHeight = this.sprite.height;
+	    this.dudeWidth = this.sprite.width;
 	    this.dudeRad = this.dudeHeight / 2;
 	    this.dudeDx = 1;
 	    this.walkSpeed = 2;
