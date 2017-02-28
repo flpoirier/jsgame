@@ -22,9 +22,6 @@ class Game {
     this.dude = new Dude(this.sprite);
     this.asteroids = new Asteroid(this.sun, this.dude);
 
-    this.endMargin = 40;
-    this.endPoint = this.canvasWidth - this.endMargin;
-
     this.bridgeX = this.canvasWidth / 2;
     this.bridgeY = this.canvasHeight + 400;
     this.bridgeRad = this.canvasWidth * 2/3;
@@ -203,14 +200,23 @@ class Game {
 
     // this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
 
-    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeHeight;
+    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeHeight - 13;
 
     // this.ctx.fillStyle = "purple";
     // this.ctx.beginPath();
     // this.ctx.arc(this.dude.dudeX, this.dude.dudeY, this.dude.dudeRad, 0, 2 * Math.PI);
     // this.ctx.fill();
 
-    this.ctx.drawImage(this.sprite, this.dude.dudeX, this.dude.dudeY, this.dude.dudeWidth, this.dude.dudeHeight);
+    let tiltAngle = dudeAngle - Math.PI/2
+
+    this.ctx.translate(this.dude.dudeX, this.dude.dudeY);
+    this.ctx.rotate(tiltAngle);
+
+    this.ctx.drawImage(this.sprite, 0, 0, this.dude.dudeWidth, this.dude.dudeHeight);
+
+    this.ctx.rotate(-tiltAngle);
+    this.ctx.translate(-this.dude.dudeX, -this.dude.dudeY);
+
 
     this.asteroids.asteroids.forEach((asteroid) => {
 

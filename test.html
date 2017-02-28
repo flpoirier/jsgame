@@ -44,37 +44,20 @@
 
         let dudeAngle = Math.PI - Math.acos(translatedDudeX / 300);
 
-        debugger
-
         dudeY = 750/2 - Math.floor(300 * Math.sin(dudeAngle)) - sprite.height;
 
         // ctx.drawImage(sprite, dudeX, dudeY, sprite.width, sprite.height);
 
         let tiltAngle = dudeAngle - Math.PI/2
 
-        if (translatedDudeX >= 0) {
+        ctx.translate(dudeX, dudeY);
+        ctx.rotate(tiltAngle);
 
-          ctx.translate(dudeX, dudeY);
-          ctx.rotate(tiltAngle);
+        ctx.drawImage(sprite, 0, 0, sprite.width, sprite.height);
 
-          ctx.drawImage(sprite, 0, 0, sprite.width, sprite.height);
+        ctx.rotate(-tiltAngle);
+        ctx.translate(-dudeX, -dudeY);
 
-          ctx.rotate(-tiltAngle);
-          ctx.translate(-dudeX, -dudeY);
-
-        } else {
-
-          ctx.translate(dudeX, dudeY);
-          ctx.rotate(tiltAngle);
-
-          ctx.drawImage(sprite, 0, 0, sprite.width, sprite.height);
-
-          ctx.rotate(-tiltAngle);
-          ctx.translate(-dudeX, -dudeY);
-
-        }
-
-        debugger
       }
 
       function walking() {

@@ -79,9 +79,6 @@
 	    this.dude = new Dude(this.sprite);
 	    this.asteroids = new Asteroid(this.sun, this.dude);
 
-	    this.endMargin = 40;
-	    this.endPoint = this.canvasWidth - this.endMargin;
-
 	    this.bridgeX = this.canvasWidth / 2;
 	    this.bridgeY = this.canvasHeight + 400;
 	    this.bridgeRad = this.canvasWidth * 2/3;
@@ -251,6 +248,8 @@
 	      translatedDudeX = this.dude.dudeX - this.bridgeX;
 	    }
 
+	    // angle in radians
+
 	    let dudeAngle = Math.PI - Math.acos(translatedDudeX / this.bridgeRad);
 	    // let dudeXDraw = this.dude.dudeX;
 
@@ -258,14 +257,23 @@
 
 	    // this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeRad;
 
-	    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeHeight;
+	    this.dude.dudeY = this.bridgeY - Math.floor(this.bridgeRad * Math.sin(dudeAngle)) - this.dude.jumpHeight - this.dude.dudeHeight - 13;
 
 	    // this.ctx.fillStyle = "purple";
 	    // this.ctx.beginPath();
 	    // this.ctx.arc(this.dude.dudeX, this.dude.dudeY, this.dude.dudeRad, 0, 2 * Math.PI);
 	    // this.ctx.fill();
 
-	    this.ctx.drawImage(this.sprite, this.dude.dudeX, this.dude.dudeY, this.dude.dudeWidth, this.dude.dudeHeight);
+	    let tiltAngle = dudeAngle - Math.PI/2
+
+	    this.ctx.translate(this.dude.dudeX, this.dude.dudeY);
+	    this.ctx.rotate(tiltAngle);
+
+	    this.ctx.drawImage(this.sprite, 0, 0, this.dude.dudeWidth, this.dude.dudeHeight);
+
+	    this.ctx.rotate(-tiltAngle);
+	    this.ctx.translate(-this.dude.dudeX, -this.dude.dudeY);
+
 
 	    this.asteroids.asteroids.forEach((asteroid) => {
 
@@ -594,8 +602,8 @@
 
 	    this.sprite = img;
 
-	    this.endMargin = 40;
-	    this.endPoint = this.canvasWidth - this.endMargin - this.sprite.width;
+	    this.endMargin = 0;
+	    this.endPoint = this.canvasWidth - this.sprite.width/2;
 
 	    this.asteroidRad = 10;
 
@@ -639,6 +647,7 @@
 	  }
 
 	  walking() {
+
 	    if (this.leftPressed) {
 	      this.dudeX -= this.walkSpeed;
 	    } else if (this.rightPressed) {
@@ -656,6 +665,7 @@
 	    } else if (this.dudeX < this.endMargin) {
 	      this.dudeX = this.endMargin;
 	    }
+
 
 	    if (this.time === 0 && !this.gameWon) {
 	      this.youLose();

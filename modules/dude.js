@@ -8,8 +8,8 @@ class Dude {
 
     this.sprite = img;
 
-    this.endMargin = 40;
-    this.endPoint = this.canvasWidth - this.endMargin - this.sprite.width;
+    this.endMargin = 0;
+    this.endPoint = this.canvasWidth - this.sprite.width/2;
 
     this.asteroidRad = 10;
 
@@ -53,6 +53,7 @@ class Dude {
   }
 
   walking() {
+
     if (this.leftPressed) {
       this.dudeX -= this.walkSpeed;
     } else if (this.rightPressed) {
@@ -70,6 +71,7 @@ class Dude {
     } else if (this.dudeX < this.endMargin) {
       this.dudeX = this.endMargin;
     }
+
 
     if (this.time === 0 && !this.gameWon) {
       this.youLose();
