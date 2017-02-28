@@ -578,10 +578,14 @@
 	      } else if (asteroid.intersecting && asteroid.intersectingTimer === this.intersectionMaxTime) {
 	        asteroid.intersecting = false;
 	        asteroid.intersectingTimer = 0;
-	      } else if ( (Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX + (this.dude.dudeWidth/2)), this.dude.dudeY))) < (this.asteroidRad + this.dude.dudeWidth) && !asteroid.intersecting) {
-	        this.dude.dudeX -= this.asteroidPush;
-	        asteroid.intersecting = true;
-	      }
+	      // } else if ( (Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX + (this.dude.dudeWidth/2)), this.dude.dudeY))) < (this.asteroidRad + this.dude.dudeWidth) && !asteroid.intersecting) {
+	      //   this.dude.dudeX -= this.asteroidPush;
+	      //   asteroid.intersecting = true;
+	      // }
+	    } else if (Math.abs(asteroid.X - (this.dude.dudeX + this.dude.dudeWidth/2)) <= (this.asteroidRad + this.dude.dudeWidth/2) && this.dude.jumpHeight <= this.asteroidRad && !asteroid.intersecting) {
+	      this.dude.dudeX -= this.asteroidPush;
+	      asteroid.intersecting = true;
+	    }
 	    });
 	  }
 
