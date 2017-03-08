@@ -47,12 +47,13 @@
 	const Game = __webpack_require__(1);
 
 	let game = new Game();
+	let canvas = document.getElementById("myCanvas");
 
 	setInterval(game.draw, 30);
 
 	// game.play();
 
-	document.addEventListener("click", game.play, false);
+	canvas.addEventListener("click", game.play, false);
 
 
 /***/ },
@@ -97,6 +98,7 @@
 	    this.time = this.maxTime;
 	    this.minsAndSecs = "";
 
+	    this.playing = false;
 	    this.gameOver = false;
 	    this.gameWon = false;
 	    this.gameLost = false;
@@ -347,11 +349,35 @@
 	      this.ctx.fillText("You lost!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
 	    }
 
+	    if (!this.playing) {
+
+	      let centX = this.canvasWidth/2;
+	      let centY = this.canvasHeight/2;
+
+	      // draws circle for play button
+
+	      this.ctx.fillStyle = "#8b0000";
+	      this.ctx.beginPath();
+	      this.ctx.arc(centX, centY, 100, 0, 2 * Math.PI);
+	      this.ctx.fill();
+
+	      // draws triangle for play button
+
+	      this.ctx.fillStyle = "white";
+	      this.ctx.beginPath();
+	      this.ctx.moveTo(centX-30, centY-50);
+	      this.ctx.lineTo(centX-30, centY+50);
+	      this.ctx.lineTo(centX+50, centY);
+	      this.ctx.fill();
+	    }
+
 	  }
 
 	  // end of draw function
 
 	  play() {
+
+	    this.playing = true;
 
 	    this.soundicon.className = "fa fa-volume-up";
 	    this.music.play();
@@ -359,7 +385,7 @@
 	    this.timeString();
 	    this.stars.starConstructor();
 
-	    document.removeEventListener("click", this.play, false);
+	    this.canvas.removeEventListener("click", this.play, false);
 	    document.addEventListener("keydown", this.keyDownHandler, false);
 	    document.addEventListener("keyup", this.keyUpHandler, false);
 

@@ -4,6 +4,7 @@
 
 canvas {
   margin: 20px 0 0px 30px;
+  cursor: pointer;
 }
 
 #footer {
