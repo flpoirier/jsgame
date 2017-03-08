@@ -89,6 +89,7 @@
 	    this.dude = new Dude(this.sprite, this.changeSprite);
 	    this.asteroids = new Asteroid(this.sun, this.dude);
 
+	    this.stone = document.getElementById("bridgeImg");
 	    this.bridgeX = this.canvasWidth / 2;
 	    this.bridgeY = this.canvasHeight + 400;
 	    this.bridgeRad = this.canvasWidth * 2/3;
@@ -249,7 +250,14 @@
 	    this.ctx.arc(this.sun.sunX, this.sun.sunY, this.sun.sunRad, 0, 2 * Math.PI);
 	    this.ctx.fill();
 
-	    this.ctx.strokeStyle = "#7b9095";
+	    // this.ctx.strokeStyle = "#7b9095";
+	    // this.ctx.lineWidth = 30;
+	    // this.ctx.beginPath();
+	    // this.ctx.arc(this.bridgeX, this.bridgeY, this.bridgeRad, Math.PI, 2 * Math.PI);
+	    // this.ctx.stroke();
+
+	    let pattern = this.ctx.createPattern(this.stone, 'repeat');
+	    this.ctx.strokeStyle = pattern;
 	    this.ctx.lineWidth = 30;
 	    this.ctx.beginPath();
 	    this.ctx.arc(this.bridgeX, this.bridgeY, this.bridgeRad, Math.PI, 2 * Math.PI);
