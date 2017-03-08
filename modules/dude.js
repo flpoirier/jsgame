@@ -47,20 +47,27 @@ class Dude {
 
     this.jumpDelay = this.jumpDelay.bind(this);
     this.walking = this.walking.bind(this);
+    this.changeSprite = this.changeSprite.bind(this);
   }
 
   jumpDelay() {
     this.justJumped = false;
   }
 
+  changeSprite() {
+    if (!this.jumping && !this.falling) {
+      this.walkFunc();
+    }
+  }
+
   walking() {
 
     if (this.leftPressed) {
       this.dudeX -= this.walkSpeed;
-      this.walkFunc();
+      this.changeSprite();
     } else if (this.rightPressed) {
       this.dudeX += this.walkSpeed;
-      this.walkFunc();
+      this.changeSprite();
     }
 
     // boundaries on where avatar can walk
