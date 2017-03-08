@@ -15,11 +15,13 @@ class Game {
     this.canvasWidth = 1100;
     this.canvasHeight = 750;
 
-    this.sprite = document.getElementById('sprite');
+    this.spriteNum = 0;
+    this.sprite = document.getElementById(this.spriteNum);
+    this.changeSprite = this.changeSprite.bind(this);
 
     this.sun = new Sun();
     this.stars = new Star();
-    this.dude = new Dude(this.sprite);
+    this.dude = new Dude(this.sprite, this.changeSprite);
     this.asteroids = new Asteroid(this.sun, this.dude);
 
     this.bridgeX = this.canvasWidth / 2;
@@ -56,6 +58,14 @@ class Game {
 
   youWon() {
     this.gameWon = true;
+  }
+
+  changeSprite() {
+    this.spriteNum += 1;
+    if (this.spriteNum > 7) {
+      this.spriteNum = 0;
+    }
+    this.sprite = document.getElementById(this.spriteNum);
   }
 
   // end of constants
@@ -289,8 +299,8 @@ class Game {
     setInterval(() => { this.stars.starshine(this.sun.blue); }, 30);
     setInterval(this.dude.walking, 30);
     setInterval(this.asteroids.collisionChecker, 30);
-    setInterval(this.asteroids.asteroidConstructor, 1000);
-    setInterval(this.asteroids.asteroidConstructor, 2500);
+    // setInterval(this.asteroids.asteroidConstructor, 1000);
+    // setInterval(this.asteroids.asteroidConstructor, 2500);
     setInterval(this.timeTick, 1000);
     setInterval(this.timeString, 1000);
     setInterval(this.draw, 30);

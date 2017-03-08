@@ -1,12 +1,13 @@
 class Dude {
 
-  constructor(img) {
+  constructor(img, walkFunc) {
     this.canvas = document.getElementById("myCanvas");
     this.ctx = this.canvas.getContext("2d");
     this.canvasWidth = 1100;
     this.canvasHeight = 750;
 
     this.sprite = img;
+    this.walkFunc = walkFunc;
 
     this.endMargin = 0;
     this.endPoint = this.canvasWidth - this.sprite.width/2;
@@ -56,8 +57,10 @@ class Dude {
 
     if (this.leftPressed) {
       this.dudeX -= this.walkSpeed;
+      this.walkFunc();
     } else if (this.rightPressed) {
       this.dudeX += this.walkSpeed;
+      this.walkFunc();
     }
 
     // boundaries on where avatar can walk

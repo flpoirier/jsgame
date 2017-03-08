@@ -72,11 +72,13 @@
 	    this.canvasWidth = 1100;
 	    this.canvasHeight = 750;
 
-	    this.sprite = document.getElementById('sprite');
+	    this.spriteNum = 0;
+	    this.sprite = document.getElementById(this.spriteNum);
+	    this.changeSprite = this.changeSprite.bind(this);
 
 	    this.sun = new Sun();
 	    this.stars = new Star();
-	    this.dude = new Dude(this.sprite);
+	    this.dude = new Dude(this.sprite, this.changeSprite);
 	    this.asteroids = new Asteroid(this.sun, this.dude);
 
 	    this.bridgeX = this.canvasWidth / 2;
@@ -113,6 +115,14 @@
 
 	  youWon() {
 	    this.gameWon = true;
+	  }
+
+	  changeSprite() {
+	    this.spriteNum += 1;
+	    if (this.spriteNum > 7) {
+	      this.spriteNum = 0;
+	    }
+	    this.sprite = document.getElementById(this.spriteNum);
 	  }
 
 	  // end of constants
@@ -346,8 +356,8 @@
 	    setInterval(() => { this.stars.starshine(this.sun.blue); }, 30);
 	    setInterval(this.dude.walking, 30);
 	    setInterval(this.asteroids.collisionChecker, 30);
-	    setInterval(this.asteroids.asteroidConstructor, 1000);
-	    setInterval(this.asteroids.asteroidConstructor, 2500);
+	    // setInterval(this.asteroids.asteroidConstructor, 1000);
+	    // setInterval(this.asteroids.asteroidConstructor, 2500);
 	    setInterval(this.timeTick, 1000);
 	    setInterval(this.timeString, 1000);
 	    setInterval(this.draw, 30);
@@ -571,6 +581,19 @@
 	    }
 	  }
 
+	  dudeIntersecting(asteroid) {
+
+	    // } else if ( (Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX + (this.dude.dudeWidth/2)), this.dude.dudeY))) < (this.asteroidRad + this.dude.dudeWidth) && !asteroid.intersecting) {
+	    //   this.dude.dudeX -= this.asteroidPush;
+	    //   asteroid.intersecting = true;
+	    // }
+	    // } else if (Math.abs(asteroid.X - (this.dude.dudeX + this.dude.dudeWidth/2)) <= (this.asteroidRad + this.dude.dudeWidth/2) && this.dude.jumpHeight <= this.asteroidRad && !asteroid.intersecting) {
+	    //   this.dude.dudeX -= this.asteroidPush;
+	    //   asteroid.intersecting = true;
+	    // }
+
+	  }
+
 	  collisionChecker() {
 	    this.asteroids.forEach((asteroid) => {
 	      if (asteroid.intersecting && asteroid.intersectingTimer < this.intersectionMaxTime) {
@@ -578,14 +601,10 @@
 	      } else if (asteroid.intersecting && asteroid.intersectingTimer === this.intersectionMaxTime) {
 	        asteroid.intersecting = false;
 	        asteroid.intersectingTimer = 0;
-	      // } else if ( (Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX + (this.dude.dudeWidth/2)), this.dude.dudeY))) < (this.asteroidRad + this.dude.dudeWidth) && !asteroid.intersecting) {
-	      //   this.dude.dudeX -= this.asteroidPush;
-	      //   asteroid.intersecting = true;
-	      // }
-	    } else if (Math.abs(asteroid.X - (this.dude.dudeX + this.dude.dudeWidth/2)) <= (this.asteroidRad + this.dude.dudeWidth/2) && this.dude.jumpHeight <= this.asteroidRad && !asteroid.intersecting) {
-	      this.dude.dudeX -= this.asteroidPush;
-	      asteroid.intersecting = true;
-	    }
+	      } else if (this.dudeIntersecting(asteroid) && !asteroid.intersecting) {
+	        this.dude.dudeX -= this.asteroidPush;
+	        asteroid.intersecting = true;
+	      }
 	    });
 	  }
 
@@ -600,13 +619,14 @@
 
 	class Dude {
 
-	  constructor(img) {
+	  constructor(img, walkFunc) {
 	    this.canvas = document.getElementById("myCanvas");
 	    this.ctx = this.canvas.getContext("2d");
 	    this.canvasWidth = 1100;
 	    this.canvasHeight = 750;
 
 	    this.sprite = img;
+	    this.walkFunc = walkFunc;
 
 	    this.endMargin = 0;
 	    this.endPoint = this.canvasWidth - this.sprite.width/2;
@@ -656,8 +676,10 @@
 
 	    if (this.leftPressed) {
 	      this.dudeX -= this.walkSpeed;
+	      this.walkFunc();
 	    } else if (this.rightPressed) {
 	      this.dudeX += this.walkSpeed;
+	      this.walkFunc();
 	    }
 
 	    // boundaries on where avatar can walk
