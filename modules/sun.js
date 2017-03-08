@@ -16,7 +16,7 @@ class Sun {
 
     this.sunRad = 20;
     this.sunX = this.canvasWidth / 2;
-    this.sunY = this.sunRad;
+    this.sunY = -this.sunRad;
     this.sunset = 0;
 
     this.red = 85;

@@ -48,6 +48,8 @@
 
 	let game = new Game();
 
+	// setInterval(game.draw, 30);
+
 	game.play();
 
 
@@ -390,7 +392,7 @@
 
 	    this.sunRad = 20;
 	    this.sunX = this.canvasWidth / 2;
-	    this.sunY = this.sunRad;
+	    this.sunY = -this.sunRad;
 	    this.sunset = 0;
 
 	    this.red = 85;
