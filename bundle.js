@@ -290,7 +290,9 @@
 	    this.ctx.translate(this.dude.dudeX, translatedDudeY);
 	    this.ctx.rotate(tiltAngle);
 
-	    this.ctx.drawImage(this.sprite, 0, 0, this.dude.dudeWidth, this.dude.dudeHeight);
+	    if (this.playing) {
+	      this.ctx.drawImage(this.sprite, 0, 0, this.dude.dudeWidth, this.dude.dudeHeight);
+	    }
 
 	    this.ctx.rotate(-tiltAngle);
 	    this.ctx.translate(-this.dude.dudeX, -translatedDudeY);
@@ -352,21 +354,21 @@
 	    if (!this.playing) {
 
 	      let centX = this.canvasWidth/2;
-	      let centY = this.canvasHeight/2;
+	      let centY = this.canvasHeight/2 - 50;
 
 	      // draws circle for play button
 
-	      this.ctx.fillStyle = "#8b0000";
+	      this.ctx.fillStyle = "#841f27";
 	      this.ctx.beginPath();
-	      this.ctx.arc(centX, centY, 100, 0, 2 * Math.PI);
+	      this.ctx.arc(centX, centY, 70, 0, 2 * Math.PI);
 	      this.ctx.fill();
 
 	      // draws triangle for play button
 
 	      this.ctx.fillStyle = "white";
 	      this.ctx.beginPath();
-	      this.ctx.moveTo(centX-30, centY-50);
-	      this.ctx.lineTo(centX-30, centY+50);
+	      this.ctx.moveTo(centX-30, centY-40);
+	      this.ctx.lineTo(centX-30, centY+40);
 	      this.ctx.lineTo(centX+50, centY);
 	      this.ctx.fill();
 	    }
