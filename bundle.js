@@ -48,9 +48,11 @@
 
 	let game = new Game();
 
-	// setInterval(game.draw, 30);
+	setInterval(game.draw, 30);
 
-	game.play();
+	// game.play();
+
+	document.addEventListener("click", game.play, false);
 
 
 /***/ },
@@ -73,6 +75,9 @@
 	    this.ctx = this.canvas.getContext("2d");
 	    this.canvasWidth = 1100;
 	    this.canvasHeight = 750;
+
+	    this.soundicon = document.getElementById("soundicon");
+	    this.music = document.getElementById("audio");
 
 	    this.spriteNum = 0;
 	    this.sprite = document.getElementById(this.spriteNum);
@@ -348,9 +353,13 @@
 
 	  play() {
 
+	    this.soundicon.className = "fa fa-volume-up";
+	    this.music.play();
+
 	    this.timeString();
 	    this.stars.starConstructor();
 
+	    document.removeEventListener("click", this.play, false);
 	    document.addEventListener("keydown", this.keyDownHandler, false);
 	    document.addEventListener("keyup", this.keyUpHandler, false);
 

@@ -2,6 +2,8 @@ const Game = require('./game.js');
 
 let game = new Game();
 
-// setInterval(game.draw, 30);
+setInterval(game.draw, 30);
 
-game.play();
+// game.play();
+
+document.addEventListener("click", game.play, false);
