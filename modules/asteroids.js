@@ -69,18 +69,16 @@ class Asteroid {
 
   dudeIntersecting(asteroid) {
 
-    // } else if ( (Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX + (this.dude.dudeWidth/2)), this.dude.dudeY))) < (this.asteroidRad + this.dude.dudeWidth) && !asteroid.intersecting) {
-    //   this.dude.dudeX -= this.asteroidPush;
-    //   asteroid.intersecting = true;
-    // }
-    // } else if (Math.abs(asteroid.X - (this.dude.dudeX + this.dude.dudeWidth/2)) <= (this.asteroidRad + this.dude.dudeWidth/2) && this.dude.jumpHeight <= this.asteroidRad && !asteroid.intersecting) {
-    //   this.dude.dudeX -= this.asteroidPush;
-    //   asteroid.intersecting = true;
-    // }
+    if ((Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX+this.dude.dudeWidth), this.dude.dudeY)) + 2) < this.asteroidRad && !asteroid.intersecting) {
+      return true;
+    }
+
+    return false;
 
   }
 
   collisionChecker() {
+    let ast = [];
     this.asteroids.forEach((asteroid) => {
       if (asteroid.intersecting && asteroid.intersectingTimer < this.intersectionMaxTime) {
         asteroid.intersectingTimer += 1;
@@ -91,7 +89,11 @@ class Asteroid {
         this.dude.dudeX -= this.asteroidPush;
         asteroid.intersecting = true;
       }
+      if (asteroid.X >= -10) {
+        ast.push(asteroid);
+      }
     });
+    this.asteroids = ast;
   }
 
 }

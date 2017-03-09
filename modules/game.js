@@ -258,12 +258,12 @@ class Game {
     this.asteroids.asteroids.forEach((asteroid) => {
 
       if (!asteroid.intersecting) {
-        this.ctx.fillStyle = asteroid.color;
+        // this.ctx.fillStyle = asteroid.color;
+        this.ctx.fillStyle = this.pattern;
       } else {
         this.ctx.fillStyle = asteroid.intersectingColor;
       }
 
-      this.ctx.fillStyle = this.pattern;
       this.ctx.beginPath();
       this.ctx.arc(asteroid.X, asteroid.Y, this.asteroids.asteroidRad, 0, 2 * Math.PI);
       this.ctx.fill();
