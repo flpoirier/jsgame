@@ -521,7 +521,7 @@
 	    this.bridgeHeight = Math.floor(this.bridgeRad + this.asteroidRad);
 
 	    this.stars = [];
-	    this.numStars = 800;
+	    this.numStars = 400;
 	    this.twinkle = 0;
 	    this.starsOut = 0;
 
@@ -539,7 +539,7 @@
 	  starConstructor () {
 	    for (let star = 0; star < this.numStars; star++) {
 	      let starX = this.getRandomInt(0, this.canvasWidth);
-	      let starY = this.getRandomInt(-this.canvasHeight, this.canvasHeight);
+	      let starY = this.getRandomInt(0, this.canvasHeight);
 	      let starRad = this.getRandomInt(1,3);
 	      this.stars.push({starX: starX, starY: starY, starRad: starRad});
 	    }
@@ -650,7 +650,6 @@
 
 	  dudeIntersecting(asteroid) {
 
-	    debugger
 	    if ((Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX+this.dude.dudeWidth), this.dude.dudeY)) + 2) < this.asteroidRad && !asteroid.intersecting) {
 	      return true;
 	    }
