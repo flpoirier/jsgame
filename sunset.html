@@ -7,7 +7,14 @@
     <link rel="stylesheet" href="stylesheet.css">
   </head>
   <body>
-    <canvas id="myCanvas" width="1100" height="750"></canvas>
+    <div style="position: relative;">
+      <canvas id="layer1" width="1100" height="750"
+      style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+      <canvas id="layer2" width="1100" height="750"
+      style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
+      <canvas id="layer3" width="1100" height="750"
+      style="position: absolute; left: 0; top: 0; z-index: 2;"></canvas>
+    </div>
 
       <div style="display:none;">
         <img id="0" src="modules/sprite_imgs/tmp-0.gif" width="75" height="75">

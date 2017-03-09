@@ -1,7 +1,7 @@
 class Asteroid {
 
   constructor(sun, dude) {
-    this.canvas = document.getElementById("myCanvas");
+    this.canvas = document.getElementById("layer3");
     this.ctx = this.canvas.getContext("2d");
     this.canvasWidth = 1100;
     this.canvasHeight = 750;
