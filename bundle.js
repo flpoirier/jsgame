@@ -331,15 +331,15 @@
 	    this.dude.blx = this.dude.brx - r * Math.cos(tiltAngle);
 	    this.dude.bly = this.dude.bry - r * Math.sin(tiltAngle);
 
-	    this.ctx.lineWidth = 3;
-	    this.ctx.strokeStyle = "white";
-	    this.ctx.beginPath();
-	    this.ctx.moveTo(this.dude.tlx,this.dude.tly);
-	    this.ctx.lineTo(this.dude.trx,this.dude.try);
-	    this.ctx.lineTo(this.dude.brx,this.dude.bry);
-	    this.ctx.lineTo(this.dude.blx,this.dude.bly);
-	    this.ctx.lineTo(this.dude.tlx,this.dude.tly);
-	    this.ctx.stroke();
+	    // this.ctx.lineWidth = 3;
+	    // this.ctx.strokeStyle = "white";
+	    // this.ctx.beginPath();
+	    // this.ctx.moveTo(this.dude.tlx,this.dude.tly);
+	    // this.ctx.lineTo(this.dude.trx,this.dude.try);
+	    // this.ctx.lineTo(this.dude.brx,this.dude.bry);
+	    // this.ctx.lineTo(this.dude.blx,this.dude.bly);
+	    // this.ctx.lineTo(this.dude.tlx,this.dude.tly);
+	    // this.ctx.stroke();
 
 
 	    this.asteroids.asteroids.forEach((asteroid) => {
@@ -677,11 +677,16 @@
 
 	  dudeIntersecting(asteroid) {
 
-	    if ((Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX+this.dude.dudeWidth), (this.dude.dudeY-this.dude.dudeHeight/2))) + 2) < this.asteroidRad && !asteroid.intersecting) {
-	      return true;
-	    }
-
-	    return false;
+	    this.ctx.lineWidth = 0.01;
+	    this.ctx.strokeStyle = "white";
+	    this.ctx.beginPath();
+	    this.ctx.moveTo(this.dude.tlx,this.dude.tly);
+	    this.ctx.lineTo(this.dude.trx,this.dude.try);
+	    this.ctx.lineTo(this.dude.brx,this.dude.bry);
+	    this.ctx.lineTo(this.dude.blx,this.dude.bly);
+	    this.ctx.lineTo(this.dude.tlx,this.dude.tly);
+	    this.ctx.stroke();
+	    return this.ctx.isPointInPath(asteroid.X, asteroid.Y);
 
 	  }
 
