@@ -22,6 +22,10 @@ class Game {
     this.sprite = document.getElementById(this.spriteNum);
     this.changeSprite = this.changeSprite.bind(this);
 
+    // bonus round img:
+    // this.nick = document.getElementById("nick");
+    // this.nickRad = this.nick.width/2;
+
     this.sun = new Sun();
     this.stars = new Star();
     this.dude = new Dude(this.sprite, this.changeSprite);
@@ -188,6 +192,11 @@ class Game {
     this.ctx.arc(this.sun.sunX, this.sun.sunY, this.sun.sunRad, 0, 2 * Math.PI);
     this.ctx.fill();
 
+    // bonus sun logic:
+    // let nickX = this.sun.sunX - this.nickRad;
+    // let nickY = this.sun.sunY - this.nickRad;
+    // this.ctx.drawImage(this.nick, nickX, nickY, this.nick.width, this.nick.height);
+
     // this.ctx.strokeStyle = "#7b9095";
     // this.ctx.lineWidth = 30;
     // this.ctx.beginPath();
@@ -254,6 +263,9 @@ class Game {
       this.ctx.beginPath();
       this.ctx.arc(asteroid.X, asteroid.Y, this.asteroids.asteroidRad, 0, 2 * Math.PI);
       this.ctx.fill();
+
+      // bonus asteroid logic:
+      // this.ctx.drawImage(this.nick, asteroid.X, asteroid.Y-55, 65, 65);
 
       if (asteroid.Y >= (asteroid.collisionPoint - this.asteroids.asteroidSpeed)) {
         asteroid.falling = false;
@@ -341,8 +353,8 @@ class Game {
     setInterval(() => { this.stars.starshine(this.sun.blue); }, 30);
     setInterval(this.dude.walking, 30);
     setInterval(this.asteroids.collisionChecker, 30);
-    // setInterval(this.asteroids.asteroidConstructor, 1000);
-    // setInterval(this.asteroids.asteroidConstructor, 2500);
+    setInterval(this.asteroids.asteroidConstructor, 1000);
+    setInterval(this.asteroids.asteroidConstructor, 2500);
     setInterval(this.timeTick, 1000);
     setInterval(this.timeString, 1000);
     setInterval(this.draw, 30);

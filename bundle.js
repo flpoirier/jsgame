@@ -84,6 +84,10 @@
 	    this.sprite = document.getElementById(this.spriteNum);
 	    this.changeSprite = this.changeSprite.bind(this);
 
+	    // bonus round img:
+	    // this.nick = document.getElementById("nick");
+	    // this.nickRad = this.nick.width/2;
+
 	    this.sun = new Sun();
 	    this.stars = new Star();
 	    this.dude = new Dude(this.sprite, this.changeSprite);
@@ -250,6 +254,11 @@
 	    this.ctx.arc(this.sun.sunX, this.sun.sunY, this.sun.sunRad, 0, 2 * Math.PI);
 	    this.ctx.fill();
 
+	    // bonus sun logic:
+	    // let nickX = this.sun.sunX - this.nickRad;
+	    // let nickY = this.sun.sunY - this.nickRad;
+	    // this.ctx.drawImage(this.nick, nickX, nickY, this.nick.width, this.nick.height);
+
 	    // this.ctx.strokeStyle = "#7b9095";
 	    // this.ctx.lineWidth = 30;
 	    // this.ctx.beginPath();
@@ -316,6 +325,9 @@
 	      this.ctx.beginPath();
 	      this.ctx.arc(asteroid.X, asteroid.Y, this.asteroids.asteroidRad, 0, 2 * Math.PI);
 	      this.ctx.fill();
+
+	      // bonus asteroid logic:
+	      // this.ctx.drawImage(this.nick, asteroid.X, asteroid.Y-55, 65, 65);
 
 	      if (asteroid.Y >= (asteroid.collisionPoint - this.asteroids.asteroidSpeed)) {
 	        asteroid.falling = false;
@@ -403,8 +415,8 @@
 	    setInterval(() => { this.stars.starshine(this.sun.blue); }, 30);
 	    setInterval(this.dude.walking, 30);
 	    setInterval(this.asteroids.collisionChecker, 30);
-	    // setInterval(this.asteroids.asteroidConstructor, 1000);
-	    // setInterval(this.asteroids.asteroidConstructor, 2500);
+	    setInterval(this.asteroids.asteroidConstructor, 1000);
+	    setInterval(this.asteroids.asteroidConstructor, 2500);
 	    setInterval(this.timeTick, 1000);
 	    setInterval(this.timeString, 1000);
 	    setInterval(this.draw, 30);
@@ -439,6 +451,9 @@
 	    this.sunX = this.canvasWidth / 2;
 	    this.sunY = -this.sunRad;
 	    this.sunset = 0;
+
+	    // during bonus round:
+	    // this.sunY = -85;
 
 	    this.red = 85;
 	    this.green = 200;
@@ -571,7 +586,7 @@
 	    this.endPoint = this.canvasWidth - this.endMargin;
 
 	    this.asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
-	    this.asteroidSpeed = 20;
+	    this.asteroidSpeed = 10;
 	    this.asteroidRad = 15;
 	    this.asteroidPush = 60;
 	    this.intersectionMaxTime = 15;

@@ -19,6 +19,9 @@ class Sun {
     this.sunY = -this.sunRad;
     this.sunset = 0;
 
+    // during bonus round:
+    // this.sunY = -85;
+
     this.red = 85;
     this.green = 200;
     this.blue = 255;
