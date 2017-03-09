@@ -18,10 +18,13 @@ class Star {
     this.numStars = 400;
     this.twinkle = 0;
     this.starsOut = 0;
+    this.star1Idx = 0;
+    this.star2Idx = 1;
 
     this.getRandomInt = this.getRandomInt.bind(this);
     this.starConstructor = this.starConstructor.bind(this);
     this.starshine = this.starshine.bind(this);
+    this.incrementStars = this.incrementStars.bind(this);
   }
 
   getRandomInt(min, max) {
@@ -37,6 +40,11 @@ class Star {
       let starRad = this.getRandomInt(1,3);
       this.stars.push({starX: starX, starY: starY, starRad: starRad});
     }
+  }
+
+  incrementStars() {
+    this.star1Idx += 2;
+    this.star2Idx += 2;
   }
 
   starshine(blue) {
