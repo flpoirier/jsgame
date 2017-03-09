@@ -69,7 +69,7 @@ class Asteroid {
 
   dudeIntersecting(asteroid) {
 
-    if ((Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX+this.dude.dudeWidth), this.dude.dudeY)) + 2) < this.asteroidRad && !asteroid.intersecting) {
+    if ((Math.floor(this.distance(asteroid.X, asteroid.Y, (this.dude.dudeX+this.dude.dudeWidth), (this.dude.dudeY-this.dude.dudeHeight/2))) + 2) < this.asteroidRad && !asteroid.intersecting) {
       return true;
     }
 

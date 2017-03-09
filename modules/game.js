@@ -254,15 +254,22 @@ class Game {
     this.ctx.rotate(-tiltAngle);
     this.ctx.translate(-this.dude.dudeX, -translatedDudeY);
 
+    // this.ctx.fillStyle = "purple";
+    // this.ctx.beginPath();
+    // this.ctx.arc(this.dude.dudeX, translatedDudeY, 10, 0, 2 * Math.PI);
+    // this.ctx.fill();
+
 
     this.asteroids.asteroids.forEach((asteroid) => {
 
       if (!asteroid.intersecting) {
         // this.ctx.fillStyle = asteroid.color;
-        this.ctx.fillStyle = this.pattern;
+        this.ctx.fillStyle = (this.pattern || asteroid.color);
       } else {
         this.ctx.fillStyle = asteroid.intersectingColor;
       }
+
+
 
       this.ctx.beginPath();
       this.ctx.arc(asteroid.X, asteroid.Y, this.asteroids.asteroidRad, 0, 2 * Math.PI);
@@ -321,7 +328,7 @@ class Game {
       // draws circle for play button
 
       // this.ctx.fillStyle = "#841f27";
-      this.ctx.fillStyle = this.pattern;
+      this.ctx.fillStyle = (this.pattern || "#841f27");
       this.ctx.beginPath();
       this.ctx.arc(centX, centY, 70, 0, 2 * Math.PI);
       this.ctx.fill();
