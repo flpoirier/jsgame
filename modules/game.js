@@ -32,6 +32,8 @@ class Game {
     this.asteroids = new Asteroid(this.sun, this.dude);
 
     this.stone = document.getElementById("bridgeImg");
+    this.pattern = this.ctx.createPattern(this.stone, 'repeat');
+
     this.bridgeX = this.canvasWidth / 2;
     this.bridgeY = this.canvasHeight + 400;
     this.bridgeRad = this.canvasWidth * 2/3;
@@ -203,8 +205,8 @@ class Game {
     // this.ctx.arc(this.bridgeX, this.bridgeY, this.bridgeRad, Math.PI, 2 * Math.PI);
     // this.ctx.stroke();
 
-    let pattern = this.ctx.createPattern(this.stone, 'repeat');
-    this.ctx.strokeStyle = pattern;
+    // this.ctx.strokeStyle = this.pattern;
+    this.ctx.strokeStyle = "#7b9095";
     this.ctx.lineWidth = 30;
     this.ctx.beginPath();
     this.ctx.arc(this.bridgeX, this.bridgeY, this.bridgeRad, Math.PI, 2 * Math.PI);
@@ -260,6 +262,8 @@ class Game {
       } else {
         this.ctx.fillStyle = asteroid.intersectingColor;
       }
+
+      this.ctx.fillStyle = this.pattern;
       this.ctx.beginPath();
       this.ctx.arc(asteroid.X, asteroid.Y, this.asteroids.asteroidRad, 0, 2 * Math.PI);
       this.ctx.fill();
@@ -316,7 +320,8 @@ class Game {
 
       // draws circle for play button
 
-      this.ctx.fillStyle = "#841f27";
+      // this.ctx.fillStyle = "#841f27";
+      this.ctx.fillStyle = this.pattern;
       this.ctx.beginPath();
       this.ctx.arc(centX, centY, 70, 0, 2 * Math.PI);
       this.ctx.fill();
