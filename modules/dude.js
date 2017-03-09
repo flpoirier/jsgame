@@ -27,6 +27,17 @@ class Dude {
     this.dudeDx = 1;
     this.walkSpeed = 2;
 
+    // coordinates for four points of image: top left x, bottom right y, etc.
+
+    this.tlx = 0;
+    this.tly = 0;
+    this.trx = 0;
+    this.try = 0;
+    this.blx = 0;
+    this.bly = 0;
+    this.brx = 0;
+    this.bry = 0;
+
     this.jumping = false;
     this.falling = false;
     this.justJumped = false;

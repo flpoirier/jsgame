@@ -254,10 +254,30 @@ class Game {
     this.ctx.rotate(-tiltAngle);
     this.ctx.translate(-this.dude.dudeX, -translatedDudeY);
 
-    // this.ctx.fillStyle = "purple";
-    // this.ctx.beginPath();
-    // this.ctx.arc(this.dude.dudeX, translatedDudeY, 10, 0, 2 * Math.PI);
-    // this.ctx.fill();
+
+    let r = this.dude.dudeWidth;
+
+    this.dude.tlx = this.dude.dudeX;
+    this.dude.tly = translatedDudeY;
+
+    this.dude.trx = this.dude.tlx + r * Math.cos(tiltAngle);
+    this.dude.try = this.dude.tly + r * Math.sin(tiltAngle);
+
+    this.dude.brx = this.dude.trx + r * Math.cos(dudeAngle);
+    this.dude.bry = this.dude.try + r * Math.sin(dudeAngle);
+
+    this.dude.blx = this.dude.brx - r * Math.cos(tiltAngle);
+    this.dude.bly = this.dude.bry - r * Math.sin(tiltAngle);
+
+    this.ctx.lineWidth = 3;
+    this.ctx.strokeStyle = "white";
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.dude.tlx,this.dude.tly);
+    this.ctx.lineTo(this.dude.trx,this.dude.try);
+    this.ctx.lineTo(this.dude.brx,this.dude.bry);
+    this.ctx.lineTo(this.dude.blx,this.dude.bly);
+    this.ctx.lineTo(this.dude.tlx,this.dude.tly);
+    this.ctx.stroke();
 
 
     this.asteroids.asteroids.forEach((asteroid) => {
@@ -351,8 +371,8 @@ class Game {
 
     this.playing = true;
 
-    this.soundicon.className = "fa fa-volume-up";
-    this.music.play();
+    // this.soundicon.className = "fa fa-volume-up";
+    // this.music.play();
 
     this.timeString();
     this.stars.starConstructor();
