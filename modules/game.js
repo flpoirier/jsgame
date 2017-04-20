@@ -71,7 +71,7 @@ class Game {
     this.dude.time = this.time;
 
     this.erase = this.erase.bind(this);
-    this.erasing = false;
+    this.erasing = null;
   }
 
   youLose() {
@@ -371,12 +371,10 @@ class Game {
     this.ctx3.fillText(`${this.minsAndSecs}`, 40, 60);
 
     if (this.gameWon) {
-      this.erasing = true;
       this.ctx3.fillStyle = "white";
       this.ctx3.font = "60px sans-serif";
       this.ctx3.fillText("You won!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
     } else if (this.gameLost) {
-      this.erasing = true;
       this.ctx3.fillStyle = "white";
       this.ctx3.font = "60px sans-serif";
       this.ctx3.fillText("You lost!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
@@ -405,19 +403,17 @@ class Game {
       this.ctx3.fill();
     }
 
-    if (this.erasing) {
-      // setTimeout(this.erase, 5000);
-      clearInterval(this.drawingFront);
-      clearInterval(this.drawingStars);
-      setInterval(this.eraseStars, 100);
+    if (!this.erasing && (this.gameWon || this.gameLost)) {
+      this.erasing = setTimeout(this.erase, 5000);
     }
 
   }
 
   erase() {
     clearInterval(this.drawingFront);
+    clearInterval(this.drawingSky);
     clearInterval(this.drawingStars);
-    setInterval(this.eraseStars, 1000);
+    setInterval(this.eraseStars, 100);
   }
 
   // end of draw function
@@ -445,7 +441,7 @@ class Game {
     setInterval(this.timeTick, 1000);
     setInterval(this.timeString, 1000);
     this.drawingFront = setInterval(this.drawFront, 30);
-    setInterval(this.drawSky, 30);
+    this.drawingSky = setInterval(this.drawSky, 30);
     this.drawingStars = setInterval(this.drawStars, 100);
 
   }
