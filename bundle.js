@@ -510,7 +510,7 @@ class Asteroid {
     this.endPoint = this.canvasWidth - this.endMargin;
 
     this.asteroidColors = ["red", "orange", "yellow", "green", "blue", "purple"];
-    this.asteroidSpeed = 10;
+    this.asteroidSpeed = 20;
     this.asteroidRad = 15;
     this.asteroidPush = 60;
     this.intersectionMaxTime = 15;
