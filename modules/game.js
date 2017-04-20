@@ -155,6 +155,7 @@ class Game {
   }
 
   drawSky() {
+    debugger
     this.ctx1.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.ctx1.fillStyle = `rgb(${this.sun.red},${this.sun.green},${this.sun.blue})`;
     this.ctx1.fillRect(0,0,this.canvasWidth,this.canvasHeight);
@@ -413,11 +414,11 @@ class Game {
     // clearInterval(this.drawingFront);
     // clearInterval(this.drawingSky);
     clearInterval(this.drawingStars);
-    clearInterval(this.sunset);
+    clearInterval(this.sunsett);
     clearInterval(this.makeAsteroids1);
     clearInterval(this.makeAsteroids2);
     setInterval(this.eraseStars, 100);
-    this.sunset = setInterval(this.sun.sunup, 30);
+    setInterval(this.sun.sunup, 30);
   }
 
   // end of draw function
@@ -436,7 +437,7 @@ class Game {
     document.addEventListener("keydown", this.keyDownHandler, false);
     document.addEventListener("keyup", this.keyUpHandler, false);
 
-    this.sunset = setInterval(this.sun.sundown, 30);
+    this.sunsett = setInterval(this.sun.sundown, 30);
     // setInterval(() => { this.stars.starshine(this.sun.blue); }, 30);
     setInterval(this.dude.walking, 30);
     setInterval(this.asteroids.collisionChecker, 30);
