@@ -69,8 +69,8 @@ class Asteroid {
 
   dudeIntersecting(asteroid) {
 
-    this.ctx.lineWidth = 0.01;
-    this.ctx.strokeStyle = "white";
+    this.ctx.lineWidth = 1;
+    this.ctx.strokeStyle = 'rgba(00,00,00,0)';
     this.ctx.beginPath();
     this.ctx.moveTo(this.dude.tlx,this.dude.tly);
     this.ctx.lineTo(this.dude.trx,this.dude.try);
