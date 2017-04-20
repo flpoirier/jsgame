@@ -488,8 +488,10 @@ class Game {
     clearInterval(this.sunsett);
     clearInterval(this.makeAsteroids1);
     clearInterval(this.makeAsteroids2);
+    clearInterval(this.dudeWalking);
     setInterval(this.eraseStars, 100);
     setInterval(this.sun.sunup, 30);
+    setInterval(this.dude.moonwalk, 30);
   }
 
   // end of draw function
@@ -510,7 +512,7 @@ class Game {
 
     this.sunsett = setInterval(this.sun.sundown, 30);
     // setInterval(() => { this.stars.starshine(this.sun.blue); }, 30);
-    setInterval(this.dude.walking, 30);
+    this.dudeWalking = setInterval(this.dude.walking, 30);
     setInterval(this.asteroids.collisionChecker, 30);
     this.makeAsteroids1 = setInterval(this.asteroids.asteroidConstructor, 1000);
     this.makeAsteroids2 = setInterval(this.asteroids.asteroidConstructor, 2500);
@@ -702,6 +704,7 @@ class Dude {
 
     this.jumpDelay = this.jumpDelay.bind(this);
     this.walking = this.walking.bind(this);
+    this.moonwalk = this.moonwalk.bind(this);
     this.changeSprite = this.changeSprite.bind(this);
   }
 
@@ -712,6 +715,13 @@ class Dude {
   changeSprite() {
     if (!this.jumping && !this.falling) {
       this.walkFunc();
+    }
+  }
+
+  moonwalk() {
+    if (this.dudeX > this.endMargin) {
+      this.dudeX -= this.walkSpeed;
+      this.changeSprite();
     }
   }
 

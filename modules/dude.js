@@ -58,6 +58,7 @@ class Dude {
 
     this.jumpDelay = this.jumpDelay.bind(this);
     this.walking = this.walking.bind(this);
+    this.moonwalk = this.moonwalk.bind(this);
     this.changeSprite = this.changeSprite.bind(this);
   }
 
@@ -68,6 +69,13 @@ class Dude {
   changeSprite() {
     if (!this.jumping && !this.falling) {
       this.walkFunc();
+    }
+  }
+
+  moonwalk() {
+    if (this.dudeX > this.endMargin) {
+      this.dudeX -= this.walkSpeed;
+      this.changeSprite();
     }
   }
 
