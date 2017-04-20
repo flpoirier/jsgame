@@ -227,7 +227,6 @@ class Game {
   }
 
   drawSky() {
-    debugger
     this.ctx1.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.ctx1.fillStyle = `rgb(${this.sun.red},${this.sun.green},${this.sun.blue})`;
     this.ctx1.fillRect(0,0,this.canvasWidth,this.canvasHeight);
@@ -924,7 +923,6 @@ class Sun {
   }
 
   sundown() {
-    debugger
     this.sunset += 1;
 
     if (this.sunset >= 8 && this.blue > 40) {
@@ -942,7 +940,6 @@ class Sun {
   }
 
   sunup() {
-    debugger
 
     this.sunset += 1;
 
@@ -953,8 +950,10 @@ class Sun {
       this.sunset = 0;
     }
 
-    if (this.sunY > 1) {
+    if (this.sunY > this.canvasHeight) {
       this.sunY -= 2;
+    } else if (this.sunY > -this.sunRad){
+      this.sunY -= 1;
     }
   }
 

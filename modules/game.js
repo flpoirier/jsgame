@@ -155,7 +155,6 @@ class Game {
   }
 
   drawSky() {
-    debugger
     this.ctx1.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.ctx1.fillStyle = `rgb(${this.sun.red},${this.sun.green},${this.sun.blue})`;
     this.ctx1.fillRect(0,0,this.canvasWidth,this.canvasHeight);
