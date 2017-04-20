@@ -63,11 +63,15 @@ class Game {
     this.drawStars = this.drawStars.bind(this);
     this.drawFront = this.drawFront.bind(this);
     this.play = this.play.bind(this);
+    this.eraseStars = this.eraseStars.bind(this);
 
     this.dude.gameWon = this.gameWon;
     this.dude.youWon = this.youWon;
     this.dude.youLose = this.youLose;
     this.dude.time = this.time;
+
+    this.erase = this.erase.bind(this);
+    this.erasing = false;
   }
 
   youLose() {
@@ -176,6 +180,19 @@ class Game {
 
     }
 
+  }
+
+  eraseStars() {
+
+    this.stars.decrementStars();
+
+    let star1 = this.stars.stars[this.stars.star1Idx];
+    let rad = star1.starRad;
+    this.ctx2.clearRect(star1.starX-rad, star1.starY-rad, rad*2, rad*2);
+
+    let star2 = this.stars.stars[this.stars.star2Idx];
+    rad = star2.starRad;
+    this.ctx2.clearRect(star2.starX-rad, star2.starY-rad, rad*2, rad*2);
   }
 
   drawFront() {
@@ -354,10 +371,12 @@ class Game {
     this.ctx3.fillText(`${this.minsAndSecs}`, 40, 60);
 
     if (this.gameWon) {
+      this.erasing = true;
       this.ctx3.fillStyle = "white";
       this.ctx3.font = "60px sans-serif";
       this.ctx3.fillText("You won!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
     } else if (this.gameLost) {
+      this.erasing = true;
       this.ctx3.fillStyle = "white";
       this.ctx3.font = "60px sans-serif";
       this.ctx3.fillText("You lost!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
@@ -386,6 +405,19 @@ class Game {
       this.ctx3.fill();
     }
 
+    if (this.erasing) {
+      // setTimeout(this.erase, 5000);
+      clearInterval(this.drawingFront);
+      clearInterval(this.drawingStars);
+      setInterval(this.eraseStars, 100);
+    }
+
+  }
+
+  erase() {
+    clearInterval(this.drawingFront);
+    clearInterval(this.drawingStars);
+    setInterval(this.eraseStars, 1000);
   }
 
   // end of draw function
@@ -412,9 +444,9 @@ class Game {
     setInterval(this.asteroids.asteroidConstructor, 2500);
     setInterval(this.timeTick, 1000);
     setInterval(this.timeString, 1000);
-    setInterval(this.drawFront, 30);
+    this.drawingFront = setInterval(this.drawFront, 30);
     setInterval(this.drawSky, 30);
-    setInterval(this.drawStars, 100);
+    this.drawingStars = setInterval(this.drawStars, 100);
 
   }
 }

@@ -135,11 +135,15 @@ class Game {
     this.drawStars = this.drawStars.bind(this);
     this.drawFront = this.drawFront.bind(this);
     this.play = this.play.bind(this);
+    this.eraseStars = this.eraseStars.bind(this);
 
     this.dude.gameWon = this.gameWon;
     this.dude.youWon = this.youWon;
     this.dude.youLose = this.youLose;
     this.dude.time = this.time;
+
+    this.erase = this.erase.bind(this);
+    this.erasing = false;
   }
 
   youLose() {
@@ -248,6 +252,19 @@ class Game {
 
     }
 
+  }
+
+  eraseStars() {
+
+    this.stars.decrementStars();
+
+    let star1 = this.stars.stars[this.stars.star1Idx];
+    let rad = star1.starRad;
+    this.ctx2.clearRect(star1.starX-rad, star1.starY-rad, rad*2, rad*2);
+
+    let star2 = this.stars.stars[this.stars.star2Idx];
+    rad = star2.starRad;
+    this.ctx2.clearRect(star2.starX-rad, star2.starY-rad, rad*2, rad*2);
   }
 
   drawFront() {
@@ -426,10 +443,12 @@ class Game {
     this.ctx3.fillText(`${this.minsAndSecs}`, 40, 60);
 
     if (this.gameWon) {
+      this.erasing = true;
       this.ctx3.fillStyle = "white";
       this.ctx3.font = "60px sans-serif";
       this.ctx3.fillText("You won!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
     } else if (this.gameLost) {
+      this.erasing = true;
       this.ctx3.fillStyle = "white";
       this.ctx3.font = "60px sans-serif";
       this.ctx3.fillText("You lost!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
@@ -458,6 +477,19 @@ class Game {
       this.ctx3.fill();
     }
 
+    if (this.erasing) {
+      // setTimeout(this.erase, 5000);
+      clearInterval(this.drawingFront);
+      clearInterval(this.drawingStars);
+      setInterval(this.eraseStars, 100);
+    }
+
+  }
+
+  erase() {
+    clearInterval(this.drawingFront);
+    clearInterval(this.drawingStars);
+    setInterval(this.eraseStars, 1000);
   }
 
   // end of draw function
@@ -484,9 +516,9 @@ class Game {
     setInterval(this.asteroids.asteroidConstructor, 2500);
     setInterval(this.timeTick, 1000);
     setInterval(this.timeString, 1000);
-    setInterval(this.drawFront, 30);
+    this.drawingFront = setInterval(this.drawFront, 30);
     setInterval(this.drawSky, 30);
-    setInterval(this.drawStars, 100);
+    this.drawingStars = setInterval(this.drawStars, 100);
 
   }
 }
@@ -777,6 +809,7 @@ class Star {
     this.starConstructor = this.starConstructor.bind(this);
     this.starshine = this.starshine.bind(this);
     this.incrementStars = this.incrementStars.bind(this);
+    this.decrementStars = this.decrementStars.bind(this);
   }
 
   getRandomInt(min, max) {
@@ -797,6 +830,19 @@ class Star {
   incrementStars() {
     this.star1Idx += 2;
     this.star2Idx += 2;
+  }
+
+  decrementStars() {
+    if (this.star1Idx === 0) {
+      return;
+    }
+    if (this.star2Idx >= this.numStars) {
+      this.star2Idx = this.numStars - 1;
+      this.star1Idx = this.numStars - 2;
+    } else {
+      this.star1Idx -= 2;
+      this.star2Idx -= 2;
+    }
   }
 
   starshine(blue) {

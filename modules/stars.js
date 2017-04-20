@@ -25,6 +25,7 @@ class Star {
     this.starConstructor = this.starConstructor.bind(this);
     this.starshine = this.starshine.bind(this);
     this.incrementStars = this.incrementStars.bind(this);
+    this.decrementStars = this.decrementStars.bind(this);
   }
 
   getRandomInt(min, max) {
@@ -45,6 +46,19 @@ class Star {
   incrementStars() {
     this.star1Idx += 2;
     this.star2Idx += 2;
+  }
+
+  decrementStars() {
+    if (this.star1Idx === 0) {
+      return;
+    }
+    if (this.star2Idx >= this.numStars) {
+      this.star2Idx = this.numStars - 1;
+      this.star1Idx = this.numStars - 2;
+    } else {
+      this.star1Idx -= 2;
+      this.star2Idx -= 2;
+    }
   }
 
   starshine(blue) {
