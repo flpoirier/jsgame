@@ -64,6 +64,8 @@ class Game {
     this.drawFront = this.drawFront.bind(this);
     this.play = this.play.bind(this);
     this.eraseStars = this.eraseStars.bind(this);
+    this.drawWon = this.drawWon.bind(this);
+    this.drawLost = this.drawLost.bind(this);
 
     this.dude.gameWon = this.gameWon;
     this.dude.youWon = this.youWon;
@@ -371,16 +373,12 @@ class Game {
     this.ctx3.fillText(`${this.minsAndSecs}`, 40, 60);
 
     if (this.gameWon) {
-      this.ctx3.fillStyle = "white";
-      this.ctx3.font = "60px sans-serif";
-      this.ctx3.fillText("You won!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
+      this.drawWon();
     } else if (this.gameLost) {
-      this.ctx3.fillStyle = "white";
-      this.ctx3.font = "60px sans-serif";
-      this.ctx3.fillText("You lost!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
+      this.drawLost();
     }
 
-    if (!this.playing) {
+    if (!this.playing || this.gameOver) {
 
       let centX = this.canvasWidth/2;
       let centY = this.canvasHeight/2 - 50;
@@ -409,6 +407,20 @@ class Game {
 
   }
 
+  // end of draw function
+
+  drawWon() {
+    this.ctx3.fillStyle = "white";
+    this.ctx3.font = "60px sans-serif";
+    this.ctx3.fillText("You won!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
+  }
+
+  drawLost() {
+    this.ctx3.fillStyle = "white";
+    this.ctx3.font = "60px sans-serif";
+    this.ctx3.fillText("You lost!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
+  }
+
   erase() {
     // clearInterval(this.drawingFront);
     // clearInterval(this.drawingSky);
@@ -420,9 +432,10 @@ class Game {
     setInterval(this.eraseStars, 100);
     setInterval(this.sun.sunup, 30);
     setInterval(this.dude.moonwalk, 30);
+    this.gameWon = false;
+    this.gameLost = false;
+    this.gameOver = true;
   }
-
-  // end of draw function
 
   play() {
 
