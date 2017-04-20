@@ -414,6 +414,8 @@ class Game {
     // clearInterval(this.drawingSky);
     clearInterval(this.drawingStars);
     clearInterval(this.sunset);
+    clearInterval(this.makeAsteroids1);
+    clearInterval(this.makeAsteroids2);
     setInterval(this.eraseStars, 100);
     this.sunset = setInterval(this.sun.sunup, 30);
   }
@@ -438,8 +440,8 @@ class Game {
     // setInterval(() => { this.stars.starshine(this.sun.blue); }, 30);
     setInterval(this.dude.walking, 30);
     setInterval(this.asteroids.collisionChecker, 30);
-    setInterval(this.asteroids.asteroidConstructor, 1000);
-    setInterval(this.asteroids.asteroidConstructor, 2500);
+    this.makeAsteroids1 = setInterval(this.asteroids.asteroidConstructor, 1000);
+    this.makeAsteroids2 = setInterval(this.asteroids.asteroidConstructor, 2500);
     setInterval(this.timeTick, 1000);
     setInterval(this.timeString, 1000);
     this.drawingFront = setInterval(this.drawFront, 30);
