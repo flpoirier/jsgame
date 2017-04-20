@@ -410,10 +410,12 @@ class Game {
   }
 
   erase() {
-    clearInterval(this.drawingFront);
-    clearInterval(this.drawingSky);
+    // clearInterval(this.drawingFront);
+    // clearInterval(this.drawingSky);
     clearInterval(this.drawingStars);
+    clearInterval(this.sunset);
     setInterval(this.eraseStars, 100);
+    this.sunset = setInterval(this.sun.sunup, 30);
   }
 
   // end of draw function
@@ -432,7 +434,7 @@ class Game {
     document.addEventListener("keydown", this.keyDownHandler, false);
     document.addEventListener("keyup", this.keyUpHandler, false);
 
-    setInterval(this.sun.sundown, 30);
+    this.sunset = setInterval(this.sun.sundown, 30);
     // setInterval(() => { this.stars.starshine(this.sun.blue); }, 30);
     setInterval(this.dude.walking, 30);
     setInterval(this.asteroids.collisionChecker, 30);
