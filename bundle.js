@@ -477,8 +477,7 @@ class Game {
     }
 
     if (!this.erasing && (this.gameWon || this.gameLost)) {
-      debugger
-      this.erasing = setTimeout(this.erase, 5000);
+      this.erasing = setTimeout(this.erase, 2000);
     }
 
   }
@@ -506,7 +505,6 @@ class Game {
   }
 
   erase() {
-    debugger
     clearInterval(this.drawingStars);
     clearInterval(this.sunset);
     clearInterval(this.makeAsteroids1);
@@ -530,7 +528,6 @@ class Game {
   }
 
   restartGame() {
-    debugger
     this.gameOver = false;
     this.gameWon = false;
     this.gameLost = false;
@@ -551,11 +548,12 @@ class Game {
     this.stars.star1Idx = 0;
     this.stars.star2Idx = 1;
     this.asteroids.asteroids = [];
+    this.dude.gameWon = false;
+    this.dude.time = this.time;
   }
 
   play() {
 
-    debugger
     this.timeString();
     this.playing = true;
     this.started = true;

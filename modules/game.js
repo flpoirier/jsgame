@@ -405,7 +405,7 @@ class Game {
     }
 
     if (!this.erasing && (this.gameWon || this.gameLost)) {
-      this.erasing = setTimeout(this.erase, 5000);
+      this.erasing = setTimeout(this.erase, 2000);
     }
 
   }
@@ -476,6 +476,8 @@ class Game {
     this.stars.star1Idx = 0;
     this.stars.star2Idx = 1;
     this.asteroids.asteroids = [];
+    this.dude.gameWon = false;
+    this.dude.time = this.time;
   }
 
   play() {
