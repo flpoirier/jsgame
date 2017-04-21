@@ -501,9 +501,9 @@ class Game {
     clearInterval(this.makeAsteroids1);
     clearInterval(this.makeAsteroids2);
     clearInterval(this.dudeWalking);
-    setInterval(this.eraseStars, 50);
-    setInterval(this.sun.sunup, 15);
-    setInterval(this.dude.moonwalk, 30);
+    setInterval(this.eraseStars, 30);
+    setInterval(this.sun.sunup, 10);
+    setInterval(this.dude.moonwalk, 15);
     this.gameWon = false;
     this.gameLost = false;
     this.gameOver = true;
