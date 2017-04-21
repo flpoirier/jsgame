@@ -48,6 +48,7 @@ class Game {
     this.time = this.maxTime;
     this.minsAndSecs = "";
 
+    this.started = false;
     this.playing = false;
     this.gameOver = false;
     this.gameWon = false;
@@ -301,7 +302,7 @@ class Game {
     this.ctx3.translate(this.dude.dudeX, translatedDudeY);
     this.ctx3.rotate(tiltAngle);
 
-    if (this.playing) {
+    if (this.started) {
       this.ctx3.drawImage(this.sprite, 0, 0, this.dude.dudeWidth, this.dude.dudeHeight);
     }
 
@@ -449,11 +450,12 @@ class Game {
     this.gameWon = false;
     this.gameLost = false;
     this.gameOver = true;
+    this.erasing = null;
   }
 
   fullyRewound() {
     if ((this.sun.sunY <= -this.sun.sunRad) && (this.dude.dudeX <= this.dude.endMargin)) {
-      setTimeout(this.restartGame, 2000);
+      setTimeout(this.restartGame, 1000);
     }
   }
 
@@ -482,6 +484,7 @@ class Game {
 
     this.timeString();
     this.playing = true;
+    this.started = true;
 
     this.canvas3.removeEventListener("click", this.play, false);
     document.addEventListener("keydown", this.keyDownHandler, false);
