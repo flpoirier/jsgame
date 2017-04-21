@@ -131,6 +131,7 @@ class Game {
     this.keyUpHandler = this.keyUpHandler.bind(this);
     this.timeString = this.timeString.bind(this);
     this.timeTick = this.timeTick.bind(this);
+    this.drawTime = this.drawTime.bind(this);
     this.drawSky = this.drawSky.bind(this);
     this.drawStars = this.drawStars.bind(this);
     this.drawFront = this.drawFront.bind(this);
@@ -146,6 +147,11 @@ class Game {
 
     this.erase = this.erase.bind(this);
     this.erasing = null;
+    this.fullyRewound = this.fullyRewound.bind(this);
+    this.restartGame = this.restartGame.bind(this);
+
+    this.timeString();
+    this.stars.starConstructor();
   }
 
   youLose() {
@@ -226,6 +232,12 @@ class Game {
     }
     this.dude.time = this.time;
     this.timeString();
+  }
+
+  drawTime() {
+    this.ctx3.fillStyle = "white";
+    this.ctx3.font = "30px sans-serif";
+    this.ctx3.fillText(`${this.minsAndSecs}`, 40, 60);
   }
 
   drawSky() {
@@ -440,17 +452,17 @@ class Game {
 
     });
 
-    this.ctx3.fillStyle = "white";
-    this.ctx3.font = "30px sans-serif";
-    this.ctx3.fillText(`${this.minsAndSecs}`, 40, 60);
-
     if (this.gameWon) {
       this.drawWon();
     } else if (this.gameLost) {
       this.drawLost();
     }
 
-    if (!this.playing || this.gameOver) {
+    if (this.playing && !this.gameOver) {
+      this.drawTime();
+    }
+
+    if (!this.playing) {
 
       let centX = this.canvasWidth/2;
       let centY = this.canvasHeight/2 - 50;
@@ -494,43 +506,66 @@ class Game {
   }
 
   erase() {
-    // clearInterval(this.drawingFront);
-    // clearInterval(this.drawingSky);
     clearInterval(this.drawingStars);
-    clearInterval(this.sunsett);
+    clearInterval(this.sunset);
     clearInterval(this.makeAsteroids1);
     clearInterval(this.makeAsteroids2);
     clearInterval(this.dudeWalking);
-    setInterval(this.eraseStars, 30);
-    setInterval(this.sun.sunup, 10);
-    setInterval(this.dude.moonwalk, 15);
+    clearInterval(this.tickingTime);
+    clearInterval(this.stringingTime);
+    clearInterval(this.checkingAsteroids);
+    this.erasingStars = setInterval(this.eraseStars, 30);
+    this.risingSun = setInterval(this.sun.sunup, 10);
+    this.moonwalking = setInterval(this.dude.moonwalk, 15);
+    this.rewinding = setInterval(this.fullyRewound, 30);
     this.gameWon = false;
     this.gameLost = false;
     this.gameOver = true;
   }
 
+  fullyRewound() {
+    if ((this.sun.sunY <= -this.sun.sunRad) && (this.dude.dudeX <= this.dude.endMargin)) {
+      setTimeout(this.restartGame, 2000);
+    }
+  }
+
+  restartGame() {
+    this.gameOver = false;
+    this.playing = false;
+    this.time = this.maxTime;
+    this.canvas3.addEventListener("click", this.play, false);
+    document.removeEventListener("keydown", this.keyDownHandler, false);
+    document.removeEventListener("keyup", this.keyUpHandler, false);
+    clearInterval(this.erasingStars);
+    clearInterval(this.risingSun);
+    clearInterval(this.moonwalking);
+    clearInterval(this.rewinding);
+    clearInterval(this.drawingFront);
+    clearInterval(this.drawingSky);
+    this.drawFront();
+    this.drawSky();
+    this.stars.star1Idx = 0;
+    this.stars.star2Idx = 1;
+    this.asteroids.asteroids = [];
+  }
+
   play() {
 
-    this.playing = true;
-
-    // this.soundicon.className = "fa fa-volume-up";
-    // this.music.play();
-
     this.timeString();
-    this.stars.starConstructor();
+    this.playing = true;
 
     this.canvas3.removeEventListener("click", this.play, false);
     document.addEventListener("keydown", this.keyDownHandler, false);
     document.addEventListener("keyup", this.keyUpHandler, false);
 
-    this.sunsett = setInterval(this.sun.sundown, 30);
+    this.sunset = setInterval(this.sun.sundown, 30);
     // setInterval(() => { this.stars.starshine(this.sun.blue); }, 30);
     this.dudeWalking = setInterval(this.dude.walking, 30);
-    setInterval(this.asteroids.collisionChecker, 30);
+    this.checkingAsteroids = setInterval(this.asteroids.collisionChecker, 30);
     this.makeAsteroids1 = setInterval(this.asteroids.asteroidConstructor, 1000);
     this.makeAsteroids2 = setInterval(this.asteroids.asteroidConstructor, 2500);
-    setInterval(this.timeTick, 1000);
-    setInterval(this.timeString, 1000);
+    this.tickingTime = setInterval(this.timeTick, 1000);
+    this.stringingTime = setInterval(this.timeString, 1000);
     this.drawingFront = setInterval(this.drawFront, 30);
     this.drawingSky = setInterval(this.drawSky, 30);
     this.drawingStars = setInterval(this.drawStars, 100);
