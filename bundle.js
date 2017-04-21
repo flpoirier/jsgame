@@ -321,9 +321,9 @@ class Game {
     this.ctx3.arc(this.sun.sunX, this.sun.sunY, this.sun.sunRad, 0, 2 * Math.PI);
     this.ctx3.fill();
 
-    if (this.gameWon) {
+    if (this.gameWon && this.sun.sunY > (this.bridgeY - this.bridgeRad)) {
       this.drawWon();
-    } else if (this.gameLost) {
+    } else if (this.gameLost && this.sun.sunY > (this.bridgeY - this.bridgeRad)) {
       this.drawLost();
     }
 
