@@ -321,6 +321,12 @@ class Game {
     this.ctx3.arc(this.sun.sunX, this.sun.sunY, this.sun.sunRad, 0, 2 * Math.PI);
     this.ctx3.fill();
 
+    if (this.gameWon) {
+      this.drawWon();
+    } else if (this.gameLost) {
+      this.drawLost();
+    }
+
     // bonus sun logic:
     // let nickX = this.sun.sunX - this.nickRad;
     // let nickY = this.sun.sunY - this.nickRad;
@@ -453,12 +459,6 @@ class Game {
 
     });
 
-    if (this.gameWon) {
-      this.drawWon();
-    } else if (this.gameLost) {
-      this.drawLost();
-    }
-
     if (this.playing && !this.gameOver) {
       this.drawTime();
     }
@@ -495,15 +495,23 @@ class Game {
   // end of draw function
 
   drawWon() {
-    this.ctx3.fillStyle = "white";
-    this.ctx3.font = "60px sans-serif";
-    this.ctx3.fillText("You won!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
+    // this.ctx3.fillStyle = "white";
+    // this.ctx3.font = "60px sans-serif";
+    // this.ctx3.fillText("You won!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
+    this.ctx3.fillStyle = "orange";
+    this.ctx3.font = "bold 15px sans-serif";
+    this.ctx3.fillText("YOU", this.sun.sunX - 15, this.sun.sunY + 1);
+    this.ctx3.fillText("WIN", this.sun.sunX - 14, this.sun.sunY + 14);
   }
 
   drawLost() {
-    this.ctx3.fillStyle = "white";
-    this.ctx3.font = "60px sans-serif";
-    this.ctx3.fillText("You lost!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
+    // this.ctx3.fillStyle = "white";
+    // this.ctx3.font = "60px sans-serif";
+    // this.ctx3.fillText("You lost!", (this.canvasWidth / 2) - 125, this.canvasHeight / 2);
+    this.ctx3.fillStyle = "orange";
+    this.ctx3.font = "bold 12px sans-serif";
+    this.ctx3.fillText("YOU", this.sun.sunX - 13, this.sun.sunY - 1);
+    this.ctx3.fillText("LOSE", this.sun.sunX - 16, this.sun.sunY + 10);
   }
 
   erase() {
@@ -519,20 +527,20 @@ class Game {
     this.risingSun = setInterval(this.sun.sunup, 10);
     this.moonwalking = setInterval(this.dude.moonwalk, 15);
     this.rewinding = setInterval(this.fullyRewound, 30);
-    this.gameWon = false;
-    this.gameLost = false;
     this.gameOver = true;
     this.erasing = null;
   }
 
   fullyRewound() {
     if ((this.sun.sunY <= -this.sun.sunRad) && (this.dude.dudeX <= this.dude.endMargin)) {
-      setTimeout(this.restartGame, 1000);
+      setTimeout(this.restartGame, 500);
     }
   }
 
   restartGame() {
     this.gameOver = false;
+    this.gameWon = false;
+    this.gameLost = false;
     this.playing = false;
     this.time = this.maxTime;
     this.canvas3.addEventListener("click", this.play, false);
