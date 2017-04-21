@@ -375,7 +375,7 @@ class Game {
     // this.ctx3.arc(this.dude.dudeX, this.dude.dudeY, this.dude.dudeRad, 0, 2 * Math.PI);
     // this.ctx3.fill();
 
-    let tiltAngle = dudeAngle - Math.PI/2
+    let tiltAngle = dudeAngle - Math.PI/2;
 
     this.ctx3.translate(this.dude.dudeX, translatedDudeY);
     this.ctx3.rotate(tiltAngle);
@@ -401,16 +401,6 @@ class Game {
 
     this.dude.blx = this.dude.brx - r * Math.cos(tiltAngle);
     this.dude.bly = this.dude.bry - r * Math.sin(tiltAngle);
-
-    // this.ctx3.lineWidth = 3;
-    // this.ctx3.strokeStyle = "white";
-    // this.ctx3.beginPath();
-    // this.ctx3.moveTo(this.dude.tlx,this.dude.tly);
-    // this.ctx3.lineTo(this.dude.trx,this.dude.try);
-    // this.ctx3.lineTo(this.dude.brx,this.dude.bry);
-    // this.ctx3.lineTo(this.dude.blx,this.dude.bly);
-    // this.ctx3.lineTo(this.dude.tlx,this.dude.tly);
-    // this.ctx3.stroke();
 
 
     this.asteroids.asteroids.forEach((asteroid) => {
@@ -487,6 +477,7 @@ class Game {
     }
 
     if (!this.erasing && (this.gameWon || this.gameLost)) {
+      debugger
       this.erasing = setTimeout(this.erase, 5000);
     }
 
@@ -515,6 +506,7 @@ class Game {
   }
 
   erase() {
+    debugger
     clearInterval(this.drawingStars);
     clearInterval(this.sunset);
     clearInterval(this.makeAsteroids1);
@@ -528,20 +520,22 @@ class Game {
     this.moonwalking = setInterval(this.dude.moonwalk, 15);
     this.rewinding = setInterval(this.fullyRewound, 30);
     this.gameOver = true;
-    this.erasing = null;
   }
 
   fullyRewound() {
     if ((this.sun.sunY <= -this.sun.sunRad) && (this.dude.dudeX <= this.dude.endMargin)) {
       setTimeout(this.restartGame, 500);
+      clearInterval(this.rewinding);
     }
   }
 
   restartGame() {
+    debugger
     this.gameOver = false;
     this.gameWon = false;
     this.gameLost = false;
     this.playing = false;
+    this.erasing = null;
     this.time = this.maxTime;
     this.canvas3.addEventListener("click", this.play, false);
     document.removeEventListener("keydown", this.keyDownHandler, false);
@@ -549,7 +543,6 @@ class Game {
     clearInterval(this.erasingStars);
     clearInterval(this.risingSun);
     clearInterval(this.moonwalking);
-    clearInterval(this.rewinding);
     clearInterval(this.drawingFront);
     clearInterval(this.drawingSky);
     this.ctx2.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
@@ -562,6 +555,7 @@ class Game {
 
   play() {
 
+    debugger
     this.timeString();
     this.playing = true;
     this.started = true;
