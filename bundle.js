@@ -1,41 +1,41 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
 /******/ 			l: false,
 /******/ 			exports: {}
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
-
+/******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
@@ -46,7 +46,7 @@
 /******/ 			});
 /******/ 		}
 /******/ 	};
-
+/******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
@@ -55,23 +55,23 @@
 /******/ 		__webpack_require__.d(getter, 'a', getter);
 /******/ 		return getter;
 /******/ 	};
-
+/******/
 /******/ 	// Object.prototype.hasOwnProperty.call
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Sun = __webpack_require__(4);
-const Star = __webpack_require__(3);
+const Sun = __webpack_require__(5);
+const Star = __webpack_require__(4);
 const Asteroid = __webpack_require__(1);
 const Dude = __webpack_require__(2);
 
@@ -707,7 +707,7 @@ class Dude {
     this.sprite = img;
     this.walkFunc = walkFunc;
 
-    this.endMargin = 0;
+    this.endMargin = -25;
     this.endPoint = this.canvasWidth - this.sprite.width/2;
 
     this.asteroidRad = 10;
@@ -842,6 +842,23 @@ module.exports = Dude;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Game = __webpack_require__(0);
+
+let game = new Game();
+let canvas = document.getElementById("layer3");
+
+game.drawSky();
+game.drawFront();
+
+// game.play();
+
+canvas.addEventListener("click", game.play, false);
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 class Star {
@@ -938,7 +955,7 @@ module.exports = Star;
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 class Sun {
@@ -1022,23 +1039,6 @@ class Sun {
 }
 
 module.exports = Sun;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const Game = __webpack_require__(0);
-
-let game = new Game();
-let canvas = document.getElementById("layer3");
-
-game.drawSky();
-game.drawFront();
-
-// game.play();
-
-canvas.addEventListener("click", game.play, false);
 
 
 /***/ })
